@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>BM 회절 억제 시뮬레이터 — 반사회절 패턴 분석</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#1a1a2e;color:#e0e0e0;font-family:'Segoe UI','Noto Sans KR',sans-serif;overflow-x:hidden;}
+h1{text-align:center;padding:12px 0 4px;font-size:20px;color:#00d4ff;letter-spacing:1px;}
+.subtitle{text-align:center;font-size:12px;color:#888;margin-bottom:8px;}
+.main{display:flex;gap:0;justify-content:center;padding:0 8px;}
+.canvas-panel{display:flex;gap:2px;justify-content:center;}
+canvas{border:1px solid #333;border-radius:4px;}
+.controls{width:260px;background:#16213e;border-radius:8px;padding:12px;margin-left:6px;flex-shrink:0;}
+.ctrl-group{margin-bottom:10px;}
+.ctrl-group label{display:block;font-size:12px;color:#aaa;margin-bottom:2px;}
+.ctrl-group .row{display:flex;align-items:center;gap:6px;}
+.ctrl-group input[type=range]{flex:1;accent-color:#00d4ff;height:6px;}
+.ctrl-group .val{font-size:12px;color:#00d4ff;min-width:55px;text-align:right;font-family:monospace;}
+.toggle-row{display:flex;align-items:center;gap:8px;margin:6px 0;}
+.toggle-row label{font-size:12px;color:#aaa;}
+.switch{position:relative;width:36px;height:20px;}
+.switch input{opacity:0;width:0;height:0;}
+.slider-sw{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:#555;border-radius:10px;transition:.3s;}
+.slider-sw:before{content:"";position:absolute;height:14px;width:14px;left:3px;bottom:3px;background:#ccc;border-radius:50%;transition:.3s;}
+.switch input:checked+.slider-sw{background:#00d4ff;}
+.switch input:checked+.slider-sw:before{transform:translateX(16px);background:#fff;}
+.presets{display:flex;flex-wrap:wrap;gap:4px;margin:8px 0;}
+.presets button{flex:1 1 45%;padding:5px 2px;font-size:10px;border:1px solid #444;background:#0f3460;color:#e0e0e0;border-radius:4px;cursor:pointer;transition:.2s;}
+.presets button:hover{background:#00d4ff;color:#000;}
+.metrics{background:#0f3460;border-radius:6px;padding:10px;margin-top:8px;}
+.metrics h3{font-size:13px;color:#00d4ff;margin-bottom:6px;}
+.metric-row{display:flex;justify-content:space-between;font-size:11px;padding:2px 0;border-bottom:1px solid #1a1a3e;}
+.metric-row .mv{color:#ff6b6b;font-family:monospace;}
+.legend{font-size:10px;color:#666;margin-top:8px;line-height:1.6;}
+.canvas-label{text-align:center;font-size:11px;color:#888;margin-top:2px;margin-bottom:1px;}
+</style>
+</head>
+<body>
+<h1>BM 회절 억제 시뮬레이터 &mdash; 반사회절 패턴 분석</h1>
+<div class="subtitle">OLED Black Matrix 반사회절 패턴 분석 &middot; 원편광 없는 회절 억제 기법 탐색</div>
+<div class="main">
+<div>
+  <div class="canvas-panel">
+    <div>
+      <div class="canvas-label">실공간 픽셀 격자</div>
+      <canvas id="cvReal" width="380" height="380"></canvas>
+    </div>
+    <div>
+      <div class="canvas-label">2D 회절 패턴 (원거리장)</div>
+      <canvas id="cvFFT" width="380" height="380"></canvas>
+    </div>
+  </div>
+</div>
+<div class="controls">
+  <div class="ctrl-group">
+    <label>픽셀 피치 (px)</label>
+    <div class="row"><input type="range" id="sPitch" min="30" max="100" value="50"><span class="val" id="vPitch">50 um</span></div>
+  </div>
+  <div class="ctrl-group">
+    <label>BM 폭 (bm)</label>
+    <div class="row"><input type="range" id="sBM" min="5" max="30" value="10"><span class="val" id="vBM">10 um</span></div>
+  </div>
+  <div class="ctrl-group">
+    <label>파장 (lambda)</label>
+    <div class="row"><input type="range" id="sWL" min="380" max="780" value="550"><span class="val" id="vWL">550 nm</span></div>
+  </div>
+  <div class="ctrl-group">
+    <label>위상 변조 깊이 (phi)</label>
+    <div class="row"><input type="range" id="sPhi" min="0" max="314" value="0"><span class="val" id="vPhi">0.00 rad</span></div>
+  </div>
+  <div class="toggle-row">
+    <label>체커보드 모드</label>
+    <label class="switch"><input type="checkbox" id="tChecker"><span class="slider-sw"></span></label>
+  </div>
+  <div class="ctrl-group">
+    <label>랜덤 나노 디퓨저 강도</label>
+    <div class="row"><input type="range" id="sDiff" min="0" max="100" value="0"><span class="val" id="vDiff">0.00</span></div>
+  </div>
+  <div class="ctrl-group">
+    <label>에지 아포다이제이션 폭</label>
+    <div class="row"><input type="range" id="sApod" min="0" max="50" value="0"><span class="val" id="vApod">0.0 um</span></div>
+  </div>
+
+  <div style="font-size:11px;color:#888;margin:8px 0 4px;">프리셋</div>
+  <div class="presets">
+    <button onclick="preset(0)">기준선</button>
+    <button onclick="preset(1)">수평 위상</button>
+    <button onclick="preset(2)">체커보드</button>
+    <button onclick="preset(3)">아포다이제이션</button>
+    <button onclick="preset(4)">랜덤 디퓨저</button>
+    <button onclick="preset(5)">풀 콤보</button>
+  </div>
+
+  <div class="metrics">
+    <h3>성능 지표</h3>
+    <div class="metric-row"><span>H-회절 억제</span><span class="mv" id="mH">0.0 dB</span></div>
+    <div class="metric-row"><span>V-회절 억제</span><span class="mv" id="mV">0.0 dB</span></div>
+    <div class="metric-row"><span>DC 반사</span><span class="mv" id="mDC">0.0 dB</span></div>
+    <div class="metric-row"><span>총 산란 파워 비율</span><span class="mv" id="mSc">0.0%</span></div>
+  </div>
+  <div class="legend">
+    범례: 검정=BM, 밝은색=개구, 빨강/파랑=위상 0/pi<br>
+    회절 패턴: log 스케일, 중심=DC
+  </div>
+</div>
+</div>
+
+<script>
+"use strict";
+const N = 128;
+const cvR = document.getElementById('cvReal');
+const cvF = document.getElementById('cvFFT');
+const ctxR = cvR.getContext('2d');
+const ctxF = cvF.getContext('2d');
+
+const el = (id) => document.getElementById(id);
+const sliders = ['sPitch','sBM','sWL','sPhi','sDiff','sApod'];
+
+// --- Simple 1D FFT (Cooley-Tukey, radix-2) ---
+function fft1d(reArr, imArr) {
+  const n = reArr.length;
+  // bit-reversal
+  for (let i = 1, j = 0; i < n; i++) {
+    let bit = n >> 1;
+    for (; j & bit; bit >>= 1) j ^= bit;
+    j ^= bit;
+    if (i < j) {
+      [reArr[i], reArr[j]] = [reArr[j], reArr[i]];
+      [imArr[i], imArr[j]] = [imArr[j], imArr[i]];
+    }
+  }
+  for (let len = 2; len <= n; len <<= 1) {
+    const ang = -2 * Math.PI / len;
+    const wRe = Math.cos(ang), wIm = Math.sin(ang);
+    for (let i = 0; i < n; i += len) {
+      let curRe = 1, curIm = 0;
+      for (let j = 0; j < len / 2; j++) {
+        const uRe = reArr[i + j], uIm = imArr[i + j];
+        const vRe = reArr[i + j + len / 2] * curRe - imArr[i + j + len / 2] * curIm;
+        const vIm = reArr[i + j + len / 2] * curIm + imArr[i + j + len / 2] * curRe;
+        reArr[i + j] = uRe + vRe;
+        imArr[i + j] = uIm + vIm;
+        reArr[i + j + len / 2] = uRe - vRe;
+        imArr[i + j + len / 2] = uIm - vIm;
+        const tmpRe = curRe * wRe - curIm * wIm;
+        curIm = curRe * wIm + curIm * wRe;
+        curRe = tmpRe;
+      }
+    }
+  }
+}
+
+function fft2d(re, im) {
+  // rows
+  const rowRe = new Float64Array(N), rowIm = new Float64Array(N);
+  for (let y = 0; y < N; y++) {
+    for (let x = 0; x < N; x++) { rowRe[x] = re[y * N + x]; rowIm[x] = im[y * N + x]; }
+    fft1d(rowRe, rowIm);
+    for (let x = 0; x < N; x++) { re[y * N + x] = rowRe[x]; im[y * N + x] = rowIm[x]; }
+  }
+  // cols
+  const colRe = new Float64Array(N), colIm = new Float64Array(N);
+  for (let x = 0; x < N; x++) {
+    for (let y = 0; y < N; y++) { colRe[y] = re[y * N + x]; colIm[y] = im[y * N + x]; }
+    fft1d(colRe, colIm);
+    for (let y = 0; y < N; y++) { re[y * N + x] = colRe[y]; im[y * N + x] = colIm[y]; }
+  }
+}
+
+function fftShift(arr, n) {
+  const out = new Float64Array(n * n);
+  const h = n >> 1;
+  for (let y = 0; y < n; y++)
+    for (let x = 0; x < n; x++)
+      out[((y + h) % n) * n + ((x + h) % n)] = arr[y * n + x];
+  return out;
+}
+
+// wavelength to RGB
+function wlToRGB(wl) {
+  let r = 0, g = 0, b = 0;
+  if (wl >= 380 && wl < 440) { r = -(wl - 440) / 60; b = 1; }
+  else if (wl < 490) { g = (wl - 440) / 50; b = 1; }
+  else if (wl < 510) { g = 1; b = -(wl - 510) / 20; }
+  else if (wl < 580) { r = (wl - 510) / 70; g = 1; }
+  else if (wl < 645) { r = 1; g = -(wl - 645) / 65; }
+  else if (wl <= 780) { r = 1; }
+  let f = 1;
+  if (wl >= 380 && wl < 420) f = 0.3 + 0.7 * (wl - 380) / 40;
+  else if (wl > 700) f = 0.3 + 0.7 * (780 - wl) / 80;
+  return [Math.round(r * f * 255), Math.round(g * f * 255), Math.round(b * f * 255)];
+}
+
+// inferno-like colormap
+function inferno(t) {
+  t = Math.max(0, Math.min(1, t));
+  const c = [
+    [0, 0, 4], [40, 11, 84], [101, 21, 110], [159, 42, 99],
+    [212, 72, 66], [245, 125, 21], [250, 193, 39], [252, 255, 164]
+  ];
+  const idx = t * (c.length - 1);
+  const i = Math.floor(idx);
+  const f = idx - i;
+  const a = c[Math.min(i, c.length - 1)];
+  const b = c[Math.min(i + 1, c.length - 1)];
+  return [
+    Math.round(a[0] + (b[0] - a[0]) * f),
+    Math.round(a[1] + (b[1] - a[1]) * f),
+    Math.round(a[2] + (b[2] - a[2]) * f)
+  ];
+}
+
+// raised cosine taper for apodization
+function raisedCos(x, width) {
+  if (width <= 0) return x > 0 ? 1 : 0;
+  if (x <= 0) return 0;
+  if (x >= width) return 1;
+  return 0.5 * (1 - Math.cos(Math.PI * x / width));
+}
+
+// Cache random phases so they don't flicker on every slider move
+let cachedRandomPhases = null;
+let cachedRandomSeed = -1;
+
+function generateRandomPhases(nPix) {
+  const total = nPix * nPix;
+  const arr = new Float64Array(total);
+  for (let i = 0; i < total; i++) arr[i] = Math.random();
+  return arr;
+}
+
+function getRandomPhases(nPix) {
+  if (cachedRandomSeed !== nPix) {
+    cachedRandomPhases = generateRandomPhases(nPix);
+    cachedRandomSeed = nPix;
+  }
+  return cachedRandomPhases;
+}
+
+function regenRandom() {
+  cachedRandomSeed = -1;
+  update();
+}
+
+// Baseline diffraction data for suppression dB calculation
+let baselineHpeak = 1;
+let baselineVpeak = 1;
+
+function update() {
+  const pitch = +el('sPitch').value;  // um
+  const bmW = +el('sBM').value;       // um
+  const wl = +el('sWL').value;        // nm
+  const phi = +el('sPhi').value / 100 * Math.PI; // 0..pi
+  const checker = el('tChecker').checked;
+  const diffStr = +el('sDiff').value / 100;
+  const apodW = +el('sApod').value / 10; // um
+
+  el('vPitch').textContent = pitch + ' um';
+  el('vBM').textContent = bmW + ' um';
+  el('vWL').textContent = wl + ' nm';
+  el('vPhi').textContent = (phi).toFixed(2) + ' rad';
+  el('vDiff').textContent = diffStr.toFixed(2);
+  el('vApod').textContent = apodW.toFixed(1) + ' um';
+
+  const apertureW = pitch - bmW; // aperture width in um
+  if (apertureW <= 0) return;
+
+  // Number of pixels that fit in our grid
+  const nPix = Math.floor(N / (pitch / 1)); // pixels per grid side using 1um/sample
+  // We'll scale: each sample = pitch/samplesPerPitch
+  const samplesPerPitch = Math.max(4, Math.floor(N / Math.max(nPix, 4)));
+  const actualNPix = Math.floor(N / samplesPerPitch);
+  if (actualNPix < 2) return;
+
+  const re = new Float64Array(N * N);
+  const im = new Float64Array(N * N);
+
+  const randPhases = getRandomPhases(actualNPix);
+
+  // Build transmission function
+  const halfBM = bmW / 2;
+  const halfAp = apertureW / 2;
+  const pitchSamples = samplesPerPitch;
+
+  for (let py = 0; py < actualNPix; py++) {
+    for (let px = 0; px < actualNPix; px++) {
+      // Determine phase for this pixel
+      let pixPhase = 0;
+      if (checker) {
+        pixPhase = ((px + py) % 2 === 0) ? 0 : phi;
+      } else {
+        // horizontal alternating: alternate by column
+        pixPhase = (px % 2 === 0) ? 0 : phi;
+      }
+      // Random diffuser phase
+      if (diffStr > 0) {
+        pixPhase += diffStr * 2 * Math.PI * randPhases[py * actualNPix + px];
+      }
+
+      const y0 = py * pitchSamples;
+      const x0 = px * pitchSamples;
+
+      for (let sy = 0; sy < pitchSamples; sy++) {
+        for (let sx = 0; sx < pitchSamples; sx++) {
+          const gy = y0 + sy;
+          const gx = x0 + sx;
+          if (gy >= N || gx >= N) continue;
+
+          // Position within unit cell in um
+          const cellX = (sx + 0.5) / pitchSamples * pitch - pitch / 2;
+          const cellY = (sy + 0.5) / pitchSamples * pitch - pitch / 2;
+
+          // Inside aperture?
+          if (Math.abs(cellX) < halfAp && Math.abs(cellY) < halfAp) {
+            // Edge apodization
+            let tx = 1, ty = 1;
+            if (apodW > 0) {
+              const distFromEdgeX = halfAp - Math.abs(cellX);
+              const distFromEdgeY = halfAp - Math.abs(cellY);
+              tx = raisedCos(distFromEdgeX, apodW);
+              ty = raisedCos(distFromEdgeY, apodW);
+            }
+            const amp = tx * ty;
+            re[gy * N + gx] = amp * Math.cos(pixPhase);
+            im[gy * N + gx] = amp * Math.sin(pixPhase);
+          }
+          // else remains 0 (BM blocks)
+        }
+      }
+    }
+  }
+
+  // Draw real-space
+  const rgbWL = wlToRGB(wl);
+  const imgR = ctxR.createImageData(380, 380);
+  const scaleR = 380 / N;
+  for (let y = 0; y < 380; y++) {
+    for (let x = 0; x < 380; x++) {
+      const gx = Math.floor(x / scaleR);
+      const gy = Math.floor(y / scaleR);
+      const idx = (y * 380 + x) * 4;
+      const rv = re[gy * N + gx];
+      const iv = im[gy * N + gx];
+      const amp = Math.sqrt(rv * rv + iv * iv);
+      if (amp < 0.01) {
+        // BM region
+        imgR.data[idx] = 15; imgR.data[idx + 1] = 15; imgR.data[idx + 2] = 25; imgR.data[idx + 3] = 255;
+      } else {
+        // Determine phase for color coding
+        const phase = Math.atan2(iv, rv);
+        const normPhase = (phase + Math.PI) / (2 * Math.PI); // 0..1
+        // phase ~ 0 -> wavelength color, phase ~ pi -> complementary
+        if (Math.abs(phase) < 0.5) {
+          // near zero phase - show wavelength color
+          imgR.data[idx] = Math.round(rgbWL[0] * amp);
+          imgR.data[idx + 1] = Math.round(rgbWL[1] * amp);
+          imgR.data[idx + 2] = Math.round(rgbWL[2] * amp);
+        } else {
+          // phase shifted - show reddish/blue
+          const t = Math.abs(phase) / Math.PI;
+          imgR.data[idx] = Math.round((100 + 155 * t) * amp);
+          imgR.data[idx + 1] = Math.round(40 * (1 - t) * amp);
+          imgR.data[idx + 2] = Math.round((50 + 200 * t) * amp);
+        }
+        imgR.data[idx + 3] = 255;
+      }
+    }
+  }
+  ctxR.putImageData(imgR, 0, 0);
+
+  // 2D FFT
+  fft2d(re, im);
+
+  // Compute power spectrum
+  const power = new Float64Array(N * N);
+  for (let i = 0; i < N * N; i++) {
+    power[i] = re[i] * re[i] + im[i] * im[i];
+  }
+  const shifted = fftShift(power, N);
+
+  // Log scale
+  let maxLog = -Infinity, minLog = Infinity;
+  const logP = new Float64Array(N * N);
+  for (let i = 0; i < N * N; i++) {
+    logP[i] = Math.log10(shifted[i] + 1e-20);
+    if (logP[i] > maxLog) maxLog = logP[i];
+    if (logP[i] < minLog) minLog = logP[i];
+  }
+  const range = maxLog - minLog || 1;
+
+  // Draw FFT
+  const imgF = ctxF.createImageData(380, 380);
+  const scaleF = 380 / N;
+  for (let y = 0; y < 380; y++) {
+    for (let x = 0; x < 380; x++) {
+      const gx = Math.floor(x / scaleF);
+      const gy = Math.floor(y / scaleF);
+      const t = (logP[gy * N + gx] - minLog) / range;
+      const c = inferno(t);
+      const idx = (y * 380 + x) * 4;
+      imgF.data[idx] = c[0]; imgF.data[idx + 1] = c[1]; imgF.data[idx + 2] = c[2]; imgF.data[idx + 3] = 255;
+    }
+  }
+  ctxF.putImageData(imgF, 0, 0);
+
+  // Draw grid/axis overlay on FFT
+  ctxF.strokeStyle = 'rgba(255,255,255,0.15)';
+  ctxF.beginPath();
+  ctxF.moveTo(190, 0); ctxF.lineTo(190, 380);
+  ctxF.moveTo(0, 190); ctxF.lineTo(380, 190);
+  ctxF.stroke();
+
+  // Metrics
+  const center = N / 2;
+  const dcPower = shifted[center * N + center];
+  let totalPower = 0;
+  for (let i = 0; i < N * N; i++) totalPower += shifted[i];
+
+  // Find first-order diffraction peaks along H and V axes
+  // The period in samples is samplesPerPitch, so first-order is at N/samplesPerPitch from center
+  const orderDist = Math.round(N / samplesPerPitch);
+
+  let hPeak = 0, vPeak = 0;
+  const searchR = Math.max(1, Math.round(orderDist * 0.15));
+  // H-axis peaks (along x)
+  for (let dx = -searchR; dx <= searchR; dx++) {
+    for (let dy = -searchR; dy <= searchR; dy++) {
+      const x1 = center + orderDist + dx;
+      const y1 = center + dy;
+      const x2 = center - orderDist + dx;
+      const y2 = center + dy;
+      if (x1 >= 0 && x1 < N && y1 >= 0 && y1 < N)
+        hPeak = Math.max(hPeak, shifted[y1 * N + x1]);
+      if (x2 >= 0 && x2 < N && y2 >= 0 && y2 < N)
+        hPeak = Math.max(hPeak, shifted[y2 * N + x2]);
+    }
+  }
+  // V-axis peaks (along y)
+  for (let dx = -searchR; dx <= searchR; dx++) {
+    for (let dy = -searchR; dy <= searchR; dy++) {
+      const x1 = center + dx;
+      const y1 = center + orderDist + dy;
+      const x2 = center + dx;
+      const y2 = center - orderDist + dy;
+      if (x1 >= 0 && x1 < N && y1 >= 0 && y1 < N)
+        vPeak = Math.max(vPeak, shifted[y1 * N + x1]);
+      if (x2 >= 0 && x2 < N && y2 >= 0 && y2 < N)
+        vPeak = Math.max(vPeak, shifted[y2 * N + x2]);
+    }
+  }
+
+  // On first run or baseline preset, store baseline peaks
+  if (baselineHpeak <= 0) baselineHpeak = 1;
+  if (baselineVpeak <= 0) baselineVpeak = 1;
+
+  const hSuppress = hPeak > 0 ? -10 * Math.log10(hPeak / baselineHpeak) : 0;
+  const vSuppress = vPeak > 0 ? -10 * Math.log10(vPeak / baselineVpeak) : 0;
+  const dcDB = dcPower > 0 ? 10 * Math.log10(dcPower / totalPower) : -99;
+  const scatterRatio = totalPower > 0 ? ((totalPower - dcPower) / totalPower * 100) : 0;
+
+  el('mH').textContent = hSuppress.toFixed(1) + ' dB';
+  el('mV').textContent = vSuppress.toFixed(1) + ' dB';
+  el('mDC').textContent = dcDB.toFixed(1) + ' dB';
+  el('mSc').textContent = scatterRatio.toFixed(1) + '%';
+
+  // Color code metrics
+  el('mH').style.color = hSuppress > 3 ? '#4ade80' : hSuppress > 0 ? '#fbbf24' : '#ff6b6b';
+  el('mV').style.color = vSuppress > 3 ? '#4ade80' : vSuppress > 0 ? '#fbbf24' : '#ff6b6b';
+}
+
+function setBaseline() {
+  // Run baseline to capture reference peaks
+  const origPhi = el('sPhi').value;
+  const origChk = el('tChecker').checked;
+  const origDiff = el('sDiff').value;
+  const origApod = el('sApod').value;
+
+  el('sPhi').value = 0;
+  el('tChecker').checked = false;
+  el('sDiff').value = 0;
+  el('sApod').value = 0;
+
+  // Temporarily set very high baseline
+  baselineHpeak = 1e30;
+  baselineVpeak = 1e30;
+
+  // Compute baseline
+  const pitch = +el('sPitch').value;
+  const bmW = +el('sBM').value;
+  const apertureW = pitch - bmW;
+  if (apertureW <= 0) return;
+  const samplesPerPitch = Math.max(4, Math.floor(N / Math.max(Math.floor(N / (pitch / 1)), 4)));
+  const actualNPix = Math.floor(N / samplesPerPitch);
+  if (actualNPix < 2) return;
+
+  const re = new Float64Array(N * N);
+  const im = new Float64Array(N * N);
+  const halfAp = apertureW / 2;
+
+  for (let py = 0; py < actualNPix; py++) {
+    for (let px = 0; px < actualNPix; px++) {
+      const y0 = py * samplesPerPitch;
+      const x0 = px * samplesPerPitch;
+      for (let sy = 0; sy < samplesPerPitch; sy++) {
+        for (let sx = 0; sx < samplesPerPitch; sx++) {
+          const gy = y0 + sy;
+          const gx = x0 + sx;
+          if (gy >= N || gx >= N) continue;
+          const cellX = (sx + 0.5) / samplesPerPitch * pitch - pitch / 2;
+          const cellY = (sy + 0.5) / samplesPerPitch * pitch - pitch / 2;
+          if (Math.abs(cellX) < halfAp && Math.abs(cellY) < halfAp) {
+            re[gy * N + gx] = 1;
+          }
+        }
+      }
+    }
+  }
+
+  fft2d(re, im);
+  const power = new Float64Array(N * N);
+  for (let i = 0; i < N * N; i++) power[i] = re[i] * re[i] + im[i] * im[i];
+  const shifted = fftShift(power, N);
+
+  const center = N / 2;
+  const orderDist = Math.round(N / samplesPerPitch);
+  const searchR = Math.max(1, Math.round(orderDist * 0.15));
+
+  baselineHpeak = 0;
+  baselineVpeak = 0;
+  for (let dx = -searchR; dx <= searchR; dx++) {
+    for (let dy = -searchR; dy <= searchR; dy++) {
+      let x1 = center + orderDist + dx, y1 = center + dy;
+      if (x1 >= 0 && x1 < N && y1 >= 0 && y1 < N)
+        baselineHpeak = Math.max(baselineHpeak, shifted[y1 * N + x1]);
+      x1 = center - orderDist + dx; y1 = center + dy;
+      if (x1 >= 0 && x1 < N && y1 >= 0 && y1 < N)
+        baselineHpeak = Math.max(baselineHpeak, shifted[y1 * N + x1]);
+
+      x1 = center + dx; y1 = center + orderDist + dy;
+      if (x1 >= 0 && x1 < N && y1 >= 0 && y1 < N)
+        baselineVpeak = Math.max(baselineVpeak, shifted[y1 * N + x1]);
+      x1 = center + dx; y1 = center - orderDist + dy;
+      if (x1 >= 0 && x1 < N && y1 >= 0 && y1 < N)
+        baselineVpeak = Math.max(baselineVpeak, shifted[y1 * N + x1]);
+    }
+  }
+  if (baselineHpeak <= 0) baselineHpeak = 1;
+  if (baselineVpeak <= 0) baselineVpeak = 1;
+
+  // Restore
+  el('sPhi').value = origPhi;
+  el('tChecker').checked = origChk;
+  el('sDiff').value = origDiff;
+  el('sApod').value = origApod;
+}
+
+function preset(n) {
+  switch (n) {
+    case 0: // Baseline
+      el('sPitch').value = 50; el('sBM').value = 10; el('sWL').value = 550;
+      el('sPhi').value = 0; el('tChecker').checked = false;
+      el('sDiff').value = 0; el('sApod').value = 0;
+      break;
+    case 1: // Horizontal Phase
+      el('sPitch').value = 50; el('sBM').value = 10; el('sWL').value = 550;
+      el('sPhi').value = 314; el('tChecker').checked = false;
+      el('sDiff').value = 0; el('sApod').value = 0;
+      break;
+    case 2: // Checkerboard
+      el('sPitch').value = 50; el('sBM').value = 10; el('sWL').value = 550;
+      el('sPhi').value = 314; el('tChecker').checked = true;
+      el('sDiff').value = 0; el('sApod').value = 0;
+      break;
+    case 3: // Apodization
+      el('sPitch').value = 50; el('sBM').value = 10; el('sWL').value = 550;
+      el('sPhi').value = 0; el('tChecker').checked = false;
+      el('sDiff').value = 0; el('sApod').value = 30;
+      break;
+    case 4: // Random Diffuser
+      el('sPitch').value = 50; el('sBM').value = 10; el('sWL').value = 550;
+      el('sPhi').value = 0; el('tChecker').checked = false;
+      el('sDiff').value = 80; el('sApod').value = 0;
+      cachedRandomSeed = -1; // regenerate
+      break;
+    case 5: // Full Combo
+      el('sPitch').value = 50; el('sBM').value = 10; el('sWL').value = 550;
+      el('sPhi').value = 314; el('tChecker').checked = true;
+      el('sDiff').value = 40; el('sApod').value = 20;
+      cachedRandomSeed = -1;
+      break;
+  }
+  setBaseline();
+  update();
+}
+
+// Bind events
+sliders.forEach(id => {
+  el(id).addEventListener('input', () => {
+    if (id === 'sPitch' || id === 'sBM') setBaseline();
+    update();
+  });
+});
+el('tChecker').addEventListener('change', update);
+
+// Initial run
+setBaseline();
+update();
+</script>
+</body>
+</html>
