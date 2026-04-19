@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>BM 회절 억제 시뮬레이터 v3 — 광대역 분석</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#111827;color:#e0e0e0;font-family:'Segoe UI','Noto Sans KR',sans-serif;overflow-x:auto;}
+h1{text-align:center;padding:14px 0 2px;font-size:20px;color:#38bdf8;letter-spacing:1px;}
+.subtitle{text-align:center;font-size:12px;color:#6b7280;margin-bottom:10px;}
+.main{display:flex;gap:8px;justify-content:center;padding:0 10px;flex-wrap:wrap;}
+canvas{border:1px solid #374151;border-radius:4px;background:#000;}
+.canvas-label{text-align:center;font-size:11px;color:#9ca3af;margin-top:2px;margin-bottom:2px;}
+.col{display:flex;flex-direction:column;align-items:center;}
+.mono-row{display:flex;gap:4px;justify-content:center;}
+.mono-box{display:flex;flex-direction:column;align-items:center;}
+.mono-box .canvas-label{font-size:10px;}
+.controls{width:270px;background:#1e293b;border-radius:8px;padding:14px;flex-shrink:0;}
+.ctrl-group{margin-bottom:8px;}
+.ctrl-group label{display:block;font-size:11px;color:#9ca3af;margin-bottom:2px;}
+.ctrl-group .row{display:flex;align-items:center;gap:6px;}
+.ctrl-group input[type=range]{flex:1;accent-color:#38bdf8;height:5px;}
+.ctrl-group .val{font-size:11px;color:#38bdf8;min-width:60px;text-align:right;font-family:'Cascadia Code',monospace;}
+.toggle-row{display:flex;align-items:center;gap:8px;margin:6px 0;}
+.toggle-row label{font-size:11px;color:#9ca3af;}
+.switch{position:relative;width:36px;height:20px;}
+.switch input{opacity:0;width:0;height:0;}
+.slider-sw{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:#4b5563;border-radius:10px;transition:.3s;}
+.slider-sw:before{content:"";position:absolute;height:14px;width:14px;left:3px;bottom:3px;background:#9ca3af;border-radius:50%;transition:.3s;}
+.switch input:checked+.slider-sw{background:#38bdf8;}
+.switch input:checked+.slider-sw:before{transform:translateX(16px);background:#fff;}
+.presets{display:flex;flex-wrap:wrap;gap:4px;margin:8px 0;}
+.presets button{flex:1 1 45%;padding:5px 2px;font-size:10px;border:1px solid #374151;background:#1e3a5f;color:#e0e0e0;border-radius:4px;cursor:pointer;transition:.2s;}
+.presets button:hover{background:#38bdf8;color:#000;}
+.presets button.active{background:#38bdf8;color:#000;font-weight:bold;}
+.metrics{background:#1e3a5f;border-radius:6px;padding:10px;margin-top:8px;}
+.metrics h3{font-size:12px;color:#38bdf8;margin-bottom:6px;}
+.metric-row{display:flex;justify-content:space-between;font-size:10px;padding:2px 0;border-bottom:1px solid #1e293b;}
+.metric-row .mv{color:#f87171;font-family:monospace;font-size:10px;}
+.metric-row .mv.good{color:#4ade80;}
+.info-box{background:#0f172a;border:1px solid #374151;border-radius:6px;padding:8px;margin-top:8px;font-size:10px;line-height:1.6;}
+.info-box .info-label{color:#38bdf8;font-weight:bold;}
+.info-box .info-val{color:#fbbf24;font-family:monospace;}
+.export-btn{width:100%;padding:7px;margin-top:8px;font-size:11px;border:1px solid #374151;background:#065f46;color:#e0e0e0;border-radius:4px;cursor:pointer;transition:.2s;}
+.export-btn:hover{background:#059669;}
+</style>
+</head>
+<body>
+<h1>BM 회절 억제 시뮬레이터 v3 &mdash; 광대역 분석</h1>
+<div class="subtitle">OLED Black Matrix 광대역(380-780nm) 회절 패턴 &middot; D65 가중 CIE 1931 색재현 &middot; 스펙트럼 균일도 분석</div>
+
+<div class="main">
+<!-- Left: Real-space -->
+<div class="col">
+  <div class="canvas-label">실공간 픽셀 격자 (위상 시각화)</div>
+  <canvas id="cvReal" width="384" height="384"></canvas>
+</div>
+
+<!-- Center: Broadband diffraction -->
+<div class="col">
+  <div class="canvas-label">광대역 회절 패턴 (D65 가중 CIE 색상)</div>
+  <canvas id="cvBroad" width="384" height="384"></canvas>
+  <div style="margin-top:6px;">
+    <div class="canvas-label">단색 비교 &mdash; R(630nm) / G(550nm) / B(450nm)</div>
+    <div class="mono-row">
+      <div class="mono-box">
+        <canvas id="cvR" width="126" height="126"></canvas>
+        <div class="canvas-label" style="color:#f87171;">R 630nm</div>
+      </div>
+      <div class="mono-box">
+        <canvas id="cvG" width="126" height="126"></canvas>
+        <div class="canvas-label" style="color:#4ade80;">G 550nm</div>
+      </div>
+      <div class="mono-box">
+        <canvas id="cvB" width="126" height="126"></canvas>
+        <div class="canvas-label" style="color:#60a5fa;">B 450nm</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Right: Controls -->
+<div class="controls">
+  <div class="ctrl-group">
+    <label>픽셀 피치</label>
+    <div class="row"><input type="range" id="sPitch" min="30" max="100" value="50"><span class="val" id="vPitch">50 um</span></div>
+  </div>
+  <div class="ctrl-group">
+    <label>BM 폭</label>
+    <div class="row"><input type="range" id="sBM" min="5" max="30" value="10"><span class="val" id="vBM">10 um</span></div>
+  </div>
+  <div class="ctrl-group">
+    <label>위상 변조 깊이 (phi)</label>
+    <div class="row"><input type="range" id="sPhi" min="0" max="314" value="314"><span class="val" id="vPhi">3.14 rad</span></div>
+  </div>
+  <div class="toggle-row">
+    <label>체커보드 모드</label>
+    <label class="switch"><input type="checkbox" id="tChecker"><span class="slider-sw"></span></label>
+  </div>
+  <div class="ctrl-group">
+    <label>랜덤 나노 디퓨저 강도</label>
+    <div class="row"><input type="range" id="sDiff" min="0" max="100" value="30"><span class="val" id="vDiff">0.30</span></div>
+  </div>
+  <div class="ctrl-group">
+    <label>에지 아포다이제이션 폭</label>
+    <div class="row"><input type="range" id="sApod" min="0" max="50" value="10"><span class="val" id="vApod">1.0 um</span></div>
+  </div>
+  <div class="ctrl-group">
+    <label>BM 굴절률 (n)</label>
+    <div class="row"><input type="range" id="sRI" min="150" max="250" value="180"><span class="val" id="vRI">1.80</span></div>
+  </div>
+
+  <div style="font-size:10px;color:#6b7280;margin:8px 0 4px;">프리셋</div>
+  <div class="presets" id="presetBtns">
+    <button onclick="preset(0)">기준선</button>
+    <button onclick="preset(1)">수평 위상</button>
+    <button onclick="preset(2)">체커보드</button>
+    <button onclick="preset(3)">아포다이제이션</button>
+    <button onclick="preset(4)">디퓨저</button>
+    <button onclick="preset(5)">풀 콤보</button>
+  </div>
+
+  <div class="info-box">
+    <span class="info-label">최적 BM 두께:</span><br>
+    <span id="infoThickness" class="info-val">--</span><br>
+    <span style="color:#6b7280;">Deltad = lambda / (2(n-1)) &mdash; 550nm 기준</span>
+  </div>
+
+  <div class="metrics">
+    <h3>파장대역별 억제 성능 (dB)</h3>
+    <div class="metric-row"><span style="color:#a78bfa;">Blue (430-490nm)</span><span class="mv" id="mBlue">--</span></div>
+    <div class="metric-row"><span style="color:#4ade80;">Green (500-570nm)</span><span class="mv" id="mGreen">--</span></div>
+    <div class="metric-row"><span style="color:#f87171;">Red (590-700nm)</span><span class="mv" id="mRed">--</span></div>
+    <div class="metric-row"><span style="color:#fbbf24;">광대역 평균</span><span class="mv" id="mBroad">--</span></div>
+    <div class="metric-row"><span style="color:#38bdf8;">DC 반사</span><span class="mv" id="mDC">--</span></div>
+    <div class="metric-row" style="border-top:1px solid #374151;margin-top:4px;padding-top:4px;">
+      <span style="color:#e879f9;">스펙트럼 균일도</span><span class="mv" id="mUniform">--</span>
+    </div>
+  </div>
+
+  <button class="export-btn" onclick="exportJSON()">결과 JSON 내보내기</button>
+</div>
+</div>
+
+<script>
+"use strict";
+
+// ===================== CONSTANTS =====================
+const N = 128;
+const BROAD_WL_START = 380, BROAD_WL_END = 780, BROAD_WL_STEP = 20;
+const MONO_WL = [630, 550, 450]; // R, G, B
+
+// ===================== D65 ILLUMINANT (relative SPD, sampled every 20nm 380-780) =====================
+const D65_SPD = [
+  49.9755, 54.6482, 82.7549, 91.486, 93.4318,
+  86.6823, 104.865, 117.008, 117.812, 114.861,
+  115.923, 108.811, 109.354, 107.802, 104.790,
+  107.689, 104.405, 104.046, 100.000, 96.3342,
+  95.788,
+];
+// Normalize D65 so peak = 1
+const D65_MAX = Math.max(...D65_SPD);
+const D65 = D65_SPD.map(v => v / D65_MAX);
+
+// ===================== CIE 1931 2-deg CMFs (sampled every 20nm 380-780) =====================
+const CIE_X = [0.0014,0.0065,0.0201,0.0679,0.1102,0.1655,0.2257,0.2904,0.3109,0.3005,0.2379,0.1634,0.0913,0.0409,0.0139,0.0040,0.0000,0.0116,0.0580,0.1346,0.2297,0.3391,0.4608,0.5955,0.7051,0.7502,0.6785,0.4969,0.2897,0.1211,0.0355];
+const CIE_Y = [0.0000,0.0002,0.0006,0.0020,0.0073,0.0213,0.0387,0.0621,0.0895,0.1282,0.1852,0.2536,0.3391,0.4608,0.6067,0.7617,0.9150,0.9786,0.9520,0.8700,0.7570,0.6310,0.5030,0.3810,0.2650,0.1750,0.1070,0.0610,0.0320,0.0117,0.0033];
+const CIE_Z = [0.0065,0.0310,0.0986,0.3388,0.5625,0.8700,1.2256,1.6065,1.8026,1.7468,1.5574,1.2256,0.8163,0.4652,0.2720,0.1582,0.0782,0.0422,0.0203,0.0087,0.0039,0.0021,0.0017,0.0011,0.0008,0.0003,0.0002,0.0000,0.0000,0.0000,0.0000];
+
+// Trim/extend CMFs to match our 21 wavelength samples (380-780 step 20)
+function getCMF(arr, nSamples) {
+  const out = [];
+  for (let i = 0; i < nSamples; i++) out.push(i < arr.length ? arr[i] : 0);
+  return out;
+}
+const NUM_WL = Math.floor((BROAD_WL_END - BROAD_WL_START) / BROAD_WL_STEP) + 1; // 21
+const cmfX = getCMF(CIE_X, NUM_WL);
+const cmfY = getCMF(CIE_Y, NUM_WL);
+const cmfZ = getCMF(CIE_Z, NUM_WL);
+
+// ===================== sRGB conversion =====================
+function xyzToLinearRGB(X, Y, Z) {
+  let r =  3.2406 * X - 1.5372 * Y - 0.4986 * Z;
+  let g = -0.9689 * X + 1.8758 * Y + 0.0415 * Z;
+  let b =  0.0557 * X - 0.2040 * Y + 1.0570 * Z;
+  return [r, g, b];
+}
+function linearToSRGB(c) {
+  return c <= 0.0031308 ? 12.92 * c : 1.055 * Math.pow(c, 1/2.4) - 0.055;
+}
+function clamp01(v) { return v < 0 ? 0 : v > 1 ? 1 : v; }
+
+// ===================== FFT (radix-2, in-place, 1D) =====================
+function fft1d(re, im, n, inv) {
+  let j = 0;
+  for (let i = 0; i < n; i++) {
+    if (i < j) { let t = re[i]; re[i] = re[j]; re[j] = t; t = im[i]; im[i] = im[j]; im[j] = t; }
+    let m = n >> 1;
+    while (m >= 1 && j >= m) { j -= m; m >>= 1; }
+    j += m;
+  }
+  for (let s = 2; s <= n; s <<= 1) {
+    const half = s >> 1;
+    const angle = (inv ? 1 : -1) * Math.PI / half;
+    const wRe = Math.cos(angle), wIm = Math.sin(angle);
+    for (let k = 0; k < n; k += s) {
+      let curRe = 1, curIm = 0;
+      for (let jj = 0; jj < half; jj++) {
+        const tRe = curRe * re[k+jj+half] - curIm * im[k+jj+half];
+        const tIm = curRe * im[k+jj+half] + curIm * re[k+jj+half];
+        re[k+jj+half] = re[k+jj] - tRe;
+        im[k+jj+half] = im[k+jj] - tIm;
+        re[k+jj] += tRe;
+        im[k+jj] += tIm;
+        const nRe = curRe * wRe - curIm * wIm;
+        curIm = curRe * wIm + curIm * wRe;
+        curRe = nRe;
+      }
+    }
+  }
+  if (inv) { for (let i = 0; i < n; i++) { re[i] /= n; im[i] /= n; } }
+}
+
+function fft2d(re, im, n, inv) {
+  const rowRe = new Float64Array(n), rowIm = new Float64Array(n);
+  for (let y = 0; y < n; y++) {
+    const off = y * n;
+    for (let x = 0; x < n; x++) { rowRe[x] = re[off+x]; rowIm[x] = im[off+x]; }
+    fft1d(rowRe, rowIm, n, inv);
+    for (let x = 0; x < n; x++) { re[off+x] = rowRe[x]; im[off+x] = rowIm[x]; }
+  }
+  const colRe = new Float64Array(n), colIm = new Float64Array(n);
+  for (let x = 0; x < n; x++) {
+    for (let y = 0; y < n; y++) { colRe[y] = re[y*n+x]; colIm[y] = im[y*n+x]; }
+    fft1d(colRe, colIm, n, inv);
+    for (let y = 0; y < n; y++) { re[y*n+x] = colRe[y]; im[y*n+x] = colIm[y]; }
+  }
+}
+
+function fftShift(arr, n) {
+  const h = n >> 1;
+  const tmp = new Float64Array(n * n);
+  for (let y = 0; y < n; y++) {
+    for (let x = 0; x < n; x++) {
+      const sy = (y + h) % n, sx = (x + h) % n;
+      tmp[sy * n + sx] = arr[y * n + x];
+    }
+  }
+  arr.set(tmp);
+}
+
+// ===================== SIMULATION CORE =====================
+// Returns power spectrum (magnitude^2) for a single wavelength
+function computeDiffraction(params, wavelength_nm) {
+  const { pitch, bmWidth, phiDepth, checker, diffuser, apodWidth, refIdx } = params;
+  const re = new Float64Array(N * N);
+  const im = new Float64Array(N * N);
+  const scale = pitch / N; // um per pixel in grid
+
+  // Compute phase shift for this wavelength
+  // phi_actual = 2*pi * delta_d * (n-1) / lambda
+  // If user sets phiDepth (target for 550nm), compute delta_d then actual phase for this lambda
+  const lambda_ref = 0.55; // um (550nm)
+  const delta_d = phiDepth * lambda_ref / (2 * Math.PI * (refIdx - 1));
+  const phi_actual = 2 * Math.PI * delta_d * (refIdx - 1) / (wavelength_nm / 1000);
+
+  // Random seed based on diffuser (consistent across wavelengths for same params)
+  let rngState = 12345;
+  function rng() {
+    rngState = (rngState * 1103515245 + 12345) & 0x7fffffff;
+    return rngState / 0x7fffffff;
+  }
+
+  const halfN = N >> 1;
+  const bmHalf = (bmWidth / pitch) * N * 0.5;
+  const apodPx = (apodWidth / pitch) * N;
+
+  for (let y = 0; y < N; y++) {
+    for (let x = 0; x < N; x++) {
+      const cx = x - halfN, cy = y - halfN;
+      const fracX = Math.abs(cx) / (N * 0.5);
+      const fracY = Math.abs(cy) / (N * 0.5);
+
+      // Determine if pixel is in BM region (periodic grid)
+      const px = ((x % N) + N) % N;
+      const py = ((y % N) + N) % N;
+      const inBM_x = px < bmHalf || px > N - bmHalf;
+      const inBM_y = py < bmHalf || py > N - bmHalf;
+      const inBM = inBM_x || inBM_y;
+
+      let amplitude = 1.0;
+      let phase = 0.0;
+
+      if (inBM) {
+        // BM region: reflective
+        amplitude = 1.0;
+
+        // Phase modulation
+        let phaseSign = 1;
+        if (checker) {
+          const cellX = Math.floor(cx / (N * 0.5));
+          const cellY = Math.floor(cy / (N * 0.5));
+          phaseSign = ((cellX + cellY) & 1) ? -1 : 1;
+        }
+        phase = phi_actual * phaseSign;
+
+        // Apodization: smooth BM edges
+        if (apodPx > 0) {
+          let edgeDist = Infinity;
+          if (inBM_x) {
+            const dx1 = px < bmHalf ? bmHalf - px : px - (N - bmHalf);
+            edgeDist = Math.min(edgeDist, dx1);
+          }
+          if (inBM_y) {
+            const dy1 = py < bmHalf ? bmHalf - py : py - (N - bmHalf);
+            edgeDist = Math.min(edgeDist, dy1);
+          }
+          if (edgeDist < apodPx) {
+            const t = edgeDist / apodPx;
+            const apodFactor = 0.5 * (1 - Math.cos(Math.PI * t));
+            amplitude *= apodFactor;
+          }
+        }
+
+        // Diffuser: random phase on BM
+        if (diffuser > 0) {
+          phase += diffuser * (rng() - 0.5) * 2 * Math.PI;
+        }
+      } else {
+        // Aperture (pixel opening): no reflection in this model
+        amplitude = 0.0;
+      }
+
+      re[y * N + x] = amplitude * Math.cos(phase);
+      im[y * N + x] = amplitude * Math.sin(phase);
+    }
+  }
+
+  fft2d(re, im, N, false);
+
+  const power = new Float64Array(N * N);
+  for (let i = 0; i < N * N; i++) {
+    power[i] = re[i] * re[i] + im[i] * im[i];
+  }
+  fftShift(power, N);
+  return power;
+}
+
+// ===================== SPECTRAL INTEGRATION =====================
+function computeBroadband(params) {
+  // XYZ accumulator per pixel
+  const imgX = new Float64Array(N * N);
+  const imgY = new Float64Array(N * N);
+  const imgZ = new Float64Array(N * N);
+
+  // Per-wavelength suppression
+  const suppressionPerWL = [];
+
+  for (let wi = 0; wi < NUM_WL; wi++) {
+    const wl = BROAD_WL_START + wi * BROAD_WL_STEP;
+    const power = computeDiffraction(params, wl);
+    const weight = D65[wi];
+
+    // Compute suppression for this wavelength
+    const supp = computeSuppression(power);
+    suppressionPerWL.push({ wl, supp, power });
+
+    // Accumulate XYZ
+    for (let i = 0; i < N * N; i++) {
+      const val = power[i] * weight;
+      imgX[i] += val * cmfX[wi];
+      imgY[i] += val * cmfY[wi];
+      imgZ[i] += val * cmfZ[wi];
+    }
+  }
+
+  return { imgX, imgY, imgZ, suppressionPerWL };
+}
+
+function computeSuppression(power) {
+  const h = N >> 1;
+  const dcPower = power[h * N + h];
+
+  // Average 1st-order diffraction peaks (H and V axes)
+  let hPeak = 0, vPeak = 0, count = 0;
+  const scanRange = 3;
+  // Find peaks along H axis
+  for (let dx = Math.max(1, h/4|0); dx < h; dx++) {
+    for (let dy = -scanRange; dy <= scanRange; dy++) {
+      const idx = (h + dy) * N + (h + dx);
+      if (idx >= 0 && idx < N*N) hPeak = Math.max(hPeak, power[idx]);
+      const idx2 = (h + dy) * N + (h - dx);
+      if (idx2 >= 0 && idx2 < N*N) hPeak = Math.max(hPeak, power[idx2]);
+    }
+  }
+  // Find peaks along V axis
+  for (let dy = Math.max(1, h/4|0); dy < h; dy++) {
+    for (let dx = -scanRange; dx <= scanRange; dx++) {
+      const idx = (h + dy) * N + (h + dx);
+      if (idx >= 0 && idx < N*N) vPeak = Math.max(vPeak, power[idx]);
+      const idx2 = (h - dy) * N + (h + dx);
+      if (idx2 >= 0 && idx2 < N*N) vPeak = Math.max(vPeak, power[idx2]);
+    }
+  }
+
+  const peakAvg = (hPeak + vPeak) / 2;
+  const suppDB = dcPower > 0 ? -10 * Math.log10(Math.max(peakAvg, 1e-20) / dcPower) : 0;
+  return suppDB;
+}
+
+// ===================== RENDERING =====================
+function renderRealSpace(ctx, w, h, params) {
+  const { pitch, bmWidth, phiDepth, checker, diffuser, apodWidth, refIdx } = params;
+  const imgData = ctx.createImageData(w, h);
+  const d = imgData.data;
+
+  const bmFrac = bmWidth / pitch;
+  const apodFrac = apodWidth / pitch;
+
+  for (let py = 0; py < h; py++) {
+    for (let px = 0; px < w; px++) {
+      const fx = (px / w); // 0..1 fraction within one pitch
+      const fy = (py / h);
+      // Tile: show 3x3 pixels
+      const tx = (fx * 3) % 1;
+      const ty = (fy * 3) % 1;
+      const cellX = Math.floor(fx * 3);
+      const cellY = Math.floor(fy * 3);
+
+      const bmHF = bmFrac * 0.5;
+      const inBM_x = tx < bmHF || tx > 1 - bmHF;
+      const inBM_y = ty < bmHF || ty > 1 - bmHF;
+      const inBM = inBM_x || inBM_y;
+
+      let r, g, b;
+      if (inBM) {
+        // Phase determines hue
+        let phaseSign = 1;
+        if (checker && ((cellX + cellY) & 1)) phaseSign = -1;
+        const phi = phiDepth * phaseSign;
+        const normPhi = ((phi % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
+
+        // Map phase to color (HSV-like)
+        const hue = normPhi / (2 * Math.PI);
+        r = Math.floor(80 + 120 * (0.5 + 0.5 * Math.sin(hue * Math.PI * 2)));
+        g = Math.floor(60 + 80 * (0.5 + 0.5 * Math.sin(hue * Math.PI * 2 + 2)));
+        b = Math.floor(80 + 100 * (0.5 + 0.5 * Math.sin(hue * Math.PI * 2 + 4)));
+
+        // Apodization visualization
+        if (apodFrac > 0) {
+          let edgeDist = Infinity;
+          if (inBM_x) {
+            const d1 = tx < bmHF ? bmHF - tx : tx - (1 - bmHF);
+            edgeDist = Math.min(edgeDist, d1);
+          }
+          if (inBM_y) {
+            const d1 = ty < bmHF ? bmHF - ty : ty - (1 - bmHF);
+            edgeDist = Math.min(edgeDist, d1);
+          }
+          if (edgeDist < apodFrac) {
+            const t = edgeDist / apodFrac;
+            const fade = 0.5 * (1 - Math.cos(Math.PI * t));
+            r = Math.floor(r * fade);
+            g = Math.floor(g * fade);
+            b = Math.floor(b * fade);
+          }
+        }
+      } else {
+        // Pixel aperture - dark
+        r = 8; g = 8; b = 12;
+      }
+
+      // Grid lines
+      const gridW = 0.005;
+      if (tx < gridW || tx > 1-gridW || ty < gridW || ty > 1-gridW) {
+        r = 40; g = 40; b = 50;
+      }
+
+      const idx = (py * w + px) * 4;
+      d[idx] = r; d[idx+1] = g; d[idx+2] = b; d[idx+3] = 255;
+    }
+  }
+  ctx.putImageData(imgData, 0, 0);
+}
+
+function renderBroadband(ctx, w, h, imgX, imgY, imgZ) {
+  const imgData = ctx.createImageData(w, h);
+  const d = imgData.data;
+  const scaleW = N / w, scaleH = N / h;
+
+  // Find max luminance for normalization
+  let maxY = 0;
+  for (let i = 0; i < N * N; i++) maxY = Math.max(maxY, imgY[i]);
+  if (maxY < 1e-10) maxY = 1;
+
+  // Use log scale for better dynamic range visualization
+  const logBase = Math.log10(maxY);
+
+  for (let py = 0; py < h; py++) {
+    for (let px = 0; px < w; px++) {
+      const sx = Math.floor(px * scaleW);
+      const sy = Math.floor(py * scaleH);
+      const si = sy * N + sx;
+
+      let X = imgX[si], Y = imgY[si], Z = imgZ[si];
+
+      // Log scaling for visibility
+      const lum = Y > 0 ? (Math.log10(Y + 1) / (logBase + 1)) : 0;
+      const boost = Math.pow(lum, 0.35) * 3;
+
+      // Normalize to keep chromaticity
+      const sum = X + Y + Z;
+      let normX = sum > 0 ? X / sum : 0.3127;
+      let normY_c = sum > 0 ? Y / sum : 0.3290;
+      let normZ_c = sum > 0 ? Z / sum : 1 - 0.3127 - 0.3290;
+
+      X = normX * boost;
+      Y = normY_c * boost;
+      Z = normZ_c * boost;
+
+      let [r, g, b] = xyzToLinearRGB(X, Y, Z);
+      r = clamp01(linearToSRGB(clamp01(r))) * 255;
+      g = clamp01(linearToSRGB(clamp01(g))) * 255;
+      b = clamp01(linearToSRGB(clamp01(b))) * 255;
+
+      const idx = (py * w + px) * 4;
+      d[idx] = r; d[idx+1] = g; d[idx+2] = b; d[idx+3] = 255;
+    }
+  }
+  ctx.putImageData(imgData, 0, 0);
+}
+
+function renderMono(ctx, w, h, power, colorR, colorG, colorB) {
+  const imgData = ctx.createImageData(w, h);
+  const d = imgData.data;
+  const scaleW = N / w, scaleH = N / h;
+
+  let maxP = 0;
+  for (let i = 0; i < N * N; i++) maxP = Math.max(maxP, power[i]);
+  if (maxP < 1e-10) maxP = 1;
+  const logMax = Math.log10(maxP);
+
+  for (let py = 0; py < h; py++) {
+    for (let px = 0; px < w; px++) {
+      const sx = Math.floor(px * scaleW);
+      const sy = Math.floor(py * scaleH);
+      const val = power[sy * N + sx];
+      const lum = val > 0 ? Math.pow(Math.log10(val + 1) / (logMax + 1), 0.4) : 0;
+      const bright = clamp01(lum) * 255;
+
+      const idx = (py * w + px) * 4;
+      d[idx] = bright * colorR;
+      d[idx+1] = bright * colorG;
+      d[idx+2] = bright * colorB;
+      d[idx+3] = 255;
+    }
+  }
+  ctx.putImageData(imgData, 0, 0);
+}
+
+// ===================== UI =====================
+const ctxReal = document.getElementById('cvReal').getContext('2d');
+const ctxBroad = document.getElementById('cvBroad').getContext('2d');
+const ctxR = document.getElementById('cvR').getContext('2d');
+const ctxG = document.getElementById('cvG').getContext('2d');
+const ctxB = document.getElementById('cvB').getContext('2d');
+
+const el = id => document.getElementById(id);
+
+function readParams() {
+  const pitch = +el('sPitch').value;
+  const bmWidth = +el('sBM').value;
+  const phiDepth = +el('sPhi').value / 100;
+  const checker = el('tChecker').checked;
+  const diffuser = +el('sDiff').value / 100;
+  const apodWidth = +el('sApod').value / 10;
+  const refIdx = +el('sRI').value / 100;
+  return { pitch, bmWidth, phiDepth, checker, diffuser, apodWidth, refIdx };
+}
+
+function updateLabels(p) {
+  el('vPitch').textContent = p.pitch + ' um';
+  el('vBM').textContent = p.bmWidth + ' um';
+  el('vPhi').textContent = p.phiDepth.toFixed(2) + ' rad';
+  el('vDiff').textContent = p.diffuser.toFixed(2);
+  el('vApod').textContent = p.apodWidth.toFixed(1) + ' um';
+  el('vRI').textContent = p.refIdx.toFixed(2);
+
+  // Optimal thickness calculation
+  const n = p.refIdx;
+  const lambdas = [450, 550, 630];
+  const thicknesses = lambdas.map(wl => (wl / 1000) / (2 * (n - 1)));
+  el('infoThickness').innerHTML =
+    'B(450nm): ' + (thicknesses[0]*1000).toFixed(0) + 'nm | ' +
+    'G(550nm): ' + (thicknesses[1]*1000).toFixed(0) + 'nm | ' +
+    'R(630nm): ' + (thicknesses[2]*1000).toFixed(0) + 'nm';
+}
+
+let lastResults = null;
+
+function simulate() {
+  const params = readParams();
+  updateLabels(params);
+
+  // Real-space rendering
+  renderRealSpace(ctxReal, 384, 384, params);
+
+  // Broadband computation
+  const { imgX, imgY, imgZ, suppressionPerWL } = computeBroadband(params);
+
+  // Broadband pattern
+  renderBroadband(ctxBroad, 384, 384, imgX, imgY, imgZ);
+
+  // Mono patterns
+  const monoR = computeDiffraction(params, 630);
+  const monoG = computeDiffraction(params, 550);
+  const monoB = computeDiffraction(params, 450);
+  renderMono(ctxR, 126, 126, monoR, 1.0, 0.3, 0.3);
+  renderMono(ctxG, 126, 126, monoG, 0.3, 1.0, 0.3);
+  renderMono(ctxB, 126, 126, monoB, 0.4, 0.5, 1.0);
+
+  // Metrics
+  // Band-averaged suppression
+  const blueWLs = suppressionPerWL.filter(s => s.wl >= 430 && s.wl <= 490);
+  const greenWLs = suppressionPerWL.filter(s => s.wl >= 500 && s.wl <= 570);
+  const redWLs = suppressionPerWL.filter(s => s.wl >= 590 && s.wl <= 700);
+
+  const avgSupp = arr => arr.length > 0 ? arr.reduce((a,b) => a + b.supp, 0) / arr.length : 0;
+  const blueSup = avgSupp(blueWLs);
+  const greenSup = avgSupp(greenWLs);
+  const redSup = avgSupp(redWLs);
+  const broadSup = avgSupp(suppressionPerWL);
+
+  // DC reflection
+  const h = N >> 1;
+  const dcPower = computeDiffraction(params, 550)[h * N + h];
+  const totalPower = N * N; // normalized
+  const dcDB = -10 * Math.log10(Math.max(dcPower, 1e-20) / totalPower);
+
+  // Spectral uniformity: 1 - (std/mean) of suppression across all wavelengths
+  const allSupps = suppressionPerWL.map(s => s.supp);
+  const meanS = allSupps.reduce((a,b) => a+b, 0) / allSupps.length;
+  const stdS = Math.sqrt(allSupps.reduce((a,b) => a + (b - meanS)**2, 0) / allSupps.length);
+  const uniformity = meanS > 0 ? Math.max(0, 1 - stdS / Math.abs(meanS)) * 100 : 0;
+
+  const fmt = (v) => (v > 0 ? '+' : '') + v.toFixed(1) + ' dB';
+  const cls = (v) => v > 5 ? 'mv good' : 'mv';
+
+  el('mBlue').textContent = fmt(blueSup);
+  el('mBlue').className = cls(blueSup);
+  el('mGreen').textContent = fmt(greenSup);
+  el('mGreen').className = cls(greenSup);
+  el('mRed').textContent = fmt(redSup);
+  el('mRed').className = cls(redSup);
+  el('mBroad').textContent = fmt(broadSup);
+  el('mBroad').className = cls(broadSup);
+  el('mDC').textContent = dcDB.toFixed(1) + ' dB';
+  el('mUniform').textContent = uniformity.toFixed(1) + '%';
+  el('mUniform').className = uniformity > 70 ? 'mv good' : 'mv';
+
+  lastResults = {
+    params,
+    metrics: {
+      blue_suppression_dB: +blueSup.toFixed(2),
+      green_suppression_dB: +greenSup.toFixed(2),
+      red_suppression_dB: +redSup.toFixed(2),
+      broadband_avg_dB: +broadSup.toFixed(2),
+      dc_reflection_dB: +dcDB.toFixed(2),
+      spectral_uniformity_pct: +uniformity.toFixed(2)
+    },
+    perWavelength: suppressionPerWL.map(s => ({
+      wavelength_nm: s.wl,
+      suppression_dB: +s.supp.toFixed(2)
+    })),
+    optimal_thickness_nm: {
+      B_450nm: +((450/1000)/(2*(params.refIdx-1))*1000).toFixed(0),
+      G_550nm: +((550/1000)/(2*(params.refIdx-1))*1000).toFixed(0),
+      R_630nm: +((630/1000)/(2*(params.refIdx-1))*1000).toFixed(0)
+    }
+  };
+}
+
+// Debounced simulation
+let simTimer = null;
+function schedSim() {
+  if (simTimer) clearTimeout(simTimer);
+  simTimer = setTimeout(simulate, 60);
+}
+
+// Bind controls
+['sPitch','sBM','sPhi','sDiff','sApod','sRI'].forEach(id => {
+  el(id).addEventListener('input', schedSim);
+});
+el('tChecker').addEventListener('change', schedSim);
+
+// Presets
+function preset(idx) {
+  const presets = [
+    { pitch:50, bm:10, phi:0,   checker:false, diff:0,  apod:0,  ri:180 }, // Baseline
+    { pitch:50, bm:10, phi:314, checker:false, diff:0,  apod:0,  ri:180 }, // Horizontal phase
+    { pitch:50, bm:10, phi:314, checker:true,  diff:0,  apod:0,  ri:180 }, // Checkerboard
+    { pitch:50, bm:10, phi:314, checker:false, diff:0,  apod:30, ri:180 }, // Apodized
+    { pitch:50, bm:10, phi:0,   checker:false, diff:60, apod:0,  ri:180 }, // Diffuser
+    { pitch:50, bm:10, phi:314, checker:true,  diff:30, apod:10, ri:180 }, // Full Combo
+  ];
+  const p = presets[idx];
+  el('sPitch').value = p.pitch;
+  el('sBM').value = p.bm;
+  el('sPhi').value = p.phi;
+  el('tChecker').checked = p.checker;
+  el('sDiff').value = p.diff;
+  el('sApod').value = p.apod;
+  el('sRI').value = p.ri;
+
+  // Highlight active preset
+  const btns = document.querySelectorAll('.presets button');
+  btns.forEach((b,i) => b.classList.toggle('active', i === idx));
+
+  simulate();
+}
+
+// Export JSON
+function exportJSON() {
+  if (!lastResults) { alert('먼저 시뮬레이션을 실행하세요.'); return; }
+  const json = JSON.stringify(lastResults, null, 2);
+  const blob = new Blob([json], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'bm_diffraction_v3_results_' + new Date().toISOString().slice(0,19).replace(/:/g,'-') + '.json';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+// Initial simulation
+simulate();
+</script>
+</body>
+</html>
