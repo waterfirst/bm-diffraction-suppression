@@ -1,0 +1,1407 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>특허 도면 V2 — 나노 디퓨저 + 체크보드 위상막 복합 구조</title>
+<style>
+  /* === Reset & Base === */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', 'Noto Sans KR', Arial, sans-serif;
+    background: #fff;
+    color: #000;
+    line-height: 1.5;
+  }
+
+  /* === Page Header === */
+  .page-header {
+    text-align: center;
+    padding: 40px 20px 20px;
+    border-bottom: 3px double #000;
+    margin-bottom: 10px;
+  }
+  .page-header h1 {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 2px;
+  }
+  .page-header .subtitle {
+    font-size: 13px;
+    color: #444;
+    margin-top: 6px;
+  }
+  .page-header .ver {
+    font-size: 11px;
+    color: #c87533;
+    margin-top: 4px;
+    font-weight: 600;
+  }
+
+  /* === Navigation === */
+  .nav-bar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #f8f8f8;
+    border-bottom: 1px solid #ccc;
+    padding: 8px 20px;
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .nav-bar button {
+    font-family: inherit;
+    font-size: 12px;
+    padding: 5px 14px;
+    border: 1px solid #888;
+    background: #fff;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .nav-bar button:hover,
+  .nav-bar button.active {
+    background: #c87533;
+    color: #fff;
+    border-color: #c87533;
+  }
+
+  /* === Figure Container === */
+  .figure-section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 30px 20px 50px;
+    border-bottom: 1px solid #ddd;
+    page-break-inside: avoid;
+  }
+  .figure-section:last-of-type { border-bottom: none; }
+
+  .fig-title {
+    font-size: 15px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+  }
+  .fig-title span.en {
+    font-weight: 400;
+    font-size: 13px;
+    color: #555;
+  }
+
+  .svg-wrap {
+    display: flex;
+    justify-content: center;
+  }
+  .svg-wrap svg {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .fig-caption {
+    text-align: center;
+    font-size: 13px;
+    margin-top: 14px;
+    color: #333;
+  }
+
+  /* === Print === */
+  @media print {
+    .nav-bar { display: none; }
+    .figure-section { page-break-after: always; border-bottom: none; }
+    .figure-section:last-of-type { page-break-after: auto; }
+    body { font-size: 11pt; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!-- HEADER -->
+<!-- ============================================================ -->
+<div class="page-header">
+  <h1>특허 도면 V2 — 나노 디퓨저 + 체크보드 위상막</h1>
+  <div class="subtitle">Patent Drawings V2 — Nano Diffuser + Checkerboard Phase Film Composite Structure</div>
+  <div class="ver">Complementary to patent_figures.html (Figs. 1-5)</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- NAVIGATION -->
+<!-- ============================================================ -->
+<nav class="nav-bar" id="nav">
+  <button onclick="jump('fig6')" class="active">Fig. 6 복합 단면도</button>
+  <button onclick="jump('fig7')">Fig. 7 제조 방법 비교</button>
+  <button onclick="jump('fig8')">Fig. 8 NIL 공정 상세</button>
+  <button onclick="jump('fig9')">Fig. 9 회절 억제 원리</button>
+  <button onclick="jump('fig10')">Fig. 10 양산 레이아웃</button>
+</nav>
+
+<!-- ============================================================ -->
+<!-- FIG. 6 — Nano Diffuser + Phase Film Composite Cross-Section -->
+<!-- ============================================================ -->
+<section class="figure-section" id="fig6">
+  <div class="fig-title">[도 6] 나노 디퓨저 + 위상막 복합 구조 단면도<br><span class="en">(Fig. 6 — Nano Diffuser + Phase Film Composite Cross-Section)</span></div>
+  <div class="svg-wrap">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 520" width="820" height="520">
+      <defs>
+        <!-- Glass hatching (diagonal) -->
+        <pattern id="hatch-glass" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)">
+          <line x1="0" y1="0" x2="0" y2="6" stroke="#000" stroke-width="0.5"/>
+        </pattern>
+        <!-- BM hatching (cross) -->
+        <pattern id="hatch-bm" patternUnits="userSpaceOnUse" width="5" height="5">
+          <line x1="0" y1="0" x2="5" y2="5" stroke="#000" stroke-width="0.4"/>
+          <line x1="5" y1="0" x2="0" y2="5" stroke="#000" stroke-width="0.4"/>
+        </pattern>
+        <!-- Arrow markers -->
+        <marker id="arR6" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+          <path d="M0,0 L8,3 L0,6 Z" fill="#000"/>
+        </marker>
+        <marker id="arL6" markerWidth="8" markerHeight="6" refX="0" refY="3" orient="auto">
+          <path d="M8,0 L0,3 L8,6 Z" fill="#000"/>
+        </marker>
+        <marker id="arR6c" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+          <path d="M0,0 L8,3 L0,6 Z" fill="#c87533"/>
+        </marker>
+        <marker id="arL6c" markerWidth="8" markerHeight="6" refX="0" refY="3" orient="auto">
+          <path d="M8,0 L0,3 L8,6 Z" fill="#c87533"/>
+        </marker>
+      </defs>
+
+      <!-- Glass substrate -->
+      <rect x="100" y="370" width="580" height="80" fill="url(#hatch-glass)" stroke="#000" stroke-width="1.5"/>
+      <text x="390" y="420" text-anchor="middle" font-size="13" font-weight="600">유리 기판 / Glass Substrate</text>
+
+      <!-- BM layer - thick regions (phase 0) -->
+      <rect x="100" y="220" width="120" height="150" fill="url(#hatch-bm)" stroke="#000" stroke-width="1.5"/>
+      <rect x="340" y="220" width="120" height="150" fill="url(#hatch-bm)" stroke="#000" stroke-width="1.5"/>
+      <rect x="580" y="220" width="100" height="150" fill="url(#hatch-bm)" stroke="#000" stroke-width="1.5"/>
+
+      <!-- BM layer - thin regions (phase pi) -->
+      <rect x="220" y="250" width="120" height="120" fill="url(#hatch-bm)" stroke="#000" stroke-width="1.5"/>
+      <rect x="460" y="250" width="120" height="120" fill="url(#hatch-bm)" stroke="#000" stroke-width="1.5"/>
+
+      <!-- Step line at top of BM -->
+      <line x1="100" y1="220" x2="220" y2="220" stroke="#000" stroke-width="1.5"/>
+      <line x1="220" y1="220" x2="220" y2="250" stroke="#000" stroke-width="1.5"/>
+      <line x1="220" y1="250" x2="340" y2="250" stroke="#000" stroke-width="1.5"/>
+      <line x1="340" y1="250" x2="340" y2="220" stroke="#000" stroke-width="1.5"/>
+      <line x1="340" y1="220" x2="460" y2="220" stroke="#000" stroke-width="1.5"/>
+      <line x1="460" y1="220" x2="460" y2="250" stroke="#000" stroke-width="1.5"/>
+      <line x1="460" y1="250" x2="580" y2="250" stroke="#000" stroke-width="1.5"/>
+      <line x1="580" y1="250" x2="580" y2="220" stroke="#000" stroke-width="1.5"/>
+      <line x1="580" y1="220" x2="680" y2="220" stroke="#000" stroke-width="1.5"/>
+
+      <!-- Nano SiO2 particles (random distribution) -->
+      <circle cx="135" cy="280" r="4" fill="none" stroke="#c87533" stroke-width="1.2"/>
+      <circle cx="165" cy="310" r="4" fill="none" stroke="#c87533" stroke-width="1.2"/>
+      <circle cx="185" cy="260" r="4" fill="none" stroke="#c87533" stroke-width="1.2"/>
+      <circle cx="148" cy="340" r="4" fill="none" stroke="#c87533" stroke-width="1.2"/>
+      <circle cx="200" cy="330" r="4" fill="none" stroke="#c87533" stroke-width="1.2"/>
+      <circle cx="120" cy="300" r="4" fill="none" stroke="#c87533" stroke-width="1.2"/>
+      <!-- Thin region particles -->
+      <circle cx="260" cy="290" r="4" fill="none" stroke="#c87533" stroke-width="1.2"/>
+      <circle cx="295" cy="320" r="4" fill="none" stroke="#c87533" stroke-width="1.2"/>
+      <circle cx="240" cy="340" r="4" fill="none" stroke="#c87533" stroke-width="1.2"/>
+      <circle cx="320" cy="300" r="4" fill="none" stroke="#c87533" stroke-width="1.2"/>
+      <!-- More particles in thick region 2 -->
+      <circle cx="370" cy="270" r="4" fill="none" stroke="#c87533" stroke-width="1.2"/>
+      <circle cx="400" cy="310" r="4" fill="none" stroke="#c87533" stroke-width="1.2"/>
+      <circle cx="430" cy="250" r="4" fill="none" stroke="#c87533" stroke-width="1.2"/>
+      <circle cx="355" cy="340" r="4" fill="none" stroke="#c87533" stroke-width="1.2"/>
+      <circle cx="440" cy="330" r="4" fill="none" stroke="#c87533" stroke-width="1.2"/>
+      <!-- Thin region 2 particles -->
+      <circle cx="490" cy="300" r="4" fill="none" stroke="#c87533" stroke-width="1.2"/>
+      <circle cx="530" cy="280" r="4" fill="none" stroke="#c87533" stroke-width="1.2"/>
+      <circle cx="510" cy="340" r="4" fill="none" stroke="#c87533" stroke-width="1.2"/>
+      <circle cx="555" cy="310" r="4" fill="none" stroke="#c87533" stroke-width="1.2"/>
+      <!-- Thick region 3 particles -->
+      <circle cx="610" cy="270" r="4" fill="none" stroke="#c87533" stroke-width="1.2"/>
+      <circle cx="640" cy="310" r="4" fill="none" stroke="#c87533" stroke-width="1.2"/>
+      <circle cx="660" cy="260" r="4" fill="none" stroke="#c87533" stroke-width="1.2"/>
+      <circle cx="620" cy="340" r="4" fill="none" stroke="#c87533" stroke-width="1.2"/>
+
+      <!-- Surface texture bumps -->
+      <path d="M100,220 Q105,216 110,220 Q115,216 120,220 Q125,216 130,220 Q135,216 140,220 Q145,216 150,220 Q155,216 160,220 Q165,216 170,220 Q175,216 180,220 Q185,216 190,220 Q195,216 200,220 Q205,216 210,220 Q215,216 220,220" stroke="#c87533" stroke-width="1" fill="none"/>
+      <path d="M340,220 Q345,216 350,220 Q355,216 360,220 Q365,216 370,220 Q375,216 380,220 Q385,216 390,220 Q395,216 400,220 Q405,216 410,220 Q415,216 420,220 Q425,216 430,220 Q435,216 440,220 Q445,216 450,220 Q455,216 460,220" stroke="#c87533" stroke-width="1" fill="none"/>
+      <path d="M580,220 Q585,216 590,220 Q595,216 600,220 Q605,216 610,220 Q615,216 620,220 Q625,216 630,220 Q635,216 640,220 Q645,216 650,220 Q655,216 660,220 Q665,216 670,220 Q675,216 680,220" stroke="#c87533" stroke-width="1" fill="none"/>
+
+      <!-- Dimension: d1 (thick) -->
+      <line x1="70" y1="220" x2="70" y2="370" stroke="#000" stroke-width="0.8" marker-start="url(#arL6)" marker-end="url(#arR6)" transform="rotate(90,70,295)"/>
+      <line x1="70" y1="220" x2="85" y2="220" stroke="#000" stroke-width="0.5" stroke-dasharray="2,2"/>
+      <line x1="70" y1="370" x2="85" y2="370" stroke="#000" stroke-width="0.5" stroke-dasharray="2,2"/>
+      <!-- Vertical dimension line for d1 -->
+      <line x1="75" y1="220" x2="75" y2="370" stroke="#000" stroke-width="0.8"/>
+      <line x1="70" y1="220" x2="80" y2="220" stroke="#000" stroke-width="0.8"/>
+      <line x1="70" y1="370" x2="80" y2="370" stroke="#000" stroke-width="0.8"/>
+      <text x="55" y="300" text-anchor="middle" font-size="12" font-weight="600" transform="rotate(-90,55,300)">d&#x2081; = 1.5 &#x03BC;m</text>
+
+      <!-- Dimension: delta d -->
+      <line x1="700" y1="220" x2="700" y2="250" stroke="#c87533" stroke-width="0.8"/>
+      <line x1="695" y1="220" x2="705" y2="220" stroke="#c87533" stroke-width="0.8"/>
+      <line x1="695" y1="250" x2="705" y2="250" stroke="#c87533" stroke-width="0.8"/>
+      <line x1="680" y1="220" x2="705" y2="220" stroke="#c87533" stroke-width="0.5" stroke-dasharray="2,2"/>
+      <line x1="580" y1="250" x2="705" y2="250" stroke="#c87533" stroke-width="0.5" stroke-dasharray="2,2"/>
+      <text x="740" y="233" text-anchor="start" font-size="11" fill="#c87533" font-weight="600">&#x0394;d</text>
+      <text x="740" y="248" text-anchor="start" font-size="10" fill="#c87533">= &#x03BB;/2(n-1)</text>
+
+      <!-- Particle diameter dimension -->
+      <line x1="260" y1="286" x2="260" y2="294" stroke="#c87533" stroke-width="0.8"/>
+      <text x="275" y="282" font-size="9" fill="#c87533">&#x2300;150nm</text>
+
+      <!-- Phase annotations -->
+      <text x="160" y="210" text-anchor="middle" font-size="11" fill="#000">&#x03C6; = 0</text>
+      <text x="280" y="210" text-anchor="middle" font-size="11" fill="#c87533" font-weight="600">&#x03C6; = &#x03C0;</text>
+      <text x="400" y="210" text-anchor="middle" font-size="11" fill="#000">&#x03C6; = 0</text>
+      <text x="520" y="210" text-anchor="middle" font-size="11" fill="#c87533" font-weight="600">&#x03C6; = &#x03C0;</text>
+      <text x="630" y="210" text-anchor="middle" font-size="11" fill="#000">&#x03C6; = 0</text>
+
+      <!-- Phase difference arrows -->
+      <path d="M220,195 C230,180 330,180 340,195" stroke="#c87533" stroke-width="1.2" fill="none" stroke-dasharray="4,2"/>
+      <text x="280" y="178" text-anchor="middle" font-size="10" fill="#c87533">&#x0394;&#x03C6; = &#x03C0;</text>
+
+      <!-- CALLOUTS -->
+      <!-- 50 - BM base -->
+      <circle cx="30" cy="350" r="12" fill="#fff" stroke="#000" stroke-width="1.5"/>
+      <text x="30" y="354" text-anchor="middle" font-size="10" font-weight="700">50</text>
+      <line x1="42" y1="350" x2="100" y2="350" stroke="#000" stroke-width="0.8" stroke-dasharray="3,2"/>
+      <text x="30" y="375" text-anchor="middle" font-size="9">BM 기층</text>
+      <text x="30" y="386" text-anchor="middle" font-size="8" fill="#555">BM base</text>
+
+      <!-- 51 - thick region -->
+      <circle cx="160" cy="170" r="12" fill="#fff" stroke="#000" stroke-width="1.5"/>
+      <text x="160" y="174" text-anchor="middle" font-size="10" font-weight="700">51</text>
+      <line x1="160" y1="182" x2="160" y2="220" stroke="#000" stroke-width="0.8" stroke-dasharray="3,2"/>
+      <text x="160" y="160" text-anchor="middle" font-size="9">두꺼운 영역</text>
+      <text x="160" y="148" text-anchor="middle" font-size="8" fill="#555">Thick (phase 0)</text>
+
+      <!-- 52 - thin region -->
+      <circle cx="280" cy="170" r="12" fill="#fff" stroke="#c87533" stroke-width="1.5"/>
+      <text x="280" y="174" text-anchor="middle" font-size="10" font-weight="700" fill="#c87533">52</text>
+      <line x1="280" y1="182" x2="280" y2="250" stroke="#c87533" stroke-width="0.8" stroke-dasharray="3,2"/>
+      <text x="280" y="160" text-anchor="middle" font-size="9" fill="#c87533">얇은 영역</text>
+      <text x="280" y="148" text-anchor="middle" font-size="8" fill="#c87533">Thin (phase &#x03C0;)</text>
+
+      <!-- 53 - nano particles -->
+      <circle cx="490" cy="380" r="12" fill="#fff" stroke="#c87533" stroke-width="1.5"/>
+      <text x="490" y="384" text-anchor="middle" font-size="10" font-weight="700" fill="#c87533">53</text>
+      <line x1="490" y1="368" x2="490" y2="305" stroke="#c87533" stroke-width="0.8" stroke-dasharray="3,2"/>
+      <text x="490" y="400" text-anchor="middle" font-size="9" fill="#c87533">나노 SiO&#x2082; 입자</text>
+      <text x="490" y="412" text-anchor="middle" font-size="8" fill="#c87533">Nano SiO&#x2082; particles</text>
+
+      <!-- 54 - surface texture -->
+      <circle cx="630" cy="170" r="12" fill="#fff" stroke="#c87533" stroke-width="1.5"/>
+      <text x="630" y="174" text-anchor="middle" font-size="10" font-weight="700" fill="#c87533">54</text>
+      <line x1="630" y1="182" x2="630" y2="218" stroke="#c87533" stroke-width="0.8" stroke-dasharray="3,2"/>
+      <text x="630" y="160" text-anchor="middle" font-size="9" fill="#c87533">표면 텍스처</text>
+      <text x="630" y="148" text-anchor="middle" font-size="8" fill="#c87533">Surface texture</text>
+
+      <!-- Incident light arrows -->
+      <line x1="200" y1="100" x2="200" y2="135" stroke="#000" stroke-width="1" marker-end="url(#arR6)"/>
+      <line x1="300" y1="100" x2="300" y2="135" stroke="#000" stroke-width="1" marker-end="url(#arR6)"/>
+      <line x1="400" y1="100" x2="400" y2="135" stroke="#000" stroke-width="1" marker-end="url(#arR6)"/>
+      <line x1="500" y1="100" x2="500" y2="135" stroke="#000" stroke-width="1" marker-end="url(#arR6)"/>
+      <text x="350" y="95" text-anchor="middle" font-size="11">입사광 / Incident Light</text>
+
+      <!-- Transmitted + scattered below substrate -->
+      <line x1="200" y1="450" x2="200" y2="490" stroke="#888" stroke-width="0.8" marker-end="url(#arR6)" stroke-dasharray="3,2"/>
+      <line x1="210" y1="450" x2="225" y2="490" stroke="#888" stroke-width="0.5" stroke-dasharray="2,2"/>
+      <line x1="190" y1="450" x2="175" y2="490" stroke="#888" stroke-width="0.5" stroke-dasharray="2,2"/>
+      <text x="200" y="505" text-anchor="middle" font-size="9" fill="#888">산란광 / Scattered</text>
+    </svg>
+  </div>
+  <div class="fig-caption">나노 SiO&#x2082; 입자가 BM 매트릭스 내에 무작위 분포하며, 체크보드 두께 변조(&#x0394;d)와 표면 텍스처가 결합된 복합 구조 단면.<br>
+  <span style="color:#555;">Cross-section showing randomly distributed nano SiO&#x2082; particles within the BM matrix, combined with checkerboard thickness modulation (&#x0394;d) and surface texture.</span></div>
+</section>
+
+<!-- ============================================================ -->
+<!-- FIG. 7 — Manufacturing Method Comparison -->
+<!-- ============================================================ -->
+<section class="figure-section" id="fig7">
+  <div class="fig-title">[도 7] 5가지 제조 방법 비교도<br><span class="en">(Fig. 7 — Manufacturing Method Comparison)</span></div>
+  <div class="svg-wrap">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 850 980" width="850" height="980">
+      <defs>
+        <pattern id="hatch-sub7" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)">
+          <line x1="0" y1="0" x2="0" y2="6" stroke="#000" stroke-width="0.4"/>
+        </pattern>
+        <pattern id="hatch-bm7" patternUnits="userSpaceOnUse" width="5" height="5">
+          <line x1="0" y1="0" x2="5" y2="5" stroke="#000" stroke-width="0.3"/>
+          <line x1="5" y1="0" x2="0" y2="5" stroke="#000" stroke-width="0.3"/>
+        </pattern>
+        <marker id="ar7R" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+          <path d="M0,0 L7,2.5 L0,5 Z" fill="#000"/>
+        </marker>
+      </defs>
+
+      <!-- Column headers -->
+      <text x="60" y="30" font-size="12" font-weight="700">방법 / Method</text>
+      <text x="215" y="30" text-anchor="middle" font-size="11" font-weight="600">① 준비 / Prepare</text>
+      <text x="425" y="30" text-anchor="middle" font-size="11" font-weight="600">② 공정 / Process</text>
+      <text x="635" y="30" text-anchor="middle" font-size="11" font-weight="600">③ 결과 / Result</text>
+      <text x="790" y="30" text-anchor="middle" font-size="11" font-weight="600">등급 / Grade</text>
+
+      <line x1="20" y1="40" x2="830" y2="40" stroke="#000" stroke-width="1"/>
+
+      <!-- ===== METHOD A: Hollow particle + develop ===== -->
+      <text x="20" y="65" font-size="13" font-weight="700">A</text>
+      <text x="20" y="80" font-size="9">중공 입자 + 현상</text>
+      <text x="20" y="92" font-size="8" fill="#555">Hollow particle</text>
+      <text x="20" y="103" font-size="8" fill="#555">+ develop</text>
+
+      <!-- Step 1: particles in PR -->
+      <rect x="145" y="55" width="140" height="70" fill="none" stroke="#ccc" stroke-width="0.5"/>
+      <rect x="155" y="85" width="120" height="25" fill="url(#hatch-sub7)" stroke="#000" stroke-width="1"/>
+      <rect x="155" y="65" width="120" height="20" fill="#eee" stroke="#000" stroke-width="1"/>
+      <circle cx="185" cy="75" r="5" fill="#fff" stroke="#000" stroke-width="0.8"/>
+      <circle cx="210" cy="73" r="4" fill="#fff" stroke="#000" stroke-width="0.8"/>
+      <circle cx="240" cy="76" r="5" fill="#fff" stroke="#000" stroke-width="0.8"/>
+      <circle cx="260" cy="72" r="3" fill="#fff" stroke="#000" stroke-width="0.8"/>
+      <text x="215" y="118" text-anchor="middle" font-size="8" fill="#555">PR + hollow spheres</text>
+
+      <!-- Arrow -->
+      <line x1="295" y1="85" x2="345" y2="85" stroke="#000" stroke-width="1" marker-end="url(#ar7R)"/>
+
+      <!-- Step 2: develop -->
+      <rect x="355" y="55" width="140" height="70" fill="none" stroke="#ccc" stroke-width="0.5"/>
+      <rect x="365" y="85" width="120" height="25" fill="url(#hatch-sub7)" stroke="#000" stroke-width="1"/>
+      <rect x="365" y="65" width="120" height="20" fill="#eee" stroke="#000" stroke-width="1"/>
+      <text x="425" y="78" text-anchor="middle" font-size="8">현상 / Develop</text>
+      <line x1="385" y1="60" x2="385" y2="55" stroke="#000" stroke-width="0.5"/>
+      <line x1="410" y1="60" x2="410" y2="55" stroke="#000" stroke-width="0.5"/>
+      <line x1="445" y1="60" x2="445" y2="55" stroke="#000" stroke-width="0.5"/>
+      <text x="425" y="118" text-anchor="middle" font-size="8" fill="#555">Develop away PR</text>
+
+      <!-- Arrow -->
+      <line x1="505" y1="85" x2="555" y2="85" stroke="#000" stroke-width="1" marker-end="url(#ar7R)"/>
+
+      <!-- Step 3: result -->
+      <rect x="565" y="55" width="140" height="70" fill="none" stroke="#ccc" stroke-width="0.5"/>
+      <rect x="575" y="85" width="120" height="25" fill="url(#hatch-sub7)" stroke="#000" stroke-width="1"/>
+      <rect x="575" y="70" width="120" height="15" fill="url(#hatch-bm7)" stroke="#000" stroke-width="1"/>
+      <circle cx="600" cy="76" r="3" fill="#fff" stroke="#000" stroke-width="0.6"/>
+      <circle cx="625" cy="78" r="4" fill="#fff" stroke="#000" stroke-width="0.6"/>
+      <circle cx="660" cy="75" r="3" fill="#fff" stroke="#000" stroke-width="0.6"/>
+      <text x="635" y="118" text-anchor="middle" font-size="8" fill="#555">Porous BM</text>
+
+      <!-- Rating -->
+      <text x="790" y="85" text-anchor="middle" font-size="16">&#x26A0;&#xFE0F;</text>
+      <text x="790" y="105" text-anchor="middle" font-size="8" fill="#555">균일성 이슈</text>
+      <text x="790" y="115" text-anchor="middle" font-size="7" fill="#888">Uniformity issue</text>
+
+      <line x1="20" y1="135" x2="830" y2="135" stroke="#ddd" stroke-width="0.5"/>
+
+      <!-- ===== METHOD B: Sacrificial nanosphere + liftoff ===== -->
+      <text x="20" y="160" font-size="13" font-weight="700">B</text>
+      <text x="20" y="175" font-size="9">희생 나노구 + 리프트오프</text>
+      <text x="20" y="187" font-size="8" fill="#555">Sacrificial nanosphere</text>
+      <text x="20" y="198" font-size="8" fill="#555">+ liftoff</text>
+
+      <!-- Step 1: PS spheres on substrate -->
+      <rect x="145" y="150" width="140" height="70" fill="none" stroke="#ccc" stroke-width="0.5"/>
+      <rect x="155" y="190" width="120" height="20" fill="url(#hatch-sub7)" stroke="#000" stroke-width="1"/>
+      <circle cx="175" cy="183" r="7" fill="none" stroke="#c87533" stroke-width="1.2"/>
+      <circle cx="195" cy="183" r="7" fill="none" stroke="#c87533" stroke-width="1.2"/>
+      <circle cx="215" cy="183" r="7" fill="none" stroke="#c87533" stroke-width="1.2"/>
+      <circle cx="235" cy="183" r="7" fill="none" stroke="#c87533" stroke-width="1.2"/>
+      <circle cx="255" cy="183" r="7" fill="none" stroke="#c87533" stroke-width="1.2"/>
+      <text x="215" y="217" text-anchor="middle" font-size="8" fill="#555">PS spheres on substrate</text>
+
+      <!-- Arrow -->
+      <line x1="295" y1="180" x2="345" y2="180" stroke="#000" stroke-width="1" marker-end="url(#ar7R)"/>
+
+      <!-- Step 2: deposit BM -->
+      <rect x="355" y="150" width="140" height="70" fill="none" stroke="#ccc" stroke-width="0.5"/>
+      <rect x="365" y="190" width="120" height="20" fill="url(#hatch-sub7)" stroke="#000" stroke-width="1"/>
+      <rect x="365" y="170" width="120" height="20" fill="url(#hatch-bm7)" stroke="#000" stroke-width="1"/>
+      <circle cx="385" cy="180" r="7" fill="none" stroke="#c87533" stroke-width="1" stroke-dasharray="2,1"/>
+      <circle cx="405" cy="180" r="7" fill="none" stroke="#c87533" stroke-width="1" stroke-dasharray="2,1"/>
+      <circle cx="425" cy="180" r="7" fill="none" stroke="#c87533" stroke-width="1" stroke-dasharray="2,1"/>
+      <circle cx="445" cy="180" r="7" fill="none" stroke="#c87533" stroke-width="1" stroke-dasharray="2,1"/>
+      <circle cx="465" cy="180" r="7" fill="none" stroke="#c87533" stroke-width="1" stroke-dasharray="2,1"/>
+      <!-- Arrows showing deposition from top -->
+      <line x1="395" y1="152" x2="395" y2="163" stroke="#000" stroke-width="0.5" marker-end="url(#ar7R)"/>
+      <line x1="425" y1="152" x2="425" y2="163" stroke="#000" stroke-width="0.5" marker-end="url(#ar7R)"/>
+      <line x1="455" y1="152" x2="455" y2="163" stroke="#000" stroke-width="0.5" marker-end="url(#ar7R)"/>
+      <text x="425" y="217" text-anchor="middle" font-size="8" fill="#555">Deposit BM over spheres</text>
+
+      <!-- Arrow -->
+      <line x1="505" y1="180" x2="555" y2="180" stroke="#000" stroke-width="1" marker-end="url(#ar7R)"/>
+
+      <!-- Step 3: liftoff result -->
+      <rect x="565" y="150" width="140" height="70" fill="none" stroke="#ccc" stroke-width="0.5"/>
+      <rect x="575" y="190" width="120" height="20" fill="url(#hatch-sub7)" stroke="#000" stroke-width="1"/>
+      <rect x="575" y="175" width="120" height="15" fill="url(#hatch-bm7)" stroke="#000" stroke-width="1"/>
+      <!-- voids where spheres were -->
+      <circle cx="595" cy="182" r="5" fill="#fff" stroke="#000" stroke-width="0.5"/>
+      <circle cx="615" cy="182" r="5" fill="#fff" stroke="#000" stroke-width="0.5"/>
+      <circle cx="635" cy="182" r="5" fill="#fff" stroke="#000" stroke-width="0.5"/>
+      <circle cx="655" cy="182" r="5" fill="#fff" stroke="#000" stroke-width="0.5"/>
+      <circle cx="675" cy="182" r="5" fill="#fff" stroke="#000" stroke-width="0.5"/>
+      <text x="635" y="217" text-anchor="middle" font-size="8" fill="#555">BM with nano voids</text>
+
+      <!-- Rating -->
+      <text x="790" y="183" text-anchor="middle" font-size="14">&#x2B50;</text>
+      <text x="790" y="200" text-anchor="middle" font-size="8" fill="#555">양호</text>
+      <text x="790" y="210" text-anchor="middle" font-size="7" fill="#888">Good</text>
+
+      <line x1="20" y1="230" x2="830" y2="230" stroke="#ddd" stroke-width="0.5"/>
+
+      <!-- ===== METHOD C: NIL (BEST) ===== -->
+      <rect x="15" y="240" width="815" height="145" fill="none" stroke="#c87533" stroke-width="2" rx="4"/>
+      <text x="20" y="260" font-size="13" font-weight="700" fill="#c87533">C</text>
+      <text x="20" y="275" font-size="9" fill="#c87533" font-weight="600">나노임프린트 리소그래피</text>
+      <text x="20" y="287" font-size="8" fill="#c87533">NIL (Nanoimprint</text>
+      <text x="20" y="298" font-size="8" fill="#c87533">Lithography)</text>
+
+      <!-- Step 1: mold approaching resin -->
+      <rect x="145" y="248" width="140" height="75" fill="none" stroke="#ccc" stroke-width="0.5"/>
+      <!-- Resin layer -->
+      <rect x="155" y="295" width="120" height="15" fill="#eee" stroke="#000" stroke-width="1"/>
+      <rect x="155" y="310" width="120" height="10" fill="url(#hatch-sub7)" stroke="#000" stroke-width="1"/>
+      <!-- Mold coming down -->
+      <rect x="165" y="255" width="100" height="12" fill="#ddd" stroke="#000" stroke-width="1"/>
+      <!-- Mold teeth -->
+      <rect x="175" y="267" width="12" height="10" fill="#ddd" stroke="#000" stroke-width="0.8"/>
+      <rect x="200" y="267" width="12" height="10" fill="#ddd" stroke="#000" stroke-width="0.8"/>
+      <rect x="225" y="267" width="12" height="10" fill="#ddd" stroke="#000" stroke-width="0.8"/>
+      <rect x="250" y="267" width="12" height="10" fill="#ddd" stroke="#000" stroke-width="0.8"/>
+      <!-- Down arrow -->
+      <line x1="215" y1="280" x2="215" y2="292" stroke="#000" stroke-width="0.8" marker-end="url(#ar7R)"/>
+      <text x="215" y="330" text-anchor="middle" font-size="8" fill="#555">Mold press into resin</text>
+
+      <!-- Arrow -->
+      <line x1="295" y1="285" x2="345" y2="285" stroke="#c87533" stroke-width="1.5" marker-end="url(#ar7R)"/>
+
+      <!-- Step 2: UV cure -->
+      <rect x="355" y="248" width="140" height="75" fill="none" stroke="#ccc" stroke-width="0.5"/>
+      <!-- Mold pressed into resin -->
+      <rect x="365" y="295" width="120" height="15" fill="#eee" stroke="#000" stroke-width="1"/>
+      <rect x="365" y="310" width="120" height="10" fill="url(#hatch-sub7)" stroke="#000" stroke-width="1"/>
+      <rect x="375" y="255" width="100" height="12" fill="#ddd" stroke="#000" stroke-width="1"/>
+      <rect x="385" y="267" width="12" height="28" fill="#ddd" stroke="#000" stroke-width="0.6"/>
+      <rect x="410" y="267" width="12" height="28" fill="#ddd" stroke="#000" stroke-width="0.6"/>
+      <rect x="435" y="267" width="12" height="28" fill="#ddd" stroke="#000" stroke-width="0.6"/>
+      <rect x="460" y="267" width="12" height="28" fill="#ddd" stroke="#000" stroke-width="0.6"/>
+      <!-- UV light arrows -->
+      <text x="425" y="252" text-anchor="middle" font-size="9" fill="#c87533">UV &#x2193;&#x2193;&#x2193;</text>
+      <text x="425" y="330" text-anchor="middle" font-size="8" fill="#555">UV cure + release</text>
+
+      <!-- Arrow -->
+      <line x1="505" y1="285" x2="555" y2="285" stroke="#c87533" stroke-width="1.5" marker-end="url(#ar7R)"/>
+
+      <!-- Step 3: result -->
+      <rect x="565" y="248" width="140" height="75" fill="none" stroke="#ccc" stroke-width="0.5"/>
+      <rect x="575" y="310" width="120" height="10" fill="url(#hatch-sub7)" stroke="#000" stroke-width="1"/>
+      <!-- Patterned BM with checkerboard + nano texture -->
+      <rect x="575" y="280" width="24" height="30" fill="url(#hatch-bm7)" stroke="#000" stroke-width="0.8"/>
+      <rect x="599" y="286" width="24" height="24" fill="url(#hatch-bm7)" stroke="#000" stroke-width="0.8"/>
+      <rect x="623" y="280" width="24" height="30" fill="url(#hatch-bm7)" stroke="#000" stroke-width="0.8"/>
+      <rect x="647" y="286" width="24" height="24" fill="url(#hatch-bm7)" stroke="#000" stroke-width="0.8"/>
+      <rect x="671" y="280" width="24" height="30" fill="url(#hatch-bm7)" stroke="#000" stroke-width="0.8"/>
+      <!-- Nano bumps on top -->
+      <path d="M575,280 Q578,277 581,280 Q584,277 587,280 Q590,277 593,280 Q596,277 599,280" stroke="#c87533" stroke-width="0.7" fill="none"/>
+      <path d="M623,280 Q626,277 629,280 Q632,277 635,280 Q638,277 641,280 Q644,277 647,280" stroke="#c87533" stroke-width="0.7" fill="none"/>
+      <path d="M671,280 Q674,277 677,280 Q680,277 683,280 Q686,277 689,280 Q692,277 695,280" stroke="#c87533" stroke-width="0.7" fill="none"/>
+      <text x="635" y="330" text-anchor="middle" font-size="8" fill="#c87533" font-weight="600">Checkerboard + nano</text>
+
+      <!-- Rating -->
+      <text x="790" y="282" text-anchor="middle" font-size="14">&#x2B50;&#x2B50;</text>
+      <text x="790" y="300" text-anchor="middle" font-size="9" fill="#c87533" font-weight="700">BEST</text>
+      <text x="790" y="312" text-anchor="middle" font-size="8" fill="#c87533">최적 / Optimal</text>
+
+      <line x1="20" y1="395" x2="830" y2="395" stroke="#ddd" stroke-width="0.5"/>
+
+      <!-- ===== METHOD D: BCP self-assembly ===== -->
+      <text x="20" y="420" font-size="13" font-weight="700">D</text>
+      <text x="20" y="435" font-size="9">블록공중합체 자기조립</text>
+      <text x="20" y="447" font-size="8" fill="#555">BCP self-assembly</text>
+
+      <!-- Step 1: BCP film coated -->
+      <rect x="145" y="408" width="140" height="70" fill="none" stroke="#ccc" stroke-width="0.5"/>
+      <rect x="155" y="448" width="120" height="20" fill="url(#hatch-sub7)" stroke="#000" stroke-width="1"/>
+      <rect x="155" y="428" width="120" height="20" fill="#f0e8d8" stroke="#000" stroke-width="0.8"/>
+      <text x="215" y="442" text-anchor="middle" font-size="8">BCP film</text>
+      <text x="215" y="476" text-anchor="middle" font-size="8" fill="#555">Coat BCP on substrate</text>
+
+      <!-- Arrow -->
+      <line x1="295" y1="440" x2="345" y2="440" stroke="#000" stroke-width="1" marker-end="url(#ar7R)"/>
+
+      <!-- Step 2: annealing -->
+      <rect x="355" y="408" width="140" height="70" fill="none" stroke="#ccc" stroke-width="0.5"/>
+      <rect x="365" y="448" width="120" height="20" fill="url(#hatch-sub7)" stroke="#000" stroke-width="1"/>
+      <!-- Lamella pattern forming -->
+      <rect x="365" y="428" width="10" height="20" fill="#c87533" fill-opacity="0.3" stroke="#000" stroke-width="0.3"/>
+      <rect x="385" y="428" width="10" height="20" fill="#c87533" fill-opacity="0.3" stroke="#000" stroke-width="0.3"/>
+      <rect x="405" y="428" width="10" height="20" fill="#c87533" fill-opacity="0.3" stroke="#000" stroke-width="0.3"/>
+      <rect x="425" y="428" width="10" height="20" fill="#c87533" fill-opacity="0.3" stroke="#000" stroke-width="0.3"/>
+      <rect x="445" y="428" width="10" height="20" fill="#c87533" fill-opacity="0.3" stroke="#000" stroke-width="0.3"/>
+      <rect x="465" y="428" width="10" height="20" fill="#c87533" fill-opacity="0.3" stroke="#000" stroke-width="0.3"/>
+      <rect x="375" y="428" width="10" height="20" fill="#fff" stroke="#000" stroke-width="0.3"/>
+      <rect x="395" y="428" width="10" height="20" fill="#fff" stroke="#000" stroke-width="0.3"/>
+      <rect x="415" y="428" width="10" height="20" fill="#fff" stroke="#000" stroke-width="0.3"/>
+      <rect x="435" y="428" width="10" height="20" fill="#fff" stroke="#000" stroke-width="0.3"/>
+      <rect x="455" y="428" width="10" height="20" fill="#fff" stroke="#000" stroke-width="0.3"/>
+      <text x="425" y="420" text-anchor="middle" font-size="8">열처리 / Anneal</text>
+      <text x="425" y="476" text-anchor="middle" font-size="8" fill="#555">Lamella pattern forms</text>
+
+      <!-- Arrow -->
+      <line x1="505" y1="440" x2="555" y2="440" stroke="#000" stroke-width="1" marker-end="url(#ar7R)"/>
+
+      <!-- Step 3: result -->
+      <rect x="565" y="408" width="140" height="70" fill="none" stroke="#ccc" stroke-width="0.5"/>
+      <rect x="575" y="448" width="120" height="20" fill="url(#hatch-sub7)" stroke="#000" stroke-width="1"/>
+      <rect x="575" y="433" width="120" height="15" fill="url(#hatch-bm7)" stroke="#000" stroke-width="0.8"/>
+      <!-- Periodic modulation lines -->
+      <line x1="585" y1="433" x2="585" y2="448" stroke="#c87533" stroke-width="0.5"/>
+      <line x1="595" y1="433" x2="595" y2="448" stroke="#c87533" stroke-width="0.5"/>
+      <line x1="605" y1="433" x2="605" y2="448" stroke="#c87533" stroke-width="0.5"/>
+      <line x1="615" y1="433" x2="615" y2="448" stroke="#c87533" stroke-width="0.5"/>
+      <line x1="625" y1="433" x2="625" y2="448" stroke="#c87533" stroke-width="0.5"/>
+      <line x1="635" y1="433" x2="635" y2="448" stroke="#c87533" stroke-width="0.5"/>
+      <line x1="645" y1="433" x2="645" y2="448" stroke="#c87533" stroke-width="0.5"/>
+      <line x1="655" y1="433" x2="655" y2="448" stroke="#c87533" stroke-width="0.5"/>
+      <line x1="665" y1="433" x2="665" y2="448" stroke="#c87533" stroke-width="0.5"/>
+      <line x1="675" y1="433" x2="675" y2="448" stroke="#c87533" stroke-width="0.5"/>
+      <line x1="685" y1="433" x2="685" y2="448" stroke="#c87533" stroke-width="0.5"/>
+      <text x="635" y="476" text-anchor="middle" font-size="8" fill="#555">Periodic nano-pattern</text>
+
+      <!-- Rating -->
+      <text x="790" y="445" text-anchor="middle" font-size="14">&#x2014;</text>
+      <text x="790" y="462" text-anchor="middle" font-size="8" fill="#555">주기적 한계</text>
+      <text x="790" y="472" text-anchor="middle" font-size="7" fill="#888">Periodic only</text>
+
+      <line x1="20" y1="490" x2="830" y2="490" stroke="#ddd" stroke-width="0.5"/>
+
+      <!-- ===== METHOD E: Laser speckle ===== -->
+      <text x="20" y="515" font-size="13" font-weight="700">E</text>
+      <text x="20" y="530" font-size="9">레이저 스페클 노광</text>
+      <text x="20" y="542" font-size="8" fill="#555">Laser speckle</text>
+      <text x="20" y="553" font-size="8" fill="#555">exposure</text>
+
+      <!-- Step 1: coherent laser -->
+      <rect x="145" y="503" width="140" height="70" fill="none" stroke="#ccc" stroke-width="0.5"/>
+      <rect x="155" y="543" width="120" height="20" fill="url(#hatch-sub7)" stroke="#000" stroke-width="1"/>
+      <rect x="155" y="530" width="120" height="13" fill="#eee" stroke="#000" stroke-width="0.8"/>
+      <text x="215" y="540" text-anchor="middle" font-size="7">PR</text>
+      <!-- Laser source -->
+      <rect x="195" y="507" width="40" height="12" fill="none" stroke="#000" stroke-width="1" rx="2"/>
+      <text x="215" y="516" text-anchor="middle" font-size="7">LASER</text>
+      <!-- Coherent beams -->
+      <line x1="200" y1="519" x2="180" y2="530" stroke="#c00" stroke-width="0.5"/>
+      <line x1="210" y1="519" x2="195" y2="530" stroke="#c00" stroke-width="0.5"/>
+      <line x1="215" y1="519" x2="215" y2="530" stroke="#c00" stroke-width="0.5"/>
+      <line x1="220" y1="519" x2="235" y2="530" stroke="#c00" stroke-width="0.5"/>
+      <line x1="230" y1="519" x2="250" y2="530" stroke="#c00" stroke-width="0.5"/>
+      <text x="215" y="576" text-anchor="middle" font-size="8" fill="#555">Coherent light source</text>
+
+      <!-- Arrow -->
+      <line x1="295" y1="535" x2="345" y2="535" stroke="#000" stroke-width="1" marker-end="url(#ar7R)"/>
+
+      <!-- Step 2: speckle pattern exposure -->
+      <rect x="355" y="503" width="140" height="70" fill="none" stroke="#ccc" stroke-width="0.5"/>
+      <rect x="365" y="543" width="120" height="20" fill="url(#hatch-sub7)" stroke="#000" stroke-width="1"/>
+      <!-- Random speckle pattern on PR -->
+      <rect x="365" y="530" width="120" height="13" fill="#eee" stroke="#000" stroke-width="0.8"/>
+      <circle cx="378" cy="536" r="2" fill="#000" opacity="0.4"/>
+      <circle cx="390" cy="534" r="3" fill="#000" opacity="0.6"/>
+      <circle cx="405" cy="537" r="2" fill="#000" opacity="0.3"/>
+      <circle cx="418" cy="535" r="4" fill="#000" opacity="0.5"/>
+      <circle cx="432" cy="536" r="2" fill="#000" opacity="0.7"/>
+      <circle cx="445" cy="534" r="3" fill="#000" opacity="0.4"/>
+      <circle cx="458" cy="537" r="2" fill="#000" opacity="0.5"/>
+      <circle cx="470" cy="535" r="3" fill="#000" opacity="0.3"/>
+      <text x="425" y="520" text-anchor="middle" font-size="8">스페클 노광</text>
+      <text x="425" y="576" text-anchor="middle" font-size="8" fill="#555">Random speckle exposure</text>
+
+      <!-- Arrow -->
+      <line x1="505" y1="535" x2="555" y2="535" stroke="#000" stroke-width="1" marker-end="url(#ar7R)"/>
+
+      <!-- Step 3: result -->
+      <rect x="565" y="503" width="140" height="70" fill="none" stroke="#ccc" stroke-width="0.5"/>
+      <rect x="575" y="543" width="120" height="20" fill="url(#hatch-sub7)" stroke="#000" stroke-width="1"/>
+      <rect x="575" y="530" width="120" height="13" fill="url(#hatch-bm7)" stroke="#000" stroke-width="0.8"/>
+      <!-- Random texture on surface -->
+      <path d="M575,530 Q580,527 583,530 Q588,526 592,530 Q597,528 600,530 Q605,526 610,530 Q614,528 618,530 Q623,526 628,530 Q632,528 636,530 Q641,526 646,530 Q650,528 654,530 Q658,527 662,530 Q666,528 670,530 Q675,526 680,530 Q684,528 688,530 Q692,527 695,530" stroke="#c87533" stroke-width="0.7" fill="none"/>
+      <text x="635" y="576" text-anchor="middle" font-size="8" fill="#555">Random surface only</text>
+
+      <!-- Rating -->
+      <text x="790" y="540" text-anchor="middle" font-size="14">&#x2014;</text>
+      <text x="790" y="557" text-anchor="middle" font-size="8" fill="#555">체크보드 불가</text>
+      <text x="790" y="567" text-anchor="middle" font-size="7" fill="#888">No checkerboard</text>
+
+      <!-- Summary box -->
+      <rect x="20" y="600" width="810" height="45" fill="#f8f4ef" stroke="#c87533" stroke-width="1" rx="4"/>
+      <text x="425" y="620" text-anchor="middle" font-size="11" font-weight="600" fill="#c87533">
+        결론: 방법 C (NIL)가 체크보드 + 나노 랜덤 텍스처 동시 구현 가능한 유일한 공정
+      </text>
+      <text x="425" y="638" text-anchor="middle" font-size="10" fill="#555">
+        Conclusion: Method C (NIL) is the only process that enables simultaneous checkerboard + nano random texture
+      </text>
+    </svg>
+  </div>
+  <div class="fig-caption">5가지 나노 디퓨저 제조 방법의 비교. NIL이 체크보드 위상 패턴과 랜덤 나노 텍스처를 동시에 구현할 수 있는 최적 공정임.<br>
+  <span style="color:#555;">Comparison of five nano diffuser fabrication methods. NIL is the optimal process for simultaneous checkerboard phase patterning and random nano texturing.</span></div>
+</section>
+
+<!-- ============================================================ -->
+<!-- FIG. 8 — Optimal NIL Process Flow Detail -->
+<!-- ============================================================ -->
+<section class="figure-section" id="fig8">
+  <div class="fig-title">[도 8] 최적 NIL 공정 흐름 상세도<br><span class="en">(Fig. 8 — Optimal NIL Process Flow Detail)</span></div>
+  <div class="svg-wrap">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 850 900" width="850" height="900">
+      <defs>
+        <pattern id="hatch-sub8" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)">
+          <line x1="0" y1="0" x2="0" y2="6" stroke="#000" stroke-width="0.4"/>
+        </pattern>
+        <pattern id="hatch-bm8" patternUnits="userSpaceOnUse" width="5" height="5">
+          <line x1="0" y1="0" x2="5" y2="5" stroke="#000" stroke-width="0.3"/>
+          <line x1="5" y1="0" x2="0" y2="5" stroke="#000" stroke-width="0.3"/>
+        </pattern>
+        <pattern id="hatch-pr" patternUnits="userSpaceOnUse" width="4" height="4" patternTransform="rotate(30)">
+          <line x1="0" y1="0" x2="0" y2="4" stroke="#c87533" stroke-width="0.4"/>
+        </pattern>
+        <marker id="ar8R" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+          <path d="M0,0 L8,3 L0,6 Z" fill="#000"/>
+        </marker>
+        <marker id="ar8D" markerWidth="6" markerHeight="8" refX="3" refY="8" orient="auto">
+          <path d="M0,0 L3,8 L6,0 Z" fill="#c87533"/>
+        </marker>
+      </defs>
+
+      <!-- ===== STEP 1: Cr/MoOx Sputtering ===== -->
+      <rect x="20" y="15" width="810" height="140" fill="none" stroke="#ddd" stroke-width="0.5" rx="4"/>
+      <!-- Step label -->
+      <circle cx="50" cy="35" r="14" fill="#c87533" stroke="none"/>
+      <text x="50" y="40" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">1</text>
+      <text x="75" y="35" font-size="12" font-weight="700">Cr/MoOx 스퍼터링</text>
+      <text x="75" y="50" font-size="10" fill="#555">Cr/MoOx Sputtering on Substrate</text>
+
+      <!-- Before -->
+      <text x="175" y="70" text-anchor="middle" font-size="9" fill="#888">Before</text>
+      <rect x="100" y="80" width="150" height="55" fill="none" stroke="#ccc" stroke-width="0.5"/>
+      <rect x="115" y="100" width="120" height="30" fill="url(#hatch-sub8)" stroke="#000" stroke-width="1"/>
+      <text x="175" y="120" text-anchor="middle" font-size="9">Glass</text>
+
+      <!-- Arrow -->
+      <line x1="270" y1="110" x2="340" y2="110" stroke="#c87533" stroke-width="1.5" marker-end="url(#ar8R)"/>
+      <text x="305" y="102" text-anchor="middle" font-size="8" fill="#c87533">Sputter</text>
+      <text x="305" y="128" text-anchor="middle" font-size="7" fill="#888">Ar+ plasma</text>
+      <text x="305" y="138" text-anchor="middle" font-size="7" fill="#888">200&#xB0;C, 3mTorr</text>
+
+      <!-- After -->
+      <text x="435" y="70" text-anchor="middle" font-size="9" fill="#888">After</text>
+      <rect x="360" y="80" width="150" height="55" fill="none" stroke="#ccc" stroke-width="0.5"/>
+      <rect x="375" y="100" width="120" height="30" fill="url(#hatch-sub8)" stroke="#000" stroke-width="1"/>
+      <rect x="375" y="85" width="120" height="15" fill="url(#hatch-bm8)" stroke="#000" stroke-width="1"/>
+      <text x="435" y="96" text-anchor="middle" font-size="8" font-weight="600">Cr/MoOx BM</text>
+      <text x="435" y="120" text-anchor="middle" font-size="9">Glass</text>
+
+      <!-- Callouts -->
+      <text x="570" y="90" font-size="9">&#x2190; 균일 BM 층 (d&#x2081; = 1.5&#x03BC;m)</text>
+      <text x="570" y="103" font-size="8" fill="#555">Uniform BM layer</text>
+
+      <!-- ===== STEP 2: Nanoparticle PR spin coat ===== -->
+      <rect x="20" y="170" width="810" height="140" fill="none" stroke="#ddd" stroke-width="0.5" rx="4"/>
+      <circle cx="50" cy="190" r="14" fill="#c87533" stroke="none"/>
+      <text x="50" y="195" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">2</text>
+      <text x="75" y="190" font-size="12" font-weight="700">나노입자 분산 PR 스핀코팅</text>
+      <text x="75" y="205" font-size="10" fill="#555">Nanoparticle-dispersed PR Spin Coating</text>
+
+      <!-- Before -->
+      <text x="175" y="225" text-anchor="middle" font-size="9" fill="#888">Before</text>
+      <rect x="100" y="235" width="150" height="55" fill="none" stroke="#ccc" stroke-width="0.5"/>
+      <rect x="115" y="260" width="120" height="25" fill="url(#hatch-sub8)" stroke="#000" stroke-width="1"/>
+      <rect x="115" y="247" width="120" height="13" fill="url(#hatch-bm8)" stroke="#000" stroke-width="1"/>
+
+      <!-- Arrow -->
+      <line x1="270" y1="265" x2="340" y2="265" stroke="#c87533" stroke-width="1.5" marker-end="url(#ar8R)"/>
+      <text x="305" y="257" text-anchor="middle" font-size="8" fill="#c87533">Spin coat</text>
+      <text x="305" y="283" text-anchor="middle" font-size="7" fill="#888">SiO&#x2082;-dispersed</text>
+      <text x="305" y="293" text-anchor="middle" font-size="7" fill="#888">3000rpm, 30s</text>
+
+      <!-- After -->
+      <text x="435" y="225" text-anchor="middle" font-size="9" fill="#888">After</text>
+      <rect x="360" y="235" width="150" height="55" fill="none" stroke="#ccc" stroke-width="0.5"/>
+      <rect x="375" y="268" width="120" height="17" fill="url(#hatch-sub8)" stroke="#000" stroke-width="1"/>
+      <rect x="375" y="257" width="120" height="11" fill="url(#hatch-bm8)" stroke="#000" stroke-width="1"/>
+      <!-- PR layer with particles -->
+      <rect x="375" y="240" width="120" height="17" fill="url(#hatch-pr)" stroke="#000" stroke-width="1"/>
+      <circle cx="395" cy="249" r="2.5" fill="none" stroke="#c87533" stroke-width="0.8"/>
+      <circle cx="415" cy="246" r="2.5" fill="none" stroke="#c87533" stroke-width="0.8"/>
+      <circle cx="435" cy="250" r="2.5" fill="none" stroke="#c87533" stroke-width="0.8"/>
+      <circle cx="455" cy="247" r="2.5" fill="none" stroke="#c87533" stroke-width="0.8"/>
+      <circle cx="475" cy="249" r="2.5" fill="none" stroke="#c87533" stroke-width="0.8"/>
+      <circle cx="405" cy="252" r="2" fill="none" stroke="#c87533" stroke-width="0.8"/>
+      <circle cx="445" cy="253" r="2" fill="none" stroke="#c87533" stroke-width="0.8"/>
+
+      <text x="570" y="248" font-size="9">&#x2190; SiO&#x2082; 나노입자 분산 PR</text>
+      <text x="570" y="261" font-size="8" fill="#555">PR with embedded SiO&#x2082;</text>
+
+      <!-- ===== STEP 3: NIL Master Mold Pressing ===== -->
+      <rect x="20" y="325" width="810" height="160" fill="none" stroke="#c87533" stroke-width="1.5" rx="4"/>
+      <circle cx="50" cy="345" r="14" fill="#c87533" stroke="none"/>
+      <text x="50" y="350" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">3</text>
+      <text x="75" y="345" font-size="12" font-weight="700" fill="#c87533">NIL 마스터 몰드 프레싱</text>
+      <text x="75" y="360" font-size="10" fill="#c87533">NIL Master Mold Pressing &#x2014; Key Step</text>
+
+      <!-- Before: mold approaching -->
+      <text x="175" y="380" text-anchor="middle" font-size="9" fill="#888">Before</text>
+      <rect x="100" y="390" width="150" height="80" fill="none" stroke="#ccc" stroke-width="0.5"/>
+      <rect x="115" y="440" width="120" height="15" fill="url(#hatch-sub8)" stroke="#000" stroke-width="1"/>
+      <rect x="115" y="430" width="120" height="10" fill="url(#hatch-bm8)" stroke="#000" stroke-width="0.8"/>
+      <rect x="115" y="418" width="120" height="12" fill="url(#hatch-pr)" stroke="#000" stroke-width="0.8"/>
+      <!-- Mold -->
+      <rect x="125" y="393" width="100" height="8" fill="#ccc" stroke="#000" stroke-width="1"/>
+      <!-- Checkerboard mold teeth -->
+      <rect x="130" y="401" width="15" height="8" fill="#ccc" stroke="#000" stroke-width="0.6"/>
+      <rect x="160" y="401" width="15" height="8" fill="#ccc" stroke="#000" stroke-width="0.6"/>
+      <rect x="190" y="401" width="15" height="8" fill="#ccc" stroke="#000" stroke-width="0.6"/>
+      <!-- Nano bumps on mold teeth -->
+      <path d="M130,401 Q132,399 134,401 Q136,399 138,401 Q140,399 142,401 Q144,399 145,401" stroke="#000" stroke-width="0.5" fill="none"/>
+      <path d="M160,401 Q162,399 164,401 Q166,399 168,401 Q170,399 172,401 Q174,399 175,401" stroke="#000" stroke-width="0.5" fill="none"/>
+      <path d="M190,401 Q192,399 194,401 Q196,399 198,401 Q200,399 202,401 Q204,399 205,401" stroke="#000" stroke-width="0.5" fill="none"/>
+      <text x="175" y="415" text-anchor="middle" font-size="7">&#x2193; Mold</text>
+
+      <!-- Arrow -->
+      <line x1="270" y1="425" x2="340" y2="425" stroke="#c87533" stroke-width="1.5" marker-end="url(#ar8R)"/>
+      <text x="305" y="418" text-anchor="middle" font-size="8" fill="#c87533">Press + UV</text>
+      <text x="305" y="443" text-anchor="middle" font-size="7" fill="#888">50bar, RT</text>
+      <text x="305" y="453" text-anchor="middle" font-size="7" fill="#888">UV 365nm, 60s</text>
+
+      <!-- After: pattern transferred -->
+      <text x="435" y="380" text-anchor="middle" font-size="9" fill="#888">After</text>
+      <rect x="360" y="390" width="150" height="80" fill="none" stroke="#ccc" stroke-width="0.5"/>
+      <rect x="375" y="448" width="120" height="15" fill="url(#hatch-sub8)" stroke="#000" stroke-width="1"/>
+      <rect x="375" y="438" width="120" height="10" fill="url(#hatch-bm8)" stroke="#000" stroke-width="0.8"/>
+      <!-- Patterned PR with checkerboard impressions -->
+      <rect x="375" y="420" width="24" height="18" fill="url(#hatch-pr)" stroke="#000" stroke-width="0.6"/>
+      <rect x="399" y="426" width="24" height="12" fill="url(#hatch-pr)" stroke="#000" stroke-width="0.6"/>
+      <rect x="423" y="420" width="24" height="18" fill="url(#hatch-pr)" stroke="#000" stroke-width="0.6"/>
+      <rect x="447" y="426" width="24" height="12" fill="url(#hatch-pr)" stroke="#000" stroke-width="0.6"/>
+      <rect x="471" y="420" width="24" height="18" fill="url(#hatch-pr)" stroke="#000" stroke-width="0.6"/>
+      <!-- Nano particles still present -->
+      <circle cx="387" cy="432" r="2" fill="none" stroke="#c87533" stroke-width="0.7"/>
+      <circle cx="411" cy="430" r="2" fill="none" stroke="#c87533" stroke-width="0.7"/>
+      <circle cx="435" cy="432" r="2" fill="none" stroke="#c87533" stroke-width="0.7"/>
+      <circle cx="459" cy="430" r="2" fill="none" stroke="#c87533" stroke-width="0.7"/>
+      <circle cx="483" cy="432" r="2" fill="none" stroke="#c87533" stroke-width="0.7"/>
+
+      <text x="570" y="425" font-size="9">&#x2190; 체크보드 + 나노 패턴 전사</text>
+      <text x="570" y="438" font-size="8" fill="#555">Checkerboard + nano pattern</text>
+      <text x="570" y="451" font-size="8" fill="#555">transferred to PR</text>
+
+      <!-- ===== STEP 4: Etching ===== -->
+      <rect x="20" y="500" width="810" height="140" fill="none" stroke="#ddd" stroke-width="0.5" rx="4"/>
+      <circle cx="50" cy="520" r="14" fill="#c87533" stroke="none"/>
+      <text x="50" y="525" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">4</text>
+      <text x="75" y="520" font-size="12" font-weight="700">식각</text>
+      <text x="75" y="535" font-size="10" fill="#555">Etching &#x2014; Thickness Modulation</text>
+
+      <!-- Before -->
+      <text x="175" y="555" text-anchor="middle" font-size="9" fill="#888">Before</text>
+      <rect x="100" y="565" width="150" height="55" fill="none" stroke="#ccc" stroke-width="0.5"/>
+      <rect x="115" y="595" width="120" height="15" fill="url(#hatch-sub8)" stroke="#000" stroke-width="1"/>
+      <!-- BM + patterned PR -->
+      <rect x="115" y="585" width="120" height="10" fill="url(#hatch-bm8)" stroke="#000" stroke-width="0.8"/>
+      <rect x="115" y="570" width="24" height="15" fill="url(#hatch-pr)" stroke="#000" stroke-width="0.6"/>
+      <rect x="139" y="575" width="24" height="10" fill="url(#hatch-pr)" stroke="#000" stroke-width="0.6"/>
+      <rect x="163" y="570" width="24" height="15" fill="url(#hatch-pr)" stroke="#000" stroke-width="0.6"/>
+      <rect x="187" y="575" width="24" height="10" fill="url(#hatch-pr)" stroke="#000" stroke-width="0.6"/>
+      <rect x="211" y="570" width="24" height="15" fill="url(#hatch-pr)" stroke="#000" stroke-width="0.6"/>
+
+      <!-- Arrow -->
+      <line x1="270" y1="585" x2="340" y2="585" stroke="#c87533" stroke-width="1.5" marker-end="url(#ar8R)"/>
+      <text x="305" y="577" text-anchor="middle" font-size="8" fill="#c87533">Dry etch</text>
+      <text x="305" y="603" text-anchor="middle" font-size="7" fill="#888">Cl&#x2082;/O&#x2082; RIE</text>
+      <text x="305" y="613" text-anchor="middle" font-size="7" fill="#888">100W, 30s</text>
+
+      <!-- After -->
+      <text x="435" y="555" text-anchor="middle" font-size="9" fill="#888">After</text>
+      <rect x="360" y="565" width="150" height="55" fill="none" stroke="#ccc" stroke-width="0.5"/>
+      <rect x="375" y="598" width="120" height="12" fill="url(#hatch-sub8)" stroke="#000" stroke-width="1"/>
+      <!-- BM with thickness modulation -->
+      <rect x="375" y="582" width="24" height="16" fill="url(#hatch-bm8)" stroke="#000" stroke-width="1"/>
+      <rect x="399" y="588" width="24" height="10" fill="url(#hatch-bm8)" stroke="#000" stroke-width="1"/>
+      <rect x="423" y="582" width="24" height="16" fill="url(#hatch-bm8)" stroke="#000" stroke-width="1"/>
+      <rect x="447" y="588" width="24" height="10" fill="url(#hatch-bm8)" stroke="#000" stroke-width="1"/>
+      <rect x="471" y="582" width="24" height="16" fill="url(#hatch-bm8)" stroke="#000" stroke-width="1"/>
+
+      <!-- Nano bumps + particles -->
+      <path d="M375,582 Q378,579 381,582 Q384,579 387,582 Q390,579 393,582 Q396,579 399,582" stroke="#c87533" stroke-width="0.6" fill="none"/>
+      <path d="M423,582 Q426,579 429,582 Q432,579 435,582 Q438,579 441,582 Q444,579 447,582" stroke="#c87533" stroke-width="0.6" fill="none"/>
+      <path d="M471,582 Q474,579 477,582 Q480,579 483,582 Q486,579 489,582 Q492,579 495,582" stroke="#c87533" stroke-width="0.6" fill="none"/>
+      <circle cx="387" cy="592" r="1.5" fill="none" stroke="#c87533" stroke-width="0.6"/>
+      <circle cx="435" cy="590" r="1.5" fill="none" stroke="#c87533" stroke-width="0.6"/>
+      <circle cx="483" cy="592" r="1.5" fill="none" stroke="#c87533" stroke-width="0.6"/>
+
+      <text x="570" y="590" font-size="9">&#x2190; &#x0394;d 두께 변조 달성</text>
+      <text x="570" y="603" font-size="8" fill="#555">&#x0394;d thickness modulation achieved</text>
+
+      <!-- ===== STEP 5: PR strip + passivation ===== -->
+      <rect x="20" y="655" width="810" height="140" fill="none" stroke="#ddd" stroke-width="0.5" rx="4"/>
+      <circle cx="50" cy="675" r="14" fill="#c87533" stroke="none"/>
+      <text x="50" y="680" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">5</text>
+      <text x="75" y="675" font-size="12" font-weight="700">PR 제거 + 보호막</text>
+      <text x="75" y="690" font-size="10" fill="#555">PR Strip + Passivation &#x2014; Final Structure</text>
+
+      <!-- Before -->
+      <text x="175" y="710" text-anchor="middle" font-size="9" fill="#888">Before</text>
+      <rect x="100" y="720" width="150" height="55" fill="none" stroke="#ccc" stroke-width="0.5"/>
+      <rect x="115" y="750" width="120" height="12" fill="url(#hatch-sub8)" stroke="#000" stroke-width="1"/>
+      <rect x="115" y="735" width="24" height="15" fill="url(#hatch-bm8)" stroke="#000" stroke-width="0.8"/>
+      <rect x="139" y="740" width="24" height="10" fill="url(#hatch-bm8)" stroke="#000" stroke-width="0.8"/>
+      <rect x="163" y="735" width="24" height="15" fill="url(#hatch-bm8)" stroke="#000" stroke-width="0.8"/>
+      <rect x="187" y="740" width="24" height="10" fill="url(#hatch-bm8)" stroke="#000" stroke-width="0.8"/>
+      <rect x="211" y="735" width="24" height="15" fill="url(#hatch-bm8)" stroke="#000" stroke-width="0.8"/>
+
+      <!-- Arrow -->
+      <line x1="270" y1="745" x2="340" y2="745" stroke="#c87533" stroke-width="1.5" marker-end="url(#ar8R)"/>
+      <text x="305" y="737" text-anchor="middle" font-size="8" fill="#c87533">Strip + coat</text>
+      <text x="305" y="763" text-anchor="middle" font-size="7" fill="#888">O&#x2082; ash + SiO&#x2082;</text>
+      <text x="305" y="773" text-anchor="middle" font-size="7" fill="#888">PECVD, 150&#xB0;C</text>
+
+      <!-- After (FINAL) -->
+      <text x="435" y="710" text-anchor="middle" font-size="9" fill="#c87533" font-weight="600">FINAL</text>
+      <rect x="360" y="720" width="150" height="55" fill="none" stroke="#c87533" stroke-width="1.5" rx="2"/>
+      <rect x="375" y="753" width="120" height="12" fill="url(#hatch-sub8)" stroke="#000" stroke-width="1"/>
+      <!-- Final BM with modulation -->
+      <rect x="375" y="738" width="24" height="15" fill="url(#hatch-bm8)" stroke="#000" stroke-width="1"/>
+      <rect x="399" y="743" width="24" height="10" fill="url(#hatch-bm8)" stroke="#000" stroke-width="1"/>
+      <rect x="423" y="738" width="24" height="15" fill="url(#hatch-bm8)" stroke="#000" stroke-width="1"/>
+      <rect x="447" y="743" width="24" height="10" fill="url(#hatch-bm8)" stroke="#000" stroke-width="1"/>
+      <rect x="471" y="738" width="24" height="15" fill="url(#hatch-bm8)" stroke="#000" stroke-width="1"/>
+      <!-- Passivation layer -->
+      <line x1="375" y1="735" x2="495" y2="735" stroke="#c87533" stroke-width="1.5" stroke-dasharray="4,2"/>
+      <!-- Nano texture on top surfaces -->
+      <path d="M375,738 Q378,735 381,738 Q384,735 387,738 Q390,735 393,738 Q396,735 399,738" stroke="#c87533" stroke-width="0.6" fill="none"/>
+      <path d="M423,738 Q426,735 429,738 Q432,735 435,738 Q438,735 441,738 Q444,735 447,738" stroke="#c87533" stroke-width="0.6" fill="none"/>
+      <path d="M471,738 Q474,735 477,738 Q480,735 483,738 Q486,735 489,738 Q492,735 495,738" stroke="#c87533" stroke-width="0.6" fill="none"/>
+      <!-- SiO2 particles -->
+      <circle cx="387" cy="748" r="1.5" fill="none" stroke="#c87533" stroke-width="0.6"/>
+      <circle cx="435" cy="746" r="1.5" fill="none" stroke="#c87533" stroke-width="0.6"/>
+      <circle cx="483" cy="748" r="1.5" fill="none" stroke="#c87533" stroke-width="0.6"/>
+
+      <text x="570" y="738" font-size="9">&#x2190; 보호막 + 최종 구조</text>
+      <text x="570" y="751" font-size="8" fill="#555">Passivation + final structure</text>
+      <text x="570" y="764" font-size="8" fill="#c87533">Checkerboard &#x0394;d + nano SiO&#x2082;</text>
+
+      <!-- Overall flow summary bar -->
+      <rect x="50" y="820" width="750" height="50" fill="#f8f4ef" stroke="#c87533" stroke-width="1" rx="4"/>
+      <text x="425" y="840" text-anchor="middle" font-size="10" font-weight="600">
+        Substrate &#x2192; BM Sputter &#x2192; Nano-PR Coat &#x2192; NIL Press &#x2192; Etch &#x2192; Strip &#x2192; Final
+      </text>
+      <text x="425" y="858" text-anchor="middle" font-size="9" fill="#c87533">
+        총 공정 시간 ~45분 / Total process time ~45 min (excluding mold fabrication)
+      </text>
+    </svg>
+  </div>
+  <div class="fig-caption">NIL 기반 5단계 최적 공정 흐름. 각 단계에서 전후 단면도와 공정 조건을 표시함.<br>
+  <span style="color:#555;">Optimal 5-step NIL-based process flow. Before/after cross-sections and process parameters shown at each stage.</span></div>
+</section>
+
+<!-- ============================================================ -->
+<!-- FIG. 9 — Diffraction Suppression Principle -->
+<!-- ============================================================ -->
+<section class="figure-section" id="fig9">
+  <div class="fig-title">[도 9] 회절 억제 원리 설명도<br><span class="en">(Fig. 9 — Diffraction Suppression Principle)</span></div>
+  <div class="svg-wrap">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 850 640" width="850" height="640">
+      <defs>
+        <pattern id="hatch-bm9" patternUnits="userSpaceOnUse" width="5" height="5">
+          <line x1="0" y1="0" x2="5" y2="5" stroke="#000" stroke-width="0.3"/>
+          <line x1="5" y1="0" x2="0" y2="5" stroke="#000" stroke-width="0.3"/>
+        </pattern>
+        <marker id="ar9R" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+          <path d="M0,0 L7,2.5 L0,5 Z" fill="#000"/>
+        </marker>
+        <marker id="ar9D" markerWidth="5" markerHeight="7" refX="2.5" refY="7" orient="auto">
+          <path d="M0,0 L2.5,7 L5,0 Z" fill="#000"/>
+        </marker>
+      </defs>
+
+      <!-- Panel labels -->
+      <text x="140" y="25" text-anchor="middle" font-size="14" font-weight="700">A</text>
+      <text x="425" y="25" text-anchor="middle" font-size="14" font-weight="700" fill="#c87533">B</text>
+      <text x="710" y="25" text-anchor="middle" font-size="14" font-weight="700" fill="#c87533">C</text>
+
+      <text x="140" y="42" text-anchor="middle" font-size="10" font-weight="600">주기적 회절</text>
+      <text x="140" y="55" text-anchor="middle" font-size="9" fill="#555">Periodic Diffraction</text>
+      <text x="425" y="42" text-anchor="middle" font-size="10" font-weight="600" fill="#c87533">체크보드 위상 변조</text>
+      <text x="425" y="55" text-anchor="middle" font-size="9" fill="#c87533">Checkerboard Phase Shift</text>
+      <text x="710" y="42" text-anchor="middle" font-size="10" font-weight="600" fill="#c87533">나노 디퓨저 추가</text>
+      <text x="710" y="55" text-anchor="middle" font-size="9" fill="#c87533">+ Nano Diffuser</text>
+
+      <!-- Vertical dividers -->
+      <line x1="283" y1="15" x2="283" y2="620" stroke="#ddd" stroke-width="1"/>
+      <line x1="568" y1="15" x2="568" y2="620" stroke="#ddd" stroke-width="1"/>
+
+      <!-- ===== PANEL A: Periodic Diffraction ===== -->
+      <!-- Incident light -->
+      <line x1="100" y1="80" x2="100" y2="110" stroke="#000" stroke-width="0.8" marker-end="url(#ar9D)"/>
+      <line x1="140" y1="80" x2="140" y2="110" stroke="#000" stroke-width="0.8" marker-end="url(#ar9D)"/>
+      <line x1="180" y1="80" x2="180" y2="110" stroke="#000" stroke-width="0.8" marker-end="url(#ar9D)"/>
+      <text x="140" y="78" text-anchor="middle" font-size="8" fill="#555">입사광</text>
+
+      <!-- Regular BM grid -->
+      <rect x="50" y="115" width="30" height="40" fill="url(#hatch-bm9)" stroke="#000" stroke-width="1"/>
+      <rect x="110" y="115" width="30" height="40" fill="url(#hatch-bm9)" stroke="#000" stroke-width="1"/>
+      <rect x="170" y="115" width="30" height="40" fill="url(#hatch-bm9)" stroke="#000" stroke-width="1"/>
+      <rect x="230" y="115" width="30" height="40" fill="url(#hatch-bm9)" stroke="#000" stroke-width="1"/>
+      <!-- Openings labeled -->
+      <text x="95" y="140" text-anchor="middle" font-size="7">pixel</text>
+      <text x="155" y="140" text-anchor="middle" font-size="7">pixel</text>
+      <text x="215" y="140" text-anchor="middle" font-size="7">pixel</text>
+
+      <!-- Label: all same thickness -->
+      <text x="140" y="168" text-anchor="middle" font-size="8" fill="#555">동일 두께 d&#x2081;</text>
+      <text x="140" y="178" text-anchor="middle" font-size="8" fill="#555">Uniform thickness</text>
+
+      <!-- Diffracted beams below (spreading out) -->
+      <line x1="95" y1="155" x2="60" y2="200" stroke="#000" stroke-width="0.5" stroke-dasharray="3,2"/>
+      <line x1="95" y1="155" x2="95" y2="200" stroke="#000" stroke-width="0.8"/>
+      <line x1="95" y1="155" x2="130" y2="200" stroke="#000" stroke-width="0.5" stroke-dasharray="3,2"/>
+      <line x1="155" y1="155" x2="120" y2="200" stroke="#000" stroke-width="0.5" stroke-dasharray="3,2"/>
+      <line x1="155" y1="155" x2="155" y2="200" stroke="#000" stroke-width="0.8"/>
+      <line x1="155" y1="155" x2="190" y2="200" stroke="#000" stroke-width="0.5" stroke-dasharray="3,2"/>
+
+      <!-- Intensity profile A (sharp peaks) -->
+      <text x="140" y="230" text-anchor="middle" font-size="9" font-weight="600">강도 분포 / Intensity Profile</text>
+      <rect x="30" y="240" width="220" height="130" fill="none" stroke="#000" stroke-width="1"/>
+      <!-- Axes -->
+      <line x1="50" y1="350" x2="230" y2="350" stroke="#000" stroke-width="0.8"/>
+      <line x1="50" y1="350" x2="50" y2="250" stroke="#000" stroke-width="0.8"/>
+      <text x="140" y="368" text-anchor="middle" font-size="8">&#x03B8; (angle)</text>
+      <text x="38" y="300" text-anchor="middle" font-size="8" transform="rotate(-90,38,300)">I</text>
+      <!-- Sharp diffraction peaks -->
+      <polyline points="55,348 70,348 75,345 80,340 85,280 87,260 90,250 92,260 95,280 100,340 105,345 110,348 120,348 125,345 130,340 135,310 137,298 140,290 142,298 145,310 150,340 155,345 160,348 170,348 175,345 180,340 185,310 187,298 190,290 192,298 195,310 200,340 205,345 210,348 225,348" fill="none" stroke="#000" stroke-width="1.5"/>
+      <!-- Labels on peaks -->
+      <text x="90" y="246" text-anchor="middle" font-size="7">-1st</text>
+      <text x="140" y="286" text-anchor="middle" font-size="7">0th</text>
+      <text x="190" y="286" text-anchor="middle" font-size="7">+1st</text>
+      <!-- Strong peaks = problem -->
+      <text x="140" y="385" text-anchor="middle" font-size="9" fill="#c00" font-weight="600">&#x274C; 강한 회절 피크</text>
+      <text x="140" y="398" text-anchor="middle" font-size="8" fill="#c00">Sharp diffraction orders</text>
+
+      <!-- ===== PANEL B: Checkerboard Phase Modulation ===== -->
+      <!-- Incident light -->
+      <line x1="385" y1="80" x2="385" y2="110" stroke="#000" stroke-width="0.8" marker-end="url(#ar9D)"/>
+      <line x1="425" y1="80" x2="425" y2="110" stroke="#000" stroke-width="0.8" marker-end="url(#ar9D)"/>
+      <line x1="465" y1="80" x2="465" y2="110" stroke="#000" stroke-width="0.8" marker-end="url(#ar9D)"/>
+      <text x="425" y="78" text-anchor="middle" font-size="8" fill="#555">입사광</text>
+
+      <!-- Checkerboard BM -->
+      <rect x="335" y="115" width="30" height="40" fill="url(#hatch-bm9)" stroke="#000" stroke-width="1"/>
+      <rect x="395" y="115" width="30" height="35" fill="url(#hatch-bm9)" stroke="#000" stroke-width="1"/>
+      <rect x="455" y="115" width="30" height="40" fill="url(#hatch-bm9)" stroke="#000" stroke-width="1"/>
+      <rect x="515" y="115" width="30" height="35" fill="url(#hatch-bm9)" stroke="#000" stroke-width="1"/>
+      <!-- Phase labels -->
+      <text x="350" y="112" text-anchor="middle" font-size="7" fill="#000">&#x03C6;=0</text>
+      <text x="410" y="112" text-anchor="middle" font-size="7" fill="#c87533">&#x03C6;=&#x03C0;</text>
+      <text x="470" y="112" text-anchor="middle" font-size="7" fill="#000">&#x03C6;=0</text>
+      <text x="530" y="112" text-anchor="middle" font-size="7" fill="#c87533">&#x03C6;=&#x03C0;</text>
+
+      <text x="425" y="168" text-anchor="middle" font-size="8" fill="#c87533">교번 위상 &#x0394;d</text>
+      <text x="425" y="178" text-anchor="middle" font-size="8" fill="#c87533">Alternating phase</text>
+
+      <!-- Destructive interference shown -->
+      <line x1="380" y1="155" x2="345" y2="200" stroke="#000" stroke-width="0.5" stroke-dasharray="3,2"/>
+      <line x1="380" y1="155" x2="380" y2="200" stroke="#000" stroke-width="0.8"/>
+      <line x1="380" y1="155" x2="415" y2="200" stroke="#000" stroke-width="0.5" stroke-dasharray="3,2"/>
+      <!-- X marks on 1st order -->
+      <text x="345" y="205" text-anchor="middle" font-size="12" fill="#c00" font-weight="700">&#x2715;</text>
+      <text x="415" y="205" text-anchor="middle" font-size="12" fill="#c00" font-weight="700">&#x2715;</text>
+
+      <!-- Intensity profile B (1st order suppressed) -->
+      <text x="425" y="230" text-anchor="middle" font-size="9" font-weight="600">강도 분포 / Intensity Profile</text>
+      <rect x="315" y="240" width="220" height="130" fill="none" stroke="#000" stroke-width="1"/>
+      <line x1="335" y1="350" x2="515" y2="350" stroke="#000" stroke-width="0.8"/>
+      <line x1="335" y1="350" x2="335" y2="250" stroke="#000" stroke-width="0.8"/>
+      <text x="425" y="368" text-anchor="middle" font-size="8">&#x03B8; (angle)</text>
+      <text x="323" y="300" text-anchor="middle" font-size="8" transform="rotate(-90,323,300)">I</text>
+      <!-- 1st order suppressed, 0th remains, small residual scatter -->
+      <polyline points="340,348 355,348 360,346 365,345 370,340 372,335 375,330 377,335 380,340 385,345 390,346 395,348 400,348 410,347 415,340 418,320 420,300 422,288 425,280 427,288 429,300 432,320 435,340 440,347 445,348 450,348 460,346 465,345 470,340 472,335 475,330 477,335 480,340 485,345 490,346 495,348 510,348" fill="none" stroke="#c87533" stroke-width="1.5"/>
+      <!-- Crossed-out old peak positions -->
+      <line x1="370" y1="325" x2="380" y2="335" stroke="#c00" stroke-width="1.5"/>
+      <line x1="380" y1="325" x2="370" y2="335" stroke="#c00" stroke-width="1.5"/>
+      <line x1="470" y1="325" x2="480" y2="335" stroke="#c00" stroke-width="1.5"/>
+      <line x1="480" y1="325" x2="470" y2="335" stroke="#c00" stroke-width="1.5"/>
+      <text x="375" y="318" text-anchor="middle" font-size="7" fill="#c00">-1st &#x2717;</text>
+      <text x="475" y="318" text-anchor="middle" font-size="7" fill="#c00">+1st &#x2717;</text>
+      <text x="425" y="275" text-anchor="middle" font-size="7">0th</text>
+
+      <text x="425" y="385" text-anchor="middle" font-size="9" fill="#c87533" font-weight="600">1차 회절 상쇄 간섭</text>
+      <text x="425" y="398" text-anchor="middle" font-size="8" fill="#c87533">1st order destructive interference</text>
+
+      <!-- ===== PANEL C: + Nano Diffuser ===== -->
+      <!-- Incident light -->
+      <line x1="670" y1="80" x2="670" y2="110" stroke="#000" stroke-width="0.8" marker-end="url(#ar9D)"/>
+      <line x1="710" y1="80" x2="710" y2="110" stroke="#000" stroke-width="0.8" marker-end="url(#ar9D)"/>
+      <line x1="750" y1="80" x2="750" y2="110" stroke="#000" stroke-width="0.8" marker-end="url(#ar9D)"/>
+      <text x="710" y="78" text-anchor="middle" font-size="8" fill="#555">입사광</text>
+
+      <!-- Checkerboard BM with nano texture -->
+      <rect x="620" y="115" width="30" height="40" fill="url(#hatch-bm9)" stroke="#000" stroke-width="1"/>
+      <rect x="680" y="115" width="30" height="35" fill="url(#hatch-bm9)" stroke="#000" stroke-width="1"/>
+      <rect x="740" y="115" width="30" height="40" fill="url(#hatch-bm9)" stroke="#000" stroke-width="1"/>
+      <rect x="800" y="115" width="30" height="35" fill="url(#hatch-bm9)" stroke="#000" stroke-width="1"/>
+      <!-- Nano particles inside -->
+      <circle cx="632" cy="130" r="2" fill="none" stroke="#c87533" stroke-width="0.7"/>
+      <circle cx="643" cy="140" r="2" fill="none" stroke="#c87533" stroke-width="0.7"/>
+      <circle cx="693" cy="128" r="2" fill="none" stroke="#c87533" stroke-width="0.7"/>
+      <circle cx="703" cy="138" r="2" fill="none" stroke="#c87533" stroke-width="0.7"/>
+      <circle cx="752" cy="130" r="2" fill="none" stroke="#c87533" stroke-width="0.7"/>
+      <circle cx="763" cy="140" r="2" fill="none" stroke="#c87533" stroke-width="0.7"/>
+      <circle cx="813" cy="128" r="2" fill="none" stroke="#c87533" stroke-width="0.7"/>
+      <!-- Nano bumps on surface -->
+      <path d="M620,115 Q623,112 626,115 Q629,112 632,115 Q635,112 638,115 Q641,112 644,115 Q647,112 650,115" stroke="#c87533" stroke-width="0.6" fill="none"/>
+      <path d="M740,115 Q743,112 746,115 Q749,112 752,115 Q755,112 758,115 Q761,112 764,115 Q767,112 770,115" stroke="#c87533" stroke-width="0.6" fill="none"/>
+
+      <text x="710" y="168" text-anchor="middle" font-size="8" fill="#c87533">위상 + 나노 산란</text>
+      <text x="710" y="178" text-anchor="middle" font-size="8" fill="#c87533">Phase + nano scatter</text>
+
+      <!-- Uniformly scattered output below -->
+      <line x1="665" y1="155" x2="640" y2="195" stroke="#888" stroke-width="0.5" stroke-dasharray="2,2"/>
+      <line x1="665" y1="155" x2="655" y2="195" stroke="#888" stroke-width="0.5" stroke-dasharray="2,2"/>
+      <line x1="665" y1="155" x2="665" y2="195" stroke="#888" stroke-width="0.5"/>
+      <line x1="665" y1="155" x2="675" y2="195" stroke="#888" stroke-width="0.5" stroke-dasharray="2,2"/>
+      <line x1="665" y1="155" x2="690" y2="195" stroke="#888" stroke-width="0.5" stroke-dasharray="2,2"/>
+
+      <!-- Intensity profile C (flat, uniform) -->
+      <text x="710" y="230" text-anchor="middle" font-size="9" font-weight="600">강도 분포 / Intensity Profile</text>
+      <rect x="600" y="240" width="220" height="130" fill="none" stroke="#000" stroke-width="1"/>
+      <line x1="620" y1="350" x2="800" y2="350" stroke="#000" stroke-width="0.8"/>
+      <line x1="620" y1="350" x2="620" y2="250" stroke="#000" stroke-width="0.8"/>
+      <text x="710" y="368" text-anchor="middle" font-size="8">&#x03B8; (angle)</text>
+      <text x="608" y="300" text-anchor="middle" font-size="8" transform="rotate(-90,608,300)">I</text>
+      <!-- Nearly flat distribution -->
+      <polyline points="625,348 640,345 650,343 660,340 670,338 680,337 690,336 700,335 710,334 720,335 730,336 740,337 750,338 760,340 770,343 780,345 795,348" fill="none" stroke="#c87533" stroke-width="2"/>
+      <!-- Filled area underneath -->
+      <polyline points="625,348 640,345 650,343 660,340 670,338 680,337 690,336 700,335 710,334 720,335 730,336 740,337 750,338 760,340 770,343 780,345 795,348" fill="#c87533" fill-opacity="0.1" stroke="none"/>
+      <text x="710" y="330" text-anchor="middle" font-size="8" fill="#c87533">균일 분포 / Uniform</text>
+
+      <text x="710" y="385" text-anchor="middle" font-size="9" fill="#060" font-weight="600">&#x2714; 회절 완전 억제</text>
+      <text x="710" y="398" text-anchor="middle" font-size="8" fill="#060">Full diffraction suppression</text>
+
+      <!-- Bottom comparison arrow -->
+      <rect x="30" y="420" width="790" height="60" fill="#f8f4ef" stroke="#c87533" stroke-width="1" rx="4"/>
+      <text x="140" y="445" text-anchor="middle" font-size="10" font-weight="600">종래 BM</text>
+      <text x="140" y="460" text-anchor="middle" font-size="9" fill="#555">Prior Art</text>
+      <line x1="220" y1="450" x2="340" y2="450" stroke="#c87533" stroke-width="1.5" marker-end="url(#ar9R)"/>
+      <text x="280" y="442" text-anchor="middle" font-size="8" fill="#c87533">+체크보드</text>
+      <text x="425" y="445" text-anchor="middle" font-size="10" font-weight="600" fill="#c87533">1차 회절 소거</text>
+      <text x="425" y="460" text-anchor="middle" font-size="9" fill="#c87533">1st order eliminated</text>
+      <line x1="510" y1="450" x2="620" y2="450" stroke="#c87533" stroke-width="1.5" marker-end="url(#ar9R)"/>
+      <text x="565" y="442" text-anchor="middle" font-size="8" fill="#c87533">+나노 디퓨저</text>
+      <text x="710" y="445" text-anchor="middle" font-size="10" font-weight="600" fill="#060">잔여 산란 균일화</text>
+      <text x="710" y="460" text-anchor="middle" font-size="9" fill="#060">Residual scatter uniformized</text>
+
+      <!-- Quantitative summary -->
+      <text x="425" y="510" text-anchor="middle" font-size="11" font-weight="600">정량적 효과 / Quantitative Effect</text>
+      <rect x="100" y="520" width="200" height="60" fill="none" stroke="#000" stroke-width="1" rx="3"/>
+      <text x="200" y="540" text-anchor="middle" font-size="10">종래 BM / Prior Art</text>
+      <text x="200" y="558" text-anchor="middle" font-size="11" font-weight="600">회절 효율 ~5%</text>
+      <text x="200" y="573" text-anchor="middle" font-size="9" fill="#555">Diffraction eff. ~5%</text>
+
+      <line x1="310" y1="550" x2="370" y2="550" stroke="#c87533" stroke-width="1.5" marker-end="url(#ar9R)"/>
+
+      <rect x="380" y="520" width="200" height="60" fill="none" stroke="#c87533" stroke-width="1" rx="3"/>
+      <text x="480" y="540" text-anchor="middle" font-size="10" fill="#c87533">본 발명 / This Invention</text>
+      <text x="480" y="558" text-anchor="middle" font-size="11" font-weight="700" fill="#c87533">회절 효율 &lt;0.1%</text>
+      <text x="480" y="573" text-anchor="middle" font-size="9" fill="#c87533">Diffraction eff. &lt;0.1%</text>
+
+      <text x="660" y="555" font-size="12" font-weight="700" fill="#060">50&#x00D7; &#x2193;</text>
+      <text x="660" y="573" font-size="9" fill="#060">reduction</text>
+    </svg>
+  </div>
+  <div class="fig-caption">회절 억제 원리의 3단계 설명. (A) 종래 BM의 주기적 회절, (B) 체크보드 위상 변조에 의한 1차 회절 상쇄, (C) 나노 디퓨저에 의한 잔여 산란 균일화.<br>
+  <span style="color:#555;">Three-stage diffraction suppression principle: (A) Periodic diffraction from conventional BM, (B) 1st-order cancellation via checkerboard phase, (C) Residual scatter uniformization via nano diffuser.</span></div>
+</section>
+
+<!-- ============================================================ -->
+<!-- FIG. 10 — Mass Production Substrate Layout -->
+<!-- ============================================================ -->
+<section class="figure-section" id="fig10">
+  <div class="fig-title">[도 10] 양산 적용 시 기판 레이아웃<br><span class="en">(Fig. 10 — Mass Production Substrate Layout)</span></div>
+  <div class="svg-wrap">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 850 720" width="850" height="720">
+      <defs>
+        <pattern id="hatch-bm10" patternUnits="userSpaceOnUse" width="5" height="5">
+          <line x1="0" y1="0" x2="5" y2="5" stroke="#000" stroke-width="0.3"/>
+          <line x1="5" y1="0" x2="0" y2="5" stroke="#000" stroke-width="0.3"/>
+        </pattern>
+        <marker id="ar10R" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+          <path d="M0,0 L7,2.5 L0,5 Z" fill="#000"/>
+        </marker>
+        <marker id="ar10L" markerWidth="7" markerHeight="5" refX="0" refY="2.5" orient="auto">
+          <path d="M7,0 L0,2.5 L7,5 Z" fill="#000"/>
+        </marker>
+        <!-- Checkerboard fill for BM display -->
+        <pattern id="checker10" patternUnits="userSpaceOnUse" width="8" height="8">
+          <rect width="4" height="4" fill="#000"/>
+          <rect x="4" y="4" width="4" height="4" fill="#000"/>
+          <rect x="4" width="4" height="4" fill="#555"/>
+          <rect y="4" width="4" height="4" fill="#555"/>
+        </pattern>
+      </defs>
+
+      <!-- ===== LEVEL 1: Full Panel ===== -->
+      <text x="40" y="30" font-size="12" font-weight="700">LEVEL 1: 패널 전체 / Full Panel</text>
+
+      <!-- Panel outline -->
+      <rect x="60" y="50" width="300" height="200" fill="#f9f9f9" stroke="#000" stroke-width="2" rx="3"/>
+      <!-- Bezel area -->
+      <rect x="75" y="65" width="270" height="170" fill="#fff" stroke="#000" stroke-width="1" stroke-dasharray="4,2"/>
+      <!-- Active area -->
+      <rect x="90" y="80" width="240" height="140" fill="#fafafa" stroke="#000" stroke-width="1.5"/>
+      <text x="210" y="155" text-anchor="middle" font-size="11" font-weight="600">Active Display Area</text>
+      <text x="210" y="170" text-anchor="middle" font-size="10">픽셀 어레이 / Pixel Array</text>
+
+      <!-- Dimension lines for panel -->
+      <line x1="60" y1="270" x2="360" y2="270" stroke="#000" stroke-width="0.8"/>
+      <line x1="60" y1="265" x2="60" y2="275" stroke="#000" stroke-width="0.8"/>
+      <line x1="360" y1="265" x2="360" y2="275" stroke="#000" stroke-width="0.8"/>
+      <text x="210" y="285" text-anchor="middle" font-size="9">Panel: 150mm &#x00D7; 100mm (6&#x2033;)</text>
+
+      <!-- Bezel label -->
+      <text x="82" y="62" font-size="7" fill="#888">Bezel</text>
+
+      <!-- Driver IC area -->
+      <rect x="130" y="225" width="80" height="15" fill="#eee" stroke="#000" stroke-width="0.8"/>
+      <text x="170" y="236" text-anchor="middle" font-size="7">Driver IC / COF</text>
+
+      <!-- ===== Zoom line to LEVEL 2 ===== -->
+      <line x1="330" y1="120" x2="430" y2="80" stroke="#c87533" stroke-width="1" stroke-dasharray="4,3"/>
+      <line x1="330" y1="180" x2="430" y2="250" stroke="#c87533" stroke-width="1" stroke-dasharray="4,3"/>
+
+      <!-- ===== LEVEL 2: Pixel Array ===== -->
+      <text x="430" y="30" font-size="12" font-weight="700">LEVEL 2: 픽셀 어레이 / Pixel Array</text>
+
+      <!-- Magnified pixel grid -->
+      <rect x="430" y="50" width="240" height="210" fill="#fff" stroke="#c87533" stroke-width="2" rx="2"/>
+
+      <!-- Draw pixel grid with BM -->
+      <!-- Row 1 -->
+      <rect x="440" y="60" width="50" height="40" fill="#fcc" stroke="#000" stroke-width="0.5"/><text x="465" y="84" text-anchor="middle" font-size="8" fill="#c00">R</text>
+      <rect x="500" y="60" width="50" height="40" fill="#cfc" stroke="#000" stroke-width="0.5"/><text x="525" y="84" text-anchor="middle" font-size="8" fill="#060">G</text>
+      <rect x="560" y="60" width="50" height="40" fill="#ccf" stroke="#000" stroke-width="0.5"/><text x="585" y="84" text-anchor="middle" font-size="8" fill="#009">B</text>
+      <rect x="620" y="60" width="40" height="40" fill="#fcc" stroke="#000" stroke-width="0.5"/><text x="640" y="84" text-anchor="middle" font-size="8" fill="#c00">R</text>
+      <!-- Row 2 -->
+      <rect x="440" y="110" width="50" height="40" fill="#fcc" stroke="#000" stroke-width="0.5"/><text x="465" y="134" text-anchor="middle" font-size="8" fill="#c00">R</text>
+      <rect x="500" y="110" width="50" height="40" fill="#cfc" stroke="#000" stroke-width="0.5"/><text x="525" y="134" text-anchor="middle" font-size="8" fill="#060">G</text>
+      <rect x="560" y="110" width="50" height="40" fill="#ccf" stroke="#000" stroke-width="0.5"/><text x="585" y="134" text-anchor="middle" font-size="8" fill="#009">B</text>
+      <rect x="620" y="110" width="40" height="40" fill="#fcc" stroke="#000" stroke-width="0.5"/><text x="640" y="134" text-anchor="middle" font-size="8" fill="#c00">R</text>
+      <!-- Row 3 -->
+      <rect x="440" y="160" width="50" height="40" fill="#fcc" stroke="#000" stroke-width="0.5"/><text x="465" y="184" text-anchor="middle" font-size="8" fill="#c00">R</text>
+      <rect x="500" y="160" width="50" height="40" fill="#cfc" stroke="#000" stroke-width="0.5"/><text x="525" y="184" text-anchor="middle" font-size="8" fill="#060">G</text>
+      <rect x="560" y="160" width="50" height="40" fill="#ccf" stroke="#000" stroke-width="0.5"/><text x="585" y="184" text-anchor="middle" font-size="8" fill="#009">B</text>
+      <rect x="620" y="160" width="40" height="40" fill="#fcc" stroke="#000" stroke-width="0.5"/><text x="640" y="184" text-anchor="middle" font-size="8" fill="#c00">R</text>
+      <!-- Row 4 partial -->
+      <rect x="440" y="210" width="50" height="40" fill="#fcc" stroke="#000" stroke-width="0.5"/><text x="465" y="234" text-anchor="middle" font-size="8" fill="#c00">R</text>
+      <rect x="500" y="210" width="50" height="40" fill="#cfc" stroke="#000" stroke-width="0.5"/><text x="525" y="234" text-anchor="middle" font-size="8" fill="#060">G</text>
+      <rect x="560" y="210" width="50" height="40" fill="#ccf" stroke="#000" stroke-width="0.5"/><text x="585" y="234" text-anchor="middle" font-size="8" fill="#009">B</text>
+      <rect x="620" y="210" width="40" height="40" fill="#fcc" stroke="#000" stroke-width="0.5"/><text x="640" y="234" text-anchor="middle" font-size="8" fill="#c00">R</text>
+
+      <!-- BM grid overlay lines (between pixels) -->
+      <line x1="440" y1="100" x2="660" y2="100" stroke="#000" stroke-width="2"/>
+      <line x1="440" y1="150" x2="660" y2="150" stroke="#000" stroke-width="2"/>
+      <line x1="440" y1="200" x2="660" y2="200" stroke="#000" stroke-width="2"/>
+      <line x1="490" y1="60" x2="490" y2="250" stroke="#000" stroke-width="2"/>
+      <line x1="550" y1="60" x2="550" y2="250" stroke="#000" stroke-width="2"/>
+      <line x1="610" y1="60" x2="610" y2="250" stroke="#000" stroke-width="2"/>
+
+      <!-- Pixel pitch dimension -->
+      <line x1="440" y1="268" x2="490" y2="268" stroke="#000" stroke-width="0.8"/>
+      <line x1="440" y1="263" x2="440" y2="273" stroke="#000" stroke-width="0.8"/>
+      <line x1="490" y1="263" x2="490" y2="273" stroke="#000" stroke-width="0.8"/>
+      <text x="465" y="282" text-anchor="middle" font-size="8">Pixel pitch</text>
+      <text x="465" y="293" text-anchor="middle" font-size="8">~80&#x03BC;m</text>
+
+      <!-- BM width dimension -->
+      <line x1="485" y1="95" x2="497" y2="95" stroke="#c87533" stroke-width="0.8"/>
+      <line x1="485" y1="90" x2="485" y2="100" stroke="#c87533" stroke-width="0.8"/>
+      <line x1="497" y1="90" x2="497" y2="100" stroke="#c87533" stroke-width="0.8"/>
+      <text x="530" y="93" font-size="7" fill="#c87533">BM: ~12&#x03BC;m</text>
+
+      <!-- ===== Zoom line to LEVEL 3 ===== -->
+      <line x1="490" y1="200" x2="100" y2="370" stroke="#c87533" stroke-width="1" stroke-dasharray="4,3"/>
+      <line x1="560" y1="200" x2="540" y2="370" stroke="#c87533" stroke-width="1" stroke-dasharray="4,3"/>
+
+      <!-- ===== LEVEL 3: Single Pixel Unit Cell ===== -->
+      <text x="40" y="350" font-size="12" font-weight="700">LEVEL 3: 단위 셀 상세 / Unit Cell Detail</text>
+
+      <rect x="60" y="370" width="540" height="310" fill="#fff" stroke="#c87533" stroke-width="2" rx="3"/>
+
+      <!-- Large scale unit cell -->
+      <!-- Pixel opening -->
+      <rect x="160" y="400" width="200" height="180" fill="#f0f0ff" stroke="#000" stroke-width="1"/>
+      <text x="260" y="495" text-anchor="middle" font-size="12" font-weight="600">Pixel Opening</text>
+      <text x="260" y="512" text-anchor="middle" font-size="10">발광 영역 / Emissive Area</text>
+
+      <!-- BM surrounding - with checkerboard shading -->
+      <!-- Top BM bar -->
+      <rect x="80" y="380" width="400" height="20" fill="url(#checker10)" stroke="#000" stroke-width="1.5"/>
+      <!-- Bottom BM bar -->
+      <rect x="80" y="580" width="400" height="30" fill="url(#checker10)" stroke="#000" stroke-width="1.5"/>
+      <!-- Left BM bar -->
+      <rect x="80" y="400" width="80" height="180" fill="url(#checker10)" stroke="#000" stroke-width="1.5"/>
+      <!-- Right BM bar -->
+      <rect x="360" y="400" width="120" height="180" fill="url(#checker10)" stroke="#000" stroke-width="1.5"/>
+
+      <!-- Nano texture dots on BM -->
+      <!-- Random dots on top bar -->
+      <circle cx="110" cy="390" r="1.5" fill="#c87533" opacity="0.6"/>
+      <circle cx="140" cy="387" r="1" fill="#c87533" opacity="0.6"/>
+      <circle cx="170" cy="392" r="1.5" fill="#c87533" opacity="0.6"/>
+      <circle cx="200" cy="388" r="1" fill="#c87533" opacity="0.6"/>
+      <circle cx="230" cy="391" r="1.5" fill="#c87533" opacity="0.6"/>
+      <circle cx="260" cy="386" r="1" fill="#c87533" opacity="0.6"/>
+      <circle cx="290" cy="393" r="1.5" fill="#c87533" opacity="0.6"/>
+      <circle cx="320" cy="388" r="1" fill="#c87533" opacity="0.6"/>
+      <circle cx="350" cy="391" r="1.5" fill="#c87533" opacity="0.6"/>
+      <circle cx="380" cy="387" r="1" fill="#c87533" opacity="0.6"/>
+      <circle cx="410" cy="392" r="1.5" fill="#c87533" opacity="0.6"/>
+      <circle cx="440" cy="388" r="1" fill="#c87533" opacity="0.6"/>
+      <!-- Dots on left bar -->
+      <circle cx="95" cy="420" r="1.5" fill="#c87533" opacity="0.6"/>
+      <circle cx="120" cy="440" r="1" fill="#c87533" opacity="0.6"/>
+      <circle cx="105" cy="460" r="1.5" fill="#c87533" opacity="0.6"/>
+      <circle cx="130" cy="480" r="1" fill="#c87533" opacity="0.6"/>
+      <circle cx="95" cy="500" r="1.5" fill="#c87533" opacity="0.6"/>
+      <circle cx="120" cy="520" r="1" fill="#c87533" opacity="0.6"/>
+      <circle cx="105" cy="540" r="1.5" fill="#c87533" opacity="0.6"/>
+      <circle cx="130" cy="560" r="1" fill="#c87533" opacity="0.6"/>
+      <!-- Dots on right bar -->
+      <circle cx="385" cy="420" r="1.5" fill="#c87533" opacity="0.6"/>
+      <circle cx="410" cy="440" r="1" fill="#c87533" opacity="0.6"/>
+      <circle cx="440" cy="460" r="1.5" fill="#c87533" opacity="0.6"/>
+      <circle cx="395" cy="480" r="1" fill="#c87533" opacity="0.6"/>
+      <circle cx="420" cy="500" r="1.5" fill="#c87533" opacity="0.6"/>
+      <circle cx="450" cy="520" r="1" fill="#c87533" opacity="0.6"/>
+      <circle cx="385" cy="540" r="1.5" fill="#c87533" opacity="0.6"/>
+      <circle cx="430" cy="560" r="1" fill="#c87533" opacity="0.6"/>
+      <!-- Dots on bottom bar -->
+      <circle cx="110" cy="595" r="1.5" fill="#c87533" opacity="0.6"/>
+      <circle cx="150" cy="590" r="1" fill="#c87533" opacity="0.6"/>
+      <circle cx="190" cy="598" r="1.5" fill="#c87533" opacity="0.6"/>
+      <circle cx="230" cy="592" r="1" fill="#c87533" opacity="0.6"/>
+      <circle cx="270" cy="597" r="1.5" fill="#c87533" opacity="0.6"/>
+      <circle cx="310" cy="590" r="1" fill="#c87533" opacity="0.6"/>
+      <circle cx="350" cy="596" r="1.5" fill="#c87533" opacity="0.6"/>
+      <circle cx="390" cy="591" r="1" fill="#c87533" opacity="0.6"/>
+      <circle cx="430" cy="597" r="1.5" fill="#c87533" opacity="0.6"/>
+
+      <!-- Callouts for unit cell -->
+      <!-- Callout: checkerboard BM -->
+      <circle cx="520" cy="410" r="12" fill="#fff" stroke="#000" stroke-width="1.5"/>
+      <text x="520" y="414" text-anchor="middle" font-size="9" font-weight="700">60</text>
+      <line x1="508" y1="410" x2="480" y2="400" stroke="#000" stroke-width="0.8" stroke-dasharray="3,2"/>
+      <text x="520" y="432" text-anchor="middle" font-size="8">체크보드 BM</text>
+      <text x="520" y="443" text-anchor="middle" font-size="7" fill="#555">Checkerboard BM</text>
+
+      <!-- Callout: nano dots -->
+      <circle cx="520" cy="475" r="12" fill="#fff" stroke="#c87533" stroke-width="1.5"/>
+      <text x="520" y="479" text-anchor="middle" font-size="9" font-weight="700" fill="#c87533">61</text>
+      <line x1="508" y1="475" x2="455" y2="463" stroke="#c87533" stroke-width="0.8" stroke-dasharray="3,2"/>
+      <text x="520" y="497" text-anchor="middle" font-size="8" fill="#c87533">나노 텍스처</text>
+      <text x="520" y="508" text-anchor="middle" font-size="7" fill="#c87533">Nano texture dots</text>
+      <text x="520" y="519" text-anchor="middle" font-size="7" fill="#c87533">~150nm features</text>
+
+      <!-- Callout: pixel opening -->
+      <circle cx="520" cy="545" r="12" fill="#fff" stroke="#000" stroke-width="1.5"/>
+      <text x="520" y="549" text-anchor="middle" font-size="9" font-weight="700">62</text>
+      <line x1="508" y1="545" x2="362" y2="510" stroke="#000" stroke-width="0.8" stroke-dasharray="3,2"/>
+      <text x="520" y="567" text-anchor="middle" font-size="8">픽셀 개구</text>
+      <text x="520" y="578" text-anchor="middle" font-size="7" fill="#555">Pixel opening</text>
+
+      <!-- BM width dimension -->
+      <line x1="80" y1="650" x2="160" y2="650" stroke="#000" stroke-width="0.8"/>
+      <line x1="80" y1="645" x2="80" y2="655" stroke="#000" stroke-width="0.8"/>
+      <line x1="160" y1="645" x2="160" y2="655" stroke="#000" stroke-width="0.8"/>
+      <text x="120" y="665" text-anchor="middle" font-size="8">BM width ~12&#x03BC;m</text>
+
+      <!-- Pixel width dimension -->
+      <line x1="160" y1="650" x2="360" y2="650" stroke="#000" stroke-width="0.8"/>
+      <line x1="160" y1="645" x2="160" y2="655" stroke="#000" stroke-width="0.8"/>
+      <line x1="360" y1="645" x2="360" y2="655" stroke="#000" stroke-width="0.8"/>
+      <text x="260" y="665" text-anchor="middle" font-size="8">Pixel opening ~68&#x03BC;m</text>
+
+      <!-- Full pitch -->
+      <line x1="80" y1="680" x2="480" y2="680" stroke="#c87533" stroke-width="0.8"/>
+      <line x1="80" y1="675" x2="80" y2="685" stroke="#c87533" stroke-width="0.8"/>
+      <line x1="480" y1="675" x2="480" y2="685" stroke="#c87533" stroke-width="0.8"/>
+      <text x="280" y="695" text-anchor="middle" font-size="9" fill="#c87533" font-weight="600">Pixel pitch = 80&#x03BC;m (318 PPI @ 6&#x2033;)</text>
+
+      <!-- Dimension summary table on right side -->
+      <rect x="620" y="370" width="210" height="210" fill="#f8f4ef" stroke="#c87533" stroke-width="1" rx="4"/>
+      <text x="725" y="393" text-anchor="middle" font-size="11" font-weight="700">치수 요약 / Dimensions</text>
+      <line x1="630" y1="400" x2="820" y2="400" stroke="#c87533" stroke-width="0.5"/>
+
+      <text x="640" y="420" font-size="10">패널 크기:</text>
+      <text x="810" y="420" text-anchor="end" font-size="10" font-weight="600">150&#x00D7;100mm</text>
+
+      <text x="640" y="442" font-size="10">픽셀 피치:</text>
+      <text x="810" y="442" text-anchor="end" font-size="10" font-weight="600">80 &#x03BC;m</text>
+
+      <text x="640" y="464" font-size="10">BM 폭:</text>
+      <text x="810" y="464" text-anchor="end" font-size="10" font-weight="600">12 &#x03BC;m</text>
+
+      <text x="640" y="486" font-size="10">BM 두께 (d&#x2081;):</text>
+      <text x="810" y="486" text-anchor="end" font-size="10" font-weight="600">1.5 &#x03BC;m</text>
+
+      <text x="640" y="508" font-size="10">&#x0394;d:</text>
+      <text x="810" y="508" text-anchor="end" font-size="10" font-weight="600" fill="#c87533">~0.5 &#x03BC;m</text>
+
+      <text x="640" y="530" font-size="10">나노 피처:</text>
+      <text x="810" y="530" text-anchor="end" font-size="10" font-weight="600" fill="#c87533">~150 nm</text>
+
+      <text x="640" y="552" font-size="10">체크보드 주기:</text>
+      <text x="810" y="552" text-anchor="end" font-size="10" font-weight="600" fill="#c87533">2&#x00D7; pixel pitch</text>
+
+      <text x="640" y="574" font-size="10">해상도 (6&#x2033;):</text>
+      <text x="810" y="574" text-anchor="end" font-size="10" font-weight="600">318 PPI</text>
+    </svg>
+  </div>
+  <div class="fig-caption">양산 기판 레이아웃의 3단계 확대도: 패널 전체 &#x2192; 픽셀 어레이 &#x2192; 단위 셀. 체크보드 BM 패턴과 나노 텍스처 도트가 BM 영역에 적용된 구조.<br>
+  <span style="color:#555;">Three-level zoom of mass production substrate layout: Full panel &#x2192; Pixel array &#x2192; Unit cell. Checkerboard BM pattern and nano texture dots applied to BM regions.</span></div>
+</section>
+
+<!-- ============================================================ -->
+<!-- FOOTER -->
+<!-- ============================================================ -->
+<div style="text-align:center; padding:30px 20px; border-top:3px double #000; max-width:900px; margin:0 auto;">
+  <p style="font-size:11px; color:#888;">Patent Drawings V2 &mdash; Nano Diffuser + Checkerboard Phase Film Composite Structure</p>
+  <p style="font-size:10px; color:#aaa;">Complementary to patent_figures.html (Figs. 1&ndash;5) | Figures 6&ndash;10</p>
+</div>
+
+<!-- ============================================================ -->
+<!-- NAVIGATION SCRIPT -->
+<!-- ============================================================ -->
+<script>
+function jump(id) {
+  document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+  // Update active button
+  document.querySelectorAll('.nav-bar button').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+}
+
+// Highlight nav on scroll
+const sections = document.querySelectorAll('.figure-section');
+const buttons = document.querySelectorAll('.nav-bar button');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const idx = Array.from(sections).indexOf(entry.target);
+      buttons.forEach(b => b.classList.remove('active'));
+      if (buttons[idx]) buttons[idx].classList.add('active');
+    }
+  });
+}, { threshold: 0.3 });
+sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>

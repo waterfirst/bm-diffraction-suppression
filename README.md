@@ -18,9 +18,16 @@
 
 ```
 simulators/
-  bm_simulator.html    — 대화형 2D FFT 회절 시뮬레이터 (브라우저에서 바로 실행)
+  bm_simulator.html                — v1 기본 2D FFT 회절 시뮬레이터
+  bm_simulator_v3_broadband.html   — v3 광대역 시뮬레이터 (D65+CIE색재현+RGB비교)
+  bm_diffraction_v2.py             — Python 정밀 분석 (512x512 FFT, 5개 도표 출력)
+  output/                          — Python 출력 도표 (fig1~fig5.png)
+patent-drawings/
+  patent_figures.html              — 특허 도면 v1 (기본 구조, 5장)
+  patent_figures_v2_nano_diffuser.html — 특허 도면 v2 (나노 디퓨저 상세, 5장)
 docs/
-  physics.md           — 물리 수식 유도 및 이론적 배경
+  physics.md                      — 물리 수식 유도 및 이론적 배경
+  manufacturing_methods.md         — 제조 방법 5종 비교 + 최적 공정 + 특허 청구항 골격
 ```
 
 ## Simulator
@@ -88,6 +95,27 @@ BM 자체의 구조를 변형하여 회절 차수를 억제:
 1. **체크보드 위상**: 인접 픽셀에 π 위상차 → 1차 회절 destructive interference
 2. **랜덤 디퓨저**: 나노입자 분산으로 위상 랜덤화 → 회절 에너지를 넓게 분산
 3. **에지 아포다이제이션**: BM 경계를 점진적으로 변화 → 고차 회절 억제
+
+## Manufacturing Methods
+
+5가지 제조 방법을 분석하여 최적 공정을 도출:
+
+| 방법 | 해상도 | 재현성 | 양산성 | 추천 |
+|------|--------|--------|--------|------|
+| A. 중공 입자 + 현상 | 100-300nm | 낮음 | 보통 | ⚠️ |
+| B. 희생 나노스피어 | 50-500nm | 우수 | 우수 | ⭐ |
+| **C. NIL (나노임프린트)** | **<100nm** | **100%** | **우수** | **⭐⭐** |
+| D. BCP 자기조립 | 15-50nm | 보통 | 보통 | - |
+| E. 레이저 스페클 | 200-1000nm | 보통 | 낮음 | - |
+
+최적 공정: **NIL + 체크보드 위상 패턴 통합** (방법 C)
+
+상세 분석: [docs/manufacturing_methods.md](docs/manufacturing_methods.md)
+
+## Patent Drawings
+
+- [v1 기본 구조 도면](patent-drawings/patent_figures.html) — Fig.1~5 (종래기술, 발명구조, 체크보드, 회절비교, 공정흐름)
+- [v2 나노 디퓨저 상세](patent-drawings/patent_figures_v2_nano_diffuser.html) — Fig.6~10 (복합단면, 제조비교, NIL상세, 억제원리, 양산레이아웃)
 
 ## Related Work
 
