@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>OLED 디스플레이 단면도 — BM 회절 억제 구조 (원본)</title>
+<style>
+body { font-family: -apple-system, 'Segoe UI', system-ui, sans-serif; background: #f5f5f0; margin: 0; padding: 20px; }
+.container { max-width: 960px; margin: 0 auto; }
+h1 { color: #333; border-bottom: 3px solid #c87533; padding-bottom: 8px; font-size: 20px; }
+.figure { background: white; border: 2px solid #666; border-radius: 4px; padding: 15px; margin: 20px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+.figure-title { font-weight: bold; text-align: center; margin-bottom: 8px; font-size: 14px; }
+.figure-caption { font-size: 11px; color: #666; text-align: center; margin-top: 8px; font-style: italic; }
+.legend { background: #f9f6ef; border: 1px solid #c87533; border-radius: 6px; padding: 12px; margin: 15px 0; font-size: 12px; }
+.legend h3 { margin: 0 0 8px; color: #c87533; font-size: 13px; }
+.legend-item { display: inline-flex; align-items: center; gap: 6px; margin-right: 18px; margin-bottom: 4px; }
+.legend-swatch { width: 20px; height: 12px; border: 1px solid #999; border-radius: 2px; }
+@media print { body { background: white; } .figure { box-shadow: none; border: 1px solid #ccc; } }
+</style>
+</head>
+<body>
+<div class="container">
+<h1>OLED 디스플레이 풀스택 단면도 — BM 회절 억제 구조</h1>
+<p style="font-size:12px;color:#666;">체크보드 위상 변조 + 랜덤 나노 디퓨저 통합 구조 (특허 출원용)</p>
+
+<div class="figure">
+<div class="figure-title">Fig. 11 — OLED 디스플레이 풀스택 단면도 (Full Stack Cross-Section)</div>
+
+<svg viewBox="0 0 900 480" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:900px;display:block;margin:0 auto;">
+  <!-- Background grid -->
+  <defs>
+    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#eee" stroke-width="0.5"/>
+    </pattern>
+    <pattern id="nanoPattern" width="8" height="8" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.2" fill="#5eb3d6"/>
+      <circle cx="6" cy="5" r="0.8" fill="#5eb3d6"/>
+      <circle cx="4" cy="7" r="1" fill="#5eb3d6"/>
+    </pattern>
+    <linearGradient id="encap" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#e0e8f0"/>
+      <stop offset="100%" stop-color="#c8d0e0"/>
+    </linearGradient>
+    <marker id="arrow1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#ff6600"/>
+    </marker>
+    <marker id="arrow2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2266cc"/>
+    </marker>
+    <marker id="arrow3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#22aa22"/>
+    </marker>
+    <marker id="arrowDim" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#333"/>
+    </marker>
+  </defs>
+  <rect width="900" height="480" fill="url(#grid)"/>
+
+  <!-- External light arrows -->
+  <g stroke="#ff6600" stroke-width="2" fill="none">
+    <path d="M 100 20 L 150 80" marker-end="url(#arrow1)"/>
+    <path d="M 250 20 L 300 80" marker-end="url(#arrow1)"/>
+    <path d="M 400 20 L 450 80" marker-end="url(#arrow1)"/>
+    <path d="M 550 20 L 600 80" marker-end="url(#arrow1)"/>
+  </g>
+  <text x="80" y="15" font-size="11" fill="#ff6600" font-weight="bold">외부광 (ambient)</text>
+
+  <!-- Suppressed reflected light (dashed blue) -->
+  <g stroke="#2266cc" stroke-width="1.5" stroke-dasharray="4,3" fill="none" opacity="0.5">
+    <path d="M 180 80 L 160 30"/>
+    <path d="M 330 80 L 350 30"/>
+    <path d="M 480 80 L 500 30"/>
+  </g>
+  <text x="520" y="15" font-size="10" fill="#2266cc" opacity="0.6">억제된 반사 회절 ✕</text>
+
+  <!-- Layer 1: Cover Glass -->
+  <rect x="50" y="80" width="800" height="30" fill="url(#encap)" stroke="#556" stroke-width="1"/>
+  <text x="450" y="100" font-size="11" text-anchor="middle" fill="#333" font-weight="bold">① 커버 글래스 (Cover Glass, 0.5T)</text>
+
+  <!-- Layer 2: OCA -->
+  <rect x="50" y="110" width="800" height="15" fill="#ffe8c8" stroke="#556"/>
+  <text x="450" y="122" font-size="10" text-anchor="middle">② OCA (광학 접착층)</text>
+
+  <!-- Layer 3: Touch sensor -->
+  <rect x="50" y="125" width="800" height="15" fill="#d8e8d8" stroke="#556"/>
+  <text x="450" y="137" font-size="10" text-anchor="middle">③ 터치 센서 (ITO/Metal Mesh)</text>
+
+  <!-- Layer 4: Planarization -->
+  <rect x="50" y="140" width="800" height="10" fill="#f0e8d8" stroke="#556"/>
+  <text x="450" y="148" font-size="9" text-anchor="middle">④ 평탄화층</text>
+
+  <!-- Layer 5: Black Matrix + Phase Modulation Layer [KEY] -->
+  <!-- Highlight border for key invention layer -->
+  <rect x="48" y="148" width="804" height="44" fill="none" stroke="#c87533" stroke-width="2.5" stroke-dasharray="6,3" rx="2"/>
+
+  <g>
+    <!-- BM regions (black) -->
+    <rect x="50" y="150" width="100" height="40" fill="#1a1a1a"/>
+    <rect x="250" y="150" width="100" height="40" fill="#1a1a1a"/>
+    <rect x="450" y="150" width="100" height="40" fill="#1a1a1a"/>
+    <rect x="650" y="150" width="100" height="40" fill="#1a1a1a"/>
+    <rect x="800" y="150" width="50" height="40" fill="#1a1a1a"/>
+
+    <!-- Slit 1: phase 0 + nano diffuser -->
+    <g>
+      <rect x="150" y="150" width="100" height="40" fill="#f5e8a0" opacity="0.7"/>
+      <rect x="175" y="160" width="50" height="20" fill="#5a7fb0" opacity="0.8"/>
+      <g fill="#2a4a6a" opacity="0.9">
+        <circle cx="165" cy="155" r="1.5"/><circle cx="190" cy="158" r="1.2"/>
+        <circle cx="215" cy="162" r="1.8"/><circle cx="235" cy="155" r="1.3"/>
+        <circle cx="170" cy="175" r="1.5"/><circle cx="195" cy="180" r="1.1"/>
+        <circle cx="220" cy="178" r="1.6"/><circle cx="240" cy="183" r="1.4"/>
+        <circle cx="180" cy="185" r="1.3"/><circle cx="205" cy="170" r="1.2"/>
+      </g>
+    </g>
+
+    <!-- Slit 2 -->
+    <g>
+      <rect x="350" y="150" width="100" height="40" fill="#f5e8a0" opacity="0.7"/>
+      <rect x="375" y="160" width="50" height="20" fill="#5a7fb0" opacity="0.8"/>
+      <g fill="#2a4a6a" opacity="0.9">
+        <circle cx="365" cy="158" r="1.4"/><circle cx="392" cy="155" r="1.3"/>
+        <circle cx="415" cy="162" r="1.5"/><circle cx="438" cy="157" r="1.2"/>
+        <circle cx="372" cy="178" r="1.6"/><circle cx="398" cy="182" r="1.2"/>
+        <circle cx="420" cy="175" r="1.4"/><circle cx="442" cy="185" r="1.3"/>
+      </g>
+    </g>
+
+    <!-- Slit 3 -->
+    <g>
+      <rect x="550" y="150" width="100" height="40" fill="#f5e8a0" opacity="0.7"/>
+      <rect x="575" y="160" width="50" height="20" fill="#5a7fb0" opacity="0.8"/>
+      <g fill="#2a4a6a" opacity="0.9">
+        <circle cx="562" cy="156" r="1.3"/><circle cx="590" cy="160" r="1.6"/>
+        <circle cx="615" cy="155" r="1.2"/><circle cx="635" cy="163" r="1.5"/>
+        <circle cx="570" cy="180" r="1.4"/><circle cx="600" cy="178" r="1.2"/>
+        <circle cx="625" cy="182" r="1.5"/><circle cx="645" cy="175" r="1.3"/>
+      </g>
+    </g>
+
+    <!-- Slit 4 (partial) -->
+    <g>
+      <rect x="750" y="150" width="50" height="40" fill="#f5e8a0" opacity="0.7"/>
+      <rect x="762" y="160" width="26" height="20" fill="#5a7fb0" opacity="0.8"/>
+      <g fill="#2a4a6a" opacity="0.9">
+        <circle cx="760" cy="158" r="1.4"/><circle cx="780" cy="162" r="1.3"/>
+        <circle cx="795" cy="156" r="1.2"/><circle cx="772" cy="180" r="1.5"/>
+        <circle cx="792" cy="183" r="1.4"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- Callouts for Layer 5 -->
+  <g stroke="#c87533" stroke-width="1.5" fill="none">
+    <path d="M 200 192 L 200 240 L 70 240"/>
+  </g>
+  <text x="70" y="255" font-size="10" fill="#c87533" font-weight="bold">⑤ BM + 위상변조막 + 나노 디퓨저 [핵심]</text>
+  <text x="70" y="268" font-size="9" fill="#666">• BM (검정) | 투과부 (황색)</text>
+  <text x="70" y="280" font-size="9" fill="#666">• 파란색 영역 = 위상 π 변조부 (두께 Δd)</text>
+  <text x="70" y="292" font-size="9" fill="#666">• 진한 점 = 랜덤 나노 디퓨저 (보이드/나노스피어)</text>
+
+  <!-- Layer 6: TFE -->
+  <rect x="50" y="305" width="800" height="15" fill="#c8e8f0" stroke="#556"/>
+  <text x="450" y="316" font-size="10" text-anchor="middle">⑥ TFE (박막봉지)</text>
+
+  <!-- Layer 7: Cathode -->
+  <rect x="50" y="320" width="800" height="10" fill="#d0d0d0" stroke="#556"/>
+  <text x="450" y="328" font-size="9" text-anchor="middle">⑦ 음극 (Cathode, reflective)</text>
+
+  <!-- Layer 8: OLED Emission Layer -->
+  <rect x="50" y="330" width="800" height="30" fill="#ffcfcf" stroke="#556"/>
+  <g>
+    <rect x="150" y="330" width="30" height="30" fill="#ff4444" opacity="0.8"/>
+    <rect x="190" y="330" width="30" height="30" fill="#44ff44" opacity="0.8"/>
+    <rect x="230" y="330" width="30" height="30" fill="#4444ff" opacity="0.8"/>
+    <rect x="350" y="330" width="30" height="30" fill="#ff4444" opacity="0.8"/>
+    <rect x="390" y="330" width="30" height="30" fill="#44ff44" opacity="0.8"/>
+    <rect x="430" y="330" width="30" height="30" fill="#4444ff" opacity="0.8"/>
+    <rect x="550" y="330" width="30" height="30" fill="#ff4444" opacity="0.8"/>
+    <rect x="590" y="330" width="30" height="30" fill="#44ff44" opacity="0.8"/>
+    <rect x="630" y="330" width="30" height="30" fill="#4444ff" opacity="0.8"/>
+    <rect x="750" y="330" width="30" height="30" fill="#ff4444" opacity="0.8"/>
+  </g>
+  <text x="450" y="350" font-size="10" text-anchor="middle" fill="#333" font-weight="bold">⑧ OLED 발광층 (R/G/B 서브픽셀)</text>
+
+  <!-- OLED emission arrows (green, going up) -->
+  <g stroke="#22aa22" stroke-width="1.5" fill="none">
+    <path d="M 165 330 L 165 195" marker-end="url(#arrow3)"/>
+    <path d="M 205 330 L 205 195" marker-end="url(#arrow3)"/>
+    <path d="M 400 330 L 400 195" marker-end="url(#arrow3)"/>
+    <path d="M 600 330 L 600 195" marker-end="url(#arrow3)"/>
+  </g>
+  <text x="620" y="300" font-size="9" fill="#22aa22" font-weight="bold">↑ OLED 발광</text>
+
+  <!-- Layer 9: TFT -->
+  <rect x="50" y="360" width="800" height="40" fill="#a8b8c8" stroke="#556"/>
+  <!-- TFT transistor symbols -->
+  <g stroke="#667" stroke-width="0.8" fill="none" opacity="0.5">
+    <rect x="160" y="370" width="20" height="20" rx="2"/>
+    <rect x="360" y="370" width="20" height="20" rx="2"/>
+    <rect x="560" y="370" width="20" height="20" rx="2"/>
+    <rect x="760" y="370" width="20" height="20" rx="2"/>
+    <line x1="170" y1="365" x2="170" y2="370"/>
+    <line x1="370" y1="365" x2="370" y2="370"/>
+    <line x1="570" y1="365" x2="570" y2="370"/>
+    <line x1="770" y1="365" x2="770" y2="370"/>
+  </g>
+  <text x="450" y="385" font-size="11" text-anchor="middle" fill="#fff" font-weight="bold">⑨ TFT 백플레인 (LTPO)</text>
+
+  <!-- Layer 10: Substrate -->
+  <rect x="50" y="400" width="800" height="30" fill="#886644" stroke="#556"/>
+  <text x="450" y="420" font-size="11" text-anchor="middle" fill="#fff" font-weight="bold">⑩ 기판 (PI/Glass)</text>
+
+  <!-- Dimension lines -->
+  <g stroke="#333" stroke-width="0.8">
+    <!-- Pixel pitch -->
+    <line x1="150" y1="445" x2="350" y2="445"/>
+    <line x1="150" y1="440" x2="150" y2="450"/>
+    <line x1="350" y1="440" x2="350" y2="450"/>
+    <text x="250" y="458" font-size="9" text-anchor="middle" fill="#333">pixel pitch (px)</text>
+
+    <!-- BM width -->
+    <line x1="250" y1="465" x2="350" y2="465"/>
+    <line x1="250" y1="460" x2="250" y2="470"/>
+    <line x1="350" y1="460" x2="350" y2="470"/>
+    <text x="300" y="477" font-size="9" text-anchor="middle" fill="#333">BM width (w)</text>
+  </g>
+
+  <!-- Right side: total stack dimension -->
+  <g stroke="#333" stroke-width="0.8">
+    <line x1="865" y1="80" x2="865" y2="430"/>
+    <line x1="860" y1="80" x2="870" y2="80"/>
+    <line x1="860" y1="430" x2="870" y2="430"/>
+    <text x="875" y="260" font-size="9" fill="#333" transform="rotate(90,875,260)" text-anchor="middle">전체 스택 ~2.5mm</text>
+  </g>
+
+</svg>
+
+<div class="figure-caption">Fig. 11 — OLED 디스플레이 풀스택 단면도. ⑤번 레이어(점선 테두리)가 본 발명의 핵심 구조.</div>
+</div>
+
+<div class="legend">
+<h3>범례 (Legend)</h3>
+<div>
+  <span class="legend-item"><span class="legend-swatch" style="background:#1a1a1a;"></span> BM (블랙 매트릭스)</span>
+  <span class="legend-item"><span class="legend-swatch" style="background:#f5e8a0;"></span> 투과부 (위상 0)</span>
+  <span class="legend-item"><span class="legend-swatch" style="background:#5a7fb0;"></span> 위상 π 변조부</span>
+  <span class="legend-item"><span class="legend-swatch" style="background:#2a4a6a;border-radius:50%;width:12px;height:12px;"></span> 나노 디퓨저</span>
+</div>
+<div style="margin-top:6px;">
+  <span class="legend-item"><span class="legend-swatch" style="background:#ff4444;"></span> R 서브픽셀</span>
+  <span class="legend-item"><span class="legend-swatch" style="background:#44ff44;"></span> G 서브픽셀</span>
+  <span class="legend-item"><span class="legend-swatch" style="background:#4444ff;"></span> B 서브픽셀</span>
+  <span class="legend-item"><span style="color:#ff6600;">→</span> 외부광</span>
+  <span class="legend-item"><span style="color:#2266cc;">⇢</span> 억제된 반사</span>
+  <span class="legend-item"><span style="color:#22aa22;">↑</span> OLED 발광</span>
+</div>
+</div>
+
+<div style="font-size:11px;color:#888;margin-top:15px;text-align:center;">
+© 2026 BM Diffraction Suppression Research | 특허 출원 준비용 도면
+</div>
+</div>
+</body>
+</html>
