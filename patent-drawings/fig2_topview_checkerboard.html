@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Fig. 2 — 체크보드 위상 + 나노 디퓨저 평면 배치</title>
+<style>
+body { font-family: -apple-system, 'Segoe UI', system-ui, sans-serif; background: #f5f5f0; margin: 0; padding: 20px; }
+.container { max-width: 960px; margin: 0 auto; }
+h1 { color: #333; border-bottom: 3px solid #c87533; padding-bottom: 8px; font-size: 20px; }
+h2 { color: #555; margin-top: 30px; background: #e8e4d8; padding: 8px 12px; border-left: 4px solid #c87533; font-size: 15px; }
+.figure { background: white; border: 2px solid #666; border-radius: 4px; padding: 15px; margin: 20px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+.figure-title { font-weight: bold; text-align: center; margin-bottom: 8px; font-size: 14px; }
+.figure-caption { font-size: 11px; color: #666; text-align: center; margin-top: 8px; font-style: italic; }
+.legend { background: #f9f6ef; border: 1px solid #c87533; border-radius: 6px; padding: 12px; margin: 15px 0; font-size: 12px; }
+.legend h3 { margin: 0 0 8px; color: #c87533; font-size: 13px; }
+.legend-item { display: inline-flex; align-items: center; gap: 6px; margin-right: 18px; margin-bottom: 4px; }
+.legend-swatch { width: 20px; height: 12px; border: 1px solid #999; border-radius: 2px; }
+.nav { display: flex; gap: 8px; margin-bottom: 15px; flex-wrap: wrap; }
+.nav a { padding: 6px 12px; background: #c87533; color: white; text-decoration: none; border-radius: 4px; font-size: 12px; }
+.nav a:hover { background: #a85a1a; }
+@media print { body { background: white; } .figure { box-shadow: none; border: 1px solid #ccc; page-break-inside: avoid; } .nav { display: none; } }
+</style>
+</head>
+<body>
+<div class="container">
+<h1>특허 도면 — 원본 SVG 시리즈</h1>
+
+<div class="nav">
+  <a href="oled_stack_original.html">Fig.11 풀스택 단면</a>
+  <a href="#">Fig.2 평면도 (현재)</a>
+  <a href="patent_figures.html">Fig.1~5 기본</a>
+  <a href="patent_figures_v2_nano_diffuser.html">Fig.6~10 나노 디퓨저</a>
+</div>
+
+<!-- ============================================================
+     FIGURE: 단면도 치수선 보완 (Fig.11 보완)
+============================================================ -->
+<h2>■ FIG. 11 보완 — 단면도 치수선 상세</h2>
+<div class="figure">
+<div class="figure-title">Fig. 11 (보완): 핵심 레이어 치수 상세</div>
+<svg viewBox="0 0 900 420" width="100%" style="max-width:900px">
+  <defs>
+    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#eee" stroke-width="0.5"/>
+    </pattern>
+    <marker id="arrowD" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#333"/>
+    </marker>
+  </defs>
+  <rect width="900" height="420" fill="url(#grid)"/>
+
+  <!-- Zoomed BM layer detail -->
+  <rect x="48" y="48" width="504" height="244" fill="none" stroke="#c87533" stroke-width="2" stroke-dasharray="6,3"/>
+
+  <!-- BM + slits (zoomed) -->
+  <rect x="50" y="50" width="80" height="240" fill="#1a1a1a"/>
+  <g><!-- Slit 1 -->
+    <rect x="130" y="50" width="100" height="240" fill="#f5e8a0" opacity="0.7"/>
+    <rect x="155" y="100" width="50" height="90" fill="#5a7fb0" opacity="0.85"/>
+    <g fill="#2a4a6a" opacity="0.9">
+      <circle cx="145" cy="70" r="3"/><circle cx="180" cy="80" r="2.5"/>
+      <circle cx="210" cy="65" r="2.8"/><circle cx="160" cy="130" r="3.2"/>
+      <circle cx="195" cy="150" r="2.3"/><circle cx="220" cy="170" r="2.8"/>
+      <circle cx="140" cy="210" r="2.5"/><circle cx="175" cy="230" r="3"/>
+      <circle cx="210" cy="250" r="2.2"/><circle cx="155" cy="270" r="2.7"/>
+    </g>
+  </g>
+  <rect x="230" y="50" width="80" height="240" fill="#1a1a1a"/>
+  <g><!-- Slit 2 -->
+    <rect x="310" y="50" width="100" height="240" fill="#f5e8a0" opacity="0.7"/>
+    <rect x="335" y="100" width="50" height="90" fill="#5a7fb0" opacity="0.85"/>
+    <g fill="#2a4a6a" opacity="0.9">
+      <circle cx="325" cy="75" r="2.8"/><circle cx="355" cy="68" r="2.5"/>
+      <circle cx="385" cy="85" r="3"/><circle cx="340" cy="140" r="2.3"/>
+      <circle cx="370" cy="155" r="2.8"/><circle cx="400" cy="165" r="2.5"/>
+      <circle cx="320" cy="220" r="3.1"/><circle cx="360" cy="240" r="2.4"/>
+      <circle cx="395" cy="260" r="2.7"/>
+    </g>
+  </g>
+  <rect x="410" y="50" width="80" height="240" fill="#1a1a1a"/>
+
+  <!-- Dimension lines -->
+  <!-- 개구부 a -->
+  <g stroke="#333" stroke-width="1">
+    <line x1="130" y1="310" x2="230" y2="310"/>
+    <line x1="130" y1="300" x2="130" y2="320"/>
+    <line x1="230" y1="300" x2="230" y2="320"/>
+  </g>
+  <text x="180" y="328" font-size="11" text-anchor="middle" fill="#333">개구부 a ≈ 10 μm</text>
+
+  <!-- BM 폭 -->
+  <g stroke="#333" stroke-width="1">
+    <line x1="230" y1="340" x2="310" y2="340"/>
+    <line x1="230" y1="330" x2="230" y2="350"/>
+    <line x1="310" y1="330" x2="310" y2="350"/>
+  </g>
+  <text x="270" y="358" font-size="11" text-anchor="middle" fill="#333">BM 폭 ≈ 10 μm</text>
+
+  <!-- 피치 -->
+  <g stroke="#333" stroke-width="1">
+    <line x1="130" y1="375" x2="310" y2="375"/>
+    <line x1="130" y1="365" x2="130" y2="385"/>
+    <line x1="310" y1="365" x2="310" y2="385"/>
+  </g>
+  <text x="220" y="398" font-size="11" text-anchor="middle" fill="#333" font-weight="bold">피치 Px ≈ 30 μm (서브픽셀 단위)</text>
+
+  <!-- Phase depth dimension (vertical, right side) -->
+  <g stroke="#c87533" stroke-width="1">
+    <line x1="520" y1="100" x2="520" y2="190"/>
+    <line x1="515" y1="100" x2="525" y2="100"/>
+    <line x1="515" y1="190" x2="525" y2="190"/>
+  </g>
+  <text x="530" y="150" font-size="10" fill="#c87533" font-weight="bold">Δd ≈ 344 nm</text>
+  <text x="530" y="163" font-size="9" fill="#888">= λ/2(n-1)</text>
+
+  <!-- Nano particle size callout -->
+  <g stroke="#2a4a6a" stroke-width="1" fill="none">
+    <line x1="210" y1="65" x2="530" y2="50"/>
+  </g>
+  <text x="535" y="50" font-size="10" fill="#2a4a6a">나노 디퓨저 ∅ 50~300 nm</text>
+  <text x="535" y="63" font-size="9" fill="#888">중공 SiO₂ 또는 PS 나노스피어</text>
+
+  <!-- Zoom indicator -->
+  <g stroke="#c87533" stroke-width="1" stroke-dasharray="3,3" fill="none">
+    <path d="M 500 50 L 600 70"/>
+    <path d="M 500 290 L 600 310"/>
+  </g>
+  <text x="610" y="195" font-size="10" fill="#c87533" font-style="italic">← Fig.11 ⑤번 레이어 확대</text>
+
+  <!-- Legend -->
+  <g>
+    <rect x="590" y="280" width="290" height="110" fill="white" stroke="#333" stroke-width="0.5" rx="3"/>
+    <text x="600" y="298" font-size="11" font-weight="bold">범례:</text>
+    <rect x="600" y="305" width="18" height="10" fill="#1a1a1a"/>
+    <text x="625" y="314" font-size="10">블랙매트릭스 (BM)</text>
+    <rect x="600" y="320" width="18" height="10" fill="#f5e8a0" opacity="0.7"/>
+    <text x="625" y="329" font-size="10">투과부 (phase 0)</text>
+    <rect x="600" y="335" width="18" height="10" fill="#5a7fb0" opacity="0.85"/>
+    <text x="625" y="344" font-size="10">위상 π 변조부 (체크보드)</text>
+    <circle cx="609" cy="360" r="3" fill="#2a4a6a"/>
+    <text x="625" y="363" font-size="10">랜덤 나노 디퓨저 (50-300nm)</text>
+    <line x1="600" y1="375" x2="618" y2="375" stroke="#c87533" stroke-width="1.5" stroke-dasharray="4,2"/>
+    <text x="625" y="378" font-size="10" fill="#c87533">핵심 발명 영역 표시</text>
+  </g>
+</svg>
+<div class="figure-caption">⑤번 레이어 확대. 개구부(a), BM 폭, 서브픽셀 피치(Px), 위상 변조 두께(Δd), 나노 디퓨저 크기 표시.</div>
+</div>
+
+<!-- ============================================================
+     FIGURE 2: 위상막 평면 레이아웃 (Top view)
+============================================================ -->
+<h2>■ FIG. 2 — 체크보드 위상 + 나노 디퓨저 평면 배치 (Top View)</h2>
+<div class="figure">
+<div class="figure-title">Fig. 2: Phase Modulation Layer Top View — 3×3 서브픽셀 단위</div>
+<svg viewBox="0 0 900 600" width="100%" style="max-width:900px">
+  <defs>
+    <pattern id="grid2" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#f0f0f0" stroke-width="0.5"/>
+    </pattern>
+  </defs>
+  <rect width="900" height="600" fill="url(#grid2)"/>
+
+  <!-- Title -->
+  <text x="450" y="25" text-anchor="middle" font-size="13" font-weight="bold">위상 변조 BM 층 평면도 (Top View) — 3×3 서브픽셀 단위</text>
+
+  <!-- 3x3 grid of subpixels -->
+  <g transform="translate(150, 50)">
+    <!-- Row 1 -->
+    <!-- Cell (0,0): checkerboard [0, π; π, 0] -->
+    <g transform="translate(0,0)">
+      <rect width="180" height="150" fill="#1a1a1a"/>
+      <rect x="30" y="15" width="120" height="120" fill="#f5e8a0" opacity="0.7"/>
+      <rect x="30" y="15" width="60" height="60" fill="#f5e8a0"/>
+      <rect x="90" y="15" width="60" height="60" fill="#5a7fb0" opacity="0.85"/>
+      <rect x="30" y="75" width="60" height="60" fill="#5a7fb0" opacity="0.85"/>
+      <rect x="90" y="75" width="60" height="60" fill="#f5e8a0"/>
+      <!-- Nano dots -->
+      <g fill="#2a4a6a" opacity="0.8">
+        <circle cx="45" cy="30" r="2"/><circle cx="75" cy="50" r="1.5"/>
+        <circle cx="110" cy="35" r="2.2"/><circle cx="135" cy="55" r="1.8"/>
+        <circle cx="50" cy="95" r="2"/><circle cx="80" cy="110" r="1.6"/>
+        <circle cx="115" cy="90" r="2.3"/><circle cx="140" cy="120" r="1.5"/>
+      </g>
+      <text x="90" y="145" text-anchor="middle" font-size="8" fill="#999">R</text>
+    </g>
+
+    <!-- Cell (1,0) -->
+    <g transform="translate(180,0)">
+      <rect width="180" height="150" fill="#1a1a1a"/>
+      <rect x="30" y="15" width="120" height="120" fill="#f5e8a0" opacity="0.7"/>
+      <rect x="30" y="15" width="60" height="60" fill="#5a7fb0" opacity="0.85"/>
+      <rect x="90" y="15" width="60" height="60" fill="#f5e8a0"/>
+      <rect x="30" y="75" width="60" height="60" fill="#f5e8a0"/>
+      <rect x="90" y="75" width="60" height="60" fill="#5a7fb0" opacity="0.85"/>
+      <g fill="#2a4a6a" opacity="0.8">
+        <circle cx="50" cy="32" r="1.8"/><circle cx="82" cy="45" r="2.1"/>
+        <circle cx="105" cy="28" r="1.6"/><circle cx="130" cy="60" r="2"/>
+        <circle cx="55" cy="100" r="2.2"/><circle cx="85" cy="115" r="1.5"/>
+        <circle cx="120" cy="95" r="1.9"/><circle cx="142" cy="125" r="1.7"/>
+      </g>
+      <text x="90" y="145" text-anchor="middle" font-size="8" fill="#999">G</text>
+    </g>
+
+    <!-- Cell (2,0) -->
+    <g transform="translate(360,0)">
+      <rect width="180" height="150" fill="#1a1a1a"/>
+      <rect x="30" y="15" width="120" height="120" fill="#f5e8a0" opacity="0.7"/>
+      <rect x="30" y="15" width="60" height="60" fill="#f5e8a0"/>
+      <rect x="90" y="15" width="60" height="60" fill="#5a7fb0" opacity="0.85"/>
+      <rect x="30" y="75" width="60" height="60" fill="#5a7fb0" opacity="0.85"/>
+      <rect x="90" y="75" width="60" height="60" fill="#f5e8a0"/>
+      <g fill="#2a4a6a" opacity="0.8">
+        <circle cx="48" cy="28" r="2.1"/><circle cx="78" cy="48" r="1.7"/>
+        <circle cx="108" cy="32" r="2"/><circle cx="138" cy="52" r="1.5"/>
+        <circle cx="52" cy="92" r="1.9"/><circle cx="82" cy="108" r="2.3"/>
+        <circle cx="118" cy="98" r="1.6"/><circle cx="145" cy="118" r="2"/>
+      </g>
+      <text x="90" y="145" text-anchor="middle" font-size="8" fill="#999">B</text>
+    </g>
+
+    <!-- Row 2 -->
+    <g transform="translate(0,150)">
+      <rect width="180" height="150" fill="#1a1a1a"/>
+      <rect x="30" y="15" width="120" height="120" fill="#f5e8a0" opacity="0.7"/>
+      <rect x="30" y="15" width="60" height="60" fill="#5a7fb0" opacity="0.85"/>
+      <rect x="90" y="15" width="60" height="60" fill="#f5e8a0"/>
+      <rect x="30" y="75" width="60" height="60" fill="#f5e8a0"/>
+      <rect x="90" y="75" width="60" height="60" fill="#5a7fb0" opacity="0.85"/>
+      <g fill="#2a4a6a" opacity="0.8">
+        <circle cx="42" cy="35" r="2"/><circle cx="72" cy="52" r="1.8"/>
+        <circle cx="112" cy="38" r="1.5"/><circle cx="140" cy="58" r="2.2"/>
+        <circle cx="48" cy="98" r="1.7"/><circle cx="78" cy="112" r="2"/>
+        <circle cx="122" cy="92" r="2.1"/><circle cx="138" cy="122" r="1.6"/>
+      </g>
+      <text x="90" y="145" text-anchor="middle" font-size="8" fill="#999">R</text>
+    </g>
+
+    <g transform="translate(180,150)">
+      <rect width="180" height="150" fill="#1a1a1a"/>
+      <rect x="30" y="15" width="120" height="120" fill="#f5e8a0" opacity="0.7"/>
+      <rect x="30" y="15" width="60" height="60" fill="#f5e8a0"/>
+      <rect x="90" y="15" width="60" height="60" fill="#5a7fb0" opacity="0.85"/>
+      <rect x="30" y="75" width="60" height="60" fill="#5a7fb0" opacity="0.85"/>
+      <rect x="90" y="75" width="60" height="60" fill="#f5e8a0"/>
+      <g fill="#2a4a6a" opacity="0.8">
+        <circle cx="50" cy="30" r="1.9"/><circle cx="80" cy="48" r="2.2"/>
+        <circle cx="108" cy="35" r="1.6"/><circle cx="135" cy="55" r="2"/>
+        <circle cx="55" cy="95" r="2.1"/><circle cx="85" cy="115" r="1.5"/>
+        <circle cx="115" cy="92" r="1.8"/><circle cx="140" cy="120" r="2.3"/>
+      </g>
+      <text x="90" y="145" text-anchor="middle" font-size="8" fill="#999">G</text>
+    </g>
+
+    <g transform="translate(360,150)">
+      <rect width="180" height="150" fill="#1a1a1a"/>
+      <rect x="30" y="15" width="120" height="120" fill="#f5e8a0" opacity="0.7"/>
+      <rect x="30" y="15" width="60" height="60" fill="#5a7fb0" opacity="0.85"/>
+      <rect x="90" y="15" width="60" height="60" fill="#f5e8a0"/>
+      <rect x="30" y="75" width="60" height="60" fill="#f5e8a0"/>
+      <rect x="90" y="75" width="60" height="60" fill="#5a7fb0" opacity="0.85"/>
+      <g fill="#2a4a6a" opacity="0.8">
+        <circle cx="48" cy="32" r="2"/><circle cx="75" cy="50" r="1.6"/>
+        <circle cx="112" cy="30" r="2.3"/><circle cx="138" cy="58" r="1.5"/>
+        <circle cx="52" cy="98" r="1.8"/><circle cx="82" cy="110" r="2.1"/>
+        <circle cx="120" cy="95" r="1.7"/><circle cx="142" cy="122" r="2"/>
+      </g>
+      <text x="90" y="145" text-anchor="middle" font-size="8" fill="#999">B</text>
+    </g>
+  </g>
+
+  <!-- Dimension arrows -->
+  <!-- Pixel pitch horizontal -->
+  <g stroke="#333" stroke-width="1">
+    <line x1="150" y1="380" x2="330" y2="380"/>
+    <line x1="150" y1="370" x2="150" y2="390"/>
+    <line x1="330" y1="370" x2="330" y2="390"/>
+  </g>
+  <text x="240" y="398" text-anchor="middle" font-size="10" fill="#333">서브픽셀 피치 ≈ 30 μm</text>
+
+  <!-- BM width -->
+  <g stroke="#333" stroke-width="1">
+    <line x1="150" y1="415" x2="180" y2="415"/>
+    <line x1="150" y1="408" x2="150" y2="422"/>
+    <line x1="180" y1="408" x2="180" y2="422"/>
+  </g>
+  <text x="165" y="432" text-anchor="middle" font-size="9" fill="#333">BM ≈ 10μm</text>
+
+  <!-- Full pixel pitch (R+G+B) -->
+  <g stroke="#c87533" stroke-width="1.5">
+    <line x1="150" y1="445" x2="690" y2="445"/>
+    <line x1="150" y1="435" x2="150" y2="455"/>
+    <line x1="690" y1="435" x2="690" y2="455"/>
+  </g>
+  <text x="420" y="465" text-anchor="middle" font-size="11" fill="#c87533" font-weight="bold">풀 픽셀 피치 = 3 × 30 μm = 90 μm</text>
+
+  <!-- Phase labels -->
+  <text x="195" y="490" font-size="10" fill="#f5e8a0" stroke="#333" stroke-width="0.3">위상 0</text>
+  <text x="275" y="490" font-size="10" fill="#5a7fb0" font-weight="bold">위상 π</text>
+  <text x="370" y="490" font-size="9" fill="#666">→ 인접 셀에서 체크보드 패턴 교대</text>
+
+  <!-- Checkerboard pattern indicator -->
+  <g stroke="#c87533" stroke-width="1" stroke-dasharray="3,2" fill="none">
+    <rect x="180" y="65" width="120" height="120" rx="3"/>
+  </g>
+  <text x="240" y="58" text-anchor="middle" font-size="9" fill="#c87533">체크보드 단위셀</text>
+
+  <!-- R/G/B color indicators -->
+  <g transform="translate(150, 505)">
+    <rect x="0" y="0" width="180" height="15" fill="#ff4444" opacity="0.3" stroke="#ff4444"/>
+    <text x="90" y="12" text-anchor="middle" font-size="9" fill="#cc0000" font-weight="bold">R (Red)</text>
+    <rect x="180" y="0" width="180" height="15" fill="#44ff44" opacity="0.3" stroke="#44cc44"/>
+    <text x="270" y="12" text-anchor="middle" font-size="9" fill="#008800" font-weight="bold">G (Green)</text>
+    <rect x="360" y="0" width="180" height="15" fill="#4444ff" opacity="0.3" stroke="#4444ff"/>
+    <text x="450" y="12" text-anchor="middle" font-size="9" fill="#0000cc" font-weight="bold">B (Blue)</text>
+  </g>
+
+  <!-- Legend -->
+  <g>
+    <rect x="600" y="380" width="270" height="100" fill="white" stroke="#333" stroke-width="0.5" rx="3"/>
+    <text x="610" y="398" font-size="11" font-weight="bold">범례:</text>
+    <rect x="610" y="405" width="16" height="10" fill="#1a1a1a"/>
+    <text x="632" y="414" font-size="9">BM (블랙매트릭스)</text>
+    <rect x="610" y="420" width="16" height="10" fill="#f5e8a0" opacity="0.7"/>
+    <text x="632" y="429" font-size="9">위상 0 (baseline)</text>
+    <rect x="610" y="435" width="16" height="10" fill="#5a7fb0" opacity="0.85"/>
+    <text x="632" y="444" font-size="9">위상 π (체크보드)</text>
+    <circle cx="618" cy="458" r="2.5" fill="#2a4a6a"/>
+    <text x="632" y="461" font-size="9">나노 디퓨저 (랜덤)</text>
+    <rect x="610" y="467" width="16" height="5" fill="none" stroke="#c87533" stroke-dasharray="3,2"/>
+    <text x="632" y="474" font-size="9" fill="#c87533">핵심 단위셀 표시</text>
+  </g>
+</svg>
+<div class="figure-caption">Fig. 2 — 위상 변조 BM 층 평면도. 3×3 서브픽셀(R/G/B × 2행) 배치. 각 개구부 내 4분할 체크보드 위상(0/π 교대) + 랜덤 나노 디퓨저 분포.</div>
+</div>
+
+<div class="legend">
+<h3>핵심 설계 원리</h3>
+<p style="font-size:12px;color:#555;line-height:1.7;">
+<strong>체크보드 위상 변조:</strong> 각 서브픽셀 개구부를 4등분하여 위상 0과 π를 체크보드로 배치.
+인접 셀 간에도 위상이 교대하여 2D 방향 모두에서 1차 회절을 소멸시킴.<br>
+<strong>나노 디퓨저:</strong> 위상막 내에 50~300nm 중공 SiO₂ 입자를 랜덤 분산.
+잔여 회절 에너지를 넓은 각도로 산란시켜 시각적으로 인지 불가능한 수준으로 저감.<br>
+<strong>R/G/B 독립:</strong> 각 서브픽셀은 독립적으로 위상 변조되며, 나노 디퓨저의 랜덤성은 광대역(380~780nm) 성능을 보장.
+</p>
+</div>
+
+<div style="font-size:11px;color:#888;margin-top:15px;text-align:center;">
+© 2026 BM Diffraction Suppression Research | 특허 출원 준비용 도면
+</div>
+</div>
+</body>
+</html>
